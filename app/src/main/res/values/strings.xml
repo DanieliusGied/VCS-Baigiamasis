@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Baigiamasis</string>
+    <string name="first_screen_create_new_character">Create new character</string>
+    <string name="first_screen_load_saved_character">Load Saved Character</string>
 </resources>

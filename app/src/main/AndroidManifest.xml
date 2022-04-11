@@ -10,6 +10,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Baigiamasis">
         <activity
+            android:name=".TreasureRoomScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PuzzleRoomScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoadCharacterScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InventoryScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ExploreDungeonScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateCharacterScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CombatScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CharacterInfoScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FirstScreenActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
