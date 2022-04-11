@@ -9,6 +9,8 @@ import android.view.View;
 
 import com.google.android.material.button.MaterialButton;
 
+import lt.vcs.baigiamasis.zaidimukasclasses.Character;
+
 public class CreateCharacterScreenActivity extends AppCompatActivity {
 
     MaterialButton materialButton1;
@@ -20,23 +22,27 @@ public class CreateCharacterScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_character_screen);
         Log.i("TEST_TAG", "Create Char - On Create");
         setUpCancelButton();
+        setUpCreateButton();
     }
 
-    private void setUpCancelButton(){
-        materialButton2 = findViewById(R.id.materialButtonCreateCharacterScreenCancel);
-        materialButton2.setOnClickListener(new View.OnClickListener(){
+    private void setUpCreateButton(){
+        materialButton1 = findViewById(R.id.materialButtonCreateCharacterScreenConfirm);
+        materialButton1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CreateCharacterScreenActivity.this, FirstScreenActivity.class);
+                MainActivity.character = new Character(findViewById(R.id.editTextCreateCharacter).toString());
+                MainActivity.character.writeCharacterToDatabase();
+
+                Intent intent = new Intent(CreateCharacterScreenActivity.this, SecondScreenActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
     }
 
-    private void setUpCreateButton(){
-        materialButton1 = findViewById(R.id.materialButtonCreateCharacterScreenConfirm);
-        materialButton1.setOnClickListener(new View.OnClickListener(){
+    private void setUpCancelButton(){
+        materialButton2 = findViewById(R.id.materialButtonCreateCharacterScreenCancel);
+        materialButton2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CreateCharacterScreenActivity.this, FirstScreenActivity.class);

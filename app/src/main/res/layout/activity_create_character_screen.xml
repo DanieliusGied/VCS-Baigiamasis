@@ -23,12 +23,10 @@
         </TextView>
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/editTextCreateCharacter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:background="@drawable/editTextBackground"
-
             android:text="Enter text here"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView">
@@ -43,7 +41,7 @@
             android:layout_marginStart="78dp"
             android:layout_marginTop="78dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText">
+            app:layout_constraintTop_toBottomOf="@+id/editTextCreateCharacter">
 
         </com.google.android.material.button.MaterialButton>
 
@@ -56,7 +54,7 @@
             android:layout_marginEnd="78dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/materialButtonCreateCharacterScreenConfirm"
-            app:layout_constraintTop_toBottomOf="@+id/editText">
+            app:layout_constraintTop_toBottomOf="@+id/editTextCreateCharacter">
 
         </com.google.android.material.button.MaterialButton>
 

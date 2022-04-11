@@ -1,6 +1,6 @@
 package lt.vcs.baigiamasis.zaidimukasclasses;
 
-import static lt.vcs.zaidimukas.Main.random;
+import static lt.vcs.baigiamasis.MainActivity.random;
 
 public class Item {
     String name;
