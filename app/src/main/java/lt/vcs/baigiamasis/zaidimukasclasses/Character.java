@@ -1,31 +1,51 @@
 package lt.vcs.baigiamasis.zaidimukasclasses;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static lt.vcs.baigiamasis.zaidimukasclasses.ItemType.ARMOR;
 import static lt.vcs.baigiamasis.zaidimukasclasses.ItemType.WEAPON;
 import static lt.vcs.baigiamasis.MainActivity.*;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = Constant.ENTITY_CHARACTER_TABLE)
 public class Character {
+    @PrimaryKey
+    private int id;
+    @ColumnInfo(name = "character_name")
     private String name;
-    private int statStr;
-    private int statCon;
-    private int statDex;
+    @ColumnInfo(name = "character_level")
     private int level;
-    private int maxHealth;
-    private int currentHealth;
-    private HashMap<ItemType, Item> inventory;
-    private int damage;
-    private int armor;
+    @ColumnInfo(name = "character_str")
+    private int statStr;
+    @ColumnInfo(name = "character_gold")
     private int gold;
+    @ColumnInfo(name = "character_con")
+    private int statCon;
+    @ColumnInfo(name = "character_dex")
+    private int statDex;
+    @ColumnInfo(name = "character_max_health")
+    private int maxHealth;
+    @ColumnInfo(name = "character_current_health")
+    private int currentHealth;
+    @ColumnInfo(name = "character_equipped_items")
+    private HashMap<ItemType, Item> equippedItems;
+    @ColumnInfo(name = "character_armor")
+    private int armor;
+
+    @Ignore
+    private int damage;
+
 
     public Character(String name){
         System.out.println("Hello and welcome :) Please enter your character's name:");
         this.name = name;
-        inventory = new HashMap<ItemType, Item>();
-        inventory.put(WEAPON, dagger);
-        inventory.put(ARMOR, clothShirt);
+        equippedItems = new HashMap<ItemType, Item>();
+        equippedItems.put(WEAPON, dagger);
+        equippedItems.put(ARMOR, clothShirt);
         level = 1;
 
         this.statStr = 10;
@@ -51,11 +71,11 @@ public class Character {
     }
 
     public void setArmor(){
-        this.armor = inventory.get(ARMOR).armor + (this.statDex - 10);
+        this.armor = equippedItems.get(ARMOR).armor + (this.statDex - 10);
     }
 
     public int calculateDamage(){
-        this.damage = inventory.get(WEAPON).calculateWeaponDamage() + (this.statStr - 10);
+        this.damage = equippedItems.get(WEAPON).calculateWeaponDamage() + (this.statStr - 10);
         return this.damage;
     }
 
