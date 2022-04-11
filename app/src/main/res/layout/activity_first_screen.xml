@@ -10,6 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <EditText
+            android:id="@+id/editTextCreateCharacter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Enter your character's name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/materialButtonFirstScreenCreateNewCharacter">
+
+        </EditText>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButtonFirstScreenCreateNewCharacter"
             android:layout_width="wrap_content"

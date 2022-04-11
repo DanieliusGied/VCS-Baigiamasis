@@ -32,7 +32,7 @@ public class FirstScreenActivity extends AppCompatActivity {
         });
     }
 
-    // TODO: 4/11/2022 Create a database connection that loads a character from the database
+    // TODO: 4/11/2022 Create a database connection that loads a character from the database, move this whole activity to MainActivity
 
     @Override
     protected void onDestroy() {

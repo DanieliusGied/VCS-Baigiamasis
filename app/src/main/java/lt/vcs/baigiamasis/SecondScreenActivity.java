@@ -18,6 +18,8 @@ public class SecondScreenActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton1;
     FloatingActionButton floatingActionButton2;
 
+    // TODO: 4/11/2022 DELETE THE WHOLE ACTIVITY AND MOVE CHAR CREATION TO FIRST SCREEN, CHANGE THE NAME 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
