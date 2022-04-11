@@ -29,6 +29,10 @@ public class Character {
         setGold();
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setStats(int str, int con, int dex){
         this.stats[0] = str;
         this.stats[1] = con;

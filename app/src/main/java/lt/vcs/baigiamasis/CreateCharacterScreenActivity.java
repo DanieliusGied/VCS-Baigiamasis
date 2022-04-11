@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -15,6 +16,7 @@ public class CreateCharacterScreenActivity extends AppCompatActivity {
 
     MaterialButton materialButton1;
     MaterialButton materialButton2;
+    EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +29,11 @@ public class CreateCharacterScreenActivity extends AppCompatActivity {
 
     private void setUpCreateButton(){
         materialButton1 = findViewById(R.id.materialButtonCreateCharacterScreenConfirm);
+        editText = findViewById(R.id.editTextCreateCharacter);
         materialButton1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                MainActivity.character = new Character(findViewById(R.id.editTextCreateCharacter).toString());
+                MainActivity.character = new Character(editText.getText().toString());
                 MainActivity.character.writeCharacterToDatabase();
 
                 Intent intent = new Intent(CreateCharacterScreenActivity.this, SecondScreenActivity.class);
