@@ -1,11 +1,9 @@
 package lt.vcs.baigiamasis.zaidimukasclasses;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-
 import static lt.vcs.baigiamasis.MainActivity.random;
 
 import androidx.room.*;
+
 @Entity(tableName = Constant.ENTITY_ENEMY_TABLE)
 public class Enemy {
     @PrimaryKey

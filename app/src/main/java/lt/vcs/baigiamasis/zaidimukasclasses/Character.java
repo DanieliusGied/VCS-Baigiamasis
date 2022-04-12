@@ -6,14 +6,11 @@ import static lt.vcs.baigiamasis.zaidimukasclasses.ItemType.ARMOR;
 import static lt.vcs.baigiamasis.zaidimukasclasses.ItemType.WEAPON;
 import static lt.vcs.baigiamasis.MainActivity.*;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
+import androidx.room.*;
 
 @Entity(tableName = Constant.ENTITY_CHARACTER_TABLE)
 public class Character {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int id;
     @ColumnInfo(name = "character_name")
     private String name;
@@ -40,12 +37,14 @@ public class Character {
     private HashMap<ItemType, Item> equippedItems;
 
 
-    public Character(String name){
-        System.out.println("Hello and welcome :) Please enter your character's name:");
+    public Character(int id, String name){
         this.name = name;
+        this.id = id;
         equippedItems = new HashMap<ItemType, Item>();
+
         equippedItems.put(WEAPON, dagger);
         equippedItems.put(ARMOR, clothShirt);
+
         level = 1;
 
         this.statStr = 10;
@@ -138,10 +137,6 @@ public class Character {
 //        System.exit(0);
 //    }
 
-    public void writeCharacterToDatabase(){
-        // TODO: 4/11/2022 CREATE THE WRITE TO DATABASE METHOD
-    }
-
     public String getName() {
         return name;
     }
@@ -212,5 +207,14 @@ public class Character {
 
     public void setMaxHealth(int maxHealth) {
         this.maxHealth = maxHealth;
+    }
+
+    @Override
+    public String toString() {
+        return id +
+                ". " + name +
+                ", Lvl " + level +
+                ", HP: " + currentHealth + "/" + maxHealth + ", " + gold +
+                "g.";
     }
 }

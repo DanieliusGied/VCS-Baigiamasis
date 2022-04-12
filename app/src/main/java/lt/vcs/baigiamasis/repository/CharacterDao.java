@@ -29,4 +29,7 @@ public interface CharacterDao {
 
     @Query("DELETE FROM " + Constant.ENTITY_CHARACTER_TABLE + " WHERE id =:id")
     void deleteItem(int id);
+
+    @Query("SELECT MAX(id) FROM " + Constant.ENTITY_CHARACTER_TABLE)
+    int returnMaxID();
 }

@@ -26,19 +26,13 @@ public class Item {
     @Ignore
     private int damage;
 
-    public Item(String name, ItemType itemType, int maxDamage, int price) {
+    public Item(String name, ItemType itemType, int maxDamage, int armor, int price) {
         this.name = name;
         this.itemType = itemType;
         this.maxDamage = maxDamage;
-        this.price = price;
-        this.characterId = Constant.CHARACTER_ID;
-    }
-
-    public Item(String name, int armor, ItemType itemType, int price) {
-        this.name = name;
-        this.itemType = itemType;
         this.armor = armor;
         this.price = price;
+        this.characterId = Constant.CHARACTER_ID;
     }
 
     public int calculateWeaponDamage(){
