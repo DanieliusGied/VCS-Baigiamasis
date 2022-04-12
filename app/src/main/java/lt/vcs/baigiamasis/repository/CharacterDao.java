@@ -16,7 +16,7 @@ public interface CharacterDao {
     Character getItem(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertCharacter(List<Character> characters);
+    void insertCharacters(List<Character> characters);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCharacter(Character character);

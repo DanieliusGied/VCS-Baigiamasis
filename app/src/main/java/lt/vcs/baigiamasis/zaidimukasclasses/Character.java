@@ -71,7 +71,7 @@ public class Character {
     }
 
     public void setArmor(){
-        this.armor = equippedItems.get(ARMOR).armor + (this.statDex - 10);
+        this.armor = equippedItems.get(ARMOR).getArmor() + (this.statDex - 10);
     }
 
     public int calculateDamage(){

@@ -21,16 +21,16 @@ public interface EnemyDao {
     Enemy getItem(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertCharacter(List<Enemy> enemies);
+    void insertEnemies(List<Enemy> enemies);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertCharacter(Enemy enemy);
+    void insertEnemy(Enemy enemy);
 
     @Delete
-    void deleteCharacter(Enemy enemy);
+    void deleteEnemy(Enemy enemy);
 
     @Delete
-    void deleteCharacter(List<Enemy> enemies);
+    void deleteEnemy(List<Enemy> enemies);
 
     @Query("DELETE FROM " + Constant.ENTITY_ENEMY_TABLE + " WHERE id =:id")
     void deleteItem(int id);
