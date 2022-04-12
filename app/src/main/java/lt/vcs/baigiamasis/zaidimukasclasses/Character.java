@@ -14,15 +14,13 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = Constant.ENTITY_CHARACTER_TABLE)
 public class Character {
     @PrimaryKey
-    private int id;
+    public int id;
     @ColumnInfo(name = "character_name")
     private String name;
     @ColumnInfo(name = "character_level")
     private int level;
     @ColumnInfo(name = "character_str")
     private int statStr;
-    @ColumnInfo(name = "character_gold")
-    private int gold;
     @ColumnInfo(name = "character_con")
     private int statCon;
     @ColumnInfo(name = "character_dex")
@@ -31,13 +29,15 @@ public class Character {
     private int maxHealth;
     @ColumnInfo(name = "character_current_health")
     private int currentHealth;
-    @ColumnInfo(name = "character_equipped_items")
-    private HashMap<ItemType, Item> equippedItems;
+    @ColumnInfo(name = "character_gold")
+    private int gold;
     @ColumnInfo(name = "character_armor")
     private int armor;
 
     @Ignore
     private int damage;
+    @Ignore
+    private HashMap<ItemType, Item> equippedItems;
 
 
     public Character(String name){

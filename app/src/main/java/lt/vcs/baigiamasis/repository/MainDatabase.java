@@ -9,6 +9,7 @@ import lt.vcs.baigiamasis.zaidimukasclasses.Constant;
         version = Constant.CHARACTER_DATABASE_VERSION,
         exportSchema = false
 )
-public abstract class CharacterDatabase {
+public abstract class MainDatabase {
     public abstract CharacterDao characterDao();
+    public abstract EnemyDao enemyDao();
 }
