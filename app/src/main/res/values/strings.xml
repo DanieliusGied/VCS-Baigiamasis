@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Baigiamasis</string>
-    <string name="first_screen_create_new_character">Confirm</string>
-    <string name="first_screen_load_saved_character">Load Saved Character</string>
-    <string name="main_select_your_character">Select your character:</string>
+    <string name="select_character_create_new_character">Confirm</string>
+    <string name="select_character_load_saved_character">Load Saved Character</string>
+    <string name="select_character_select_your_character">Select your character:</string>
+    <string name="main_app_name">Baigiamasis darbas</string>
+    <string name="character_select_new_character">New Character</string>
+    <string name="main_game_menu_explore_the_dungeon">Explore the dungeon</string>
 </resources>

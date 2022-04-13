@@ -4,70 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstScreenActivity">
+    tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </ImageView>
-
         <TextView
+            android:id="@+id/mainAppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/main_select_your_character">
-
-        </TextView>
-
-        <EditText
-            android:id="@+id/editTextCreateCharacter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Enter your character's name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/materialButtonMainConfirm">
-
-        </EditText>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButtonMainConfirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="156dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/first_screen_create_new_character"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:text="@string/main_app_name"
+            android:textSize="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-        </com.google.android.material.button.MaterialButton>
-
-        <TextView
-            android:id="@+id/textViewMainLoadSavedCharacter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="78dp"
-            android:text="@string/first_screen_load_saved_character"
-            app:layout_constraintTop_toBottomOf="@+id/materialButtonMainConfirm"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
         </TextView>
 
-        <ListView
-            android:id="@+id/listViewMain"
+        <ImageView
+            android:id="@+id/mainImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textViewMainLoadSavedCharacter"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mainAppName"
+            android:src="@drawable/ic_baseline_account_circle_24"
+            >
 
-        </ListView>
+        </ImageView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/materialButtonMainPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32dp"
+            android:text="play"
+            app:layout_constraintTop_toBottomOf="@+id/mainImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:width="300dp">
+
+        </com.google.android.material.button.MaterialButton>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

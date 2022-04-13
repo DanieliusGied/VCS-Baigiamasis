@@ -1,8 +1,7 @@
 package lt.vcs.baigiamasis;
 
-import static lt.vcs.baigiamasis.MainActivity.character;
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,14 +12,32 @@ import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 
+import lt.vcs.baigiamasis.repository.CharacterDao;
+import lt.vcs.baigiamasis.repository.MainDatabase;
+import lt.vcs.baigiamasis.zaidimukasclasses.Character;
+import lt.vcs.baigiamasis.zaidimukasclasses.Constant;
+
 public class CharacterInfoScreenActivity extends AppCompatActivity {
 
     MaterialButton materialButton;
+    Character character;
+    CharacterDao characterDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_info_screen);
+
+        MainDatabase database = Room.databaseBuilder(
+                getApplicationContext(),
+                MainDatabase.class,
+                "main.db"
+        ).allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
+                .build();
+
+        characterDao = database.characterDao();
+        character = characterDao.getItem(Constant.CHARACTER_ID);
 
         setUpText();
         setUpCloseButton();

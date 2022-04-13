@@ -10,7 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Baigiamasis">
         <activity
-            android:name=".SecondScreenActivity"
+            android:name=".CharacterSelectScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainGameMenuScreenActivity"
             android:exported="false" />
         <activity
             android:name=".TreasureRoomScreenActivity"
