@@ -90,16 +90,13 @@ public class CharacterSelectScreenActivity extends AppCompatActivity {
     }
 
     private void setUpListView() {
-        // Graphic element
         elementListView = findViewById(R.id.listViewMain);
 
-        // Adapter Graphic element <-> Data
         arrayAdapter = new ArrayAdapter(
                 this,
                 android.R.layout.simple_list_item_1,
                 characterList);
 
-        // Graphic element connected with adapter
         elementListView.setAdapter(arrayAdapter);
     }
 
@@ -138,6 +135,7 @@ public class CharacterSelectScreenActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         characterDao.deleteCharacter(characterList.get(position));
+                        inventoryDao.deleteItemFromCharacter(characterList.get(position).getId());
                         characterList.remove(position);
                         arrayAdapter.notifyDataSetChanged();
                     }

@@ -13,6 +13,7 @@ import com.google.android.material.button.MaterialButton;
 
 import lt.vcs.baigiamasis.R;
 import lt.vcs.baigiamasis.repository.CharacterDao;
+import lt.vcs.baigiamasis.repository.InventoryDao;
 import lt.vcs.baigiamasis.repository.MainDatabase;
 import lt.vcs.baigiamasis.character.model.Character;
 
@@ -21,6 +22,7 @@ public class CharacterInfoScreenActivity extends AppCompatActivity {
     MaterialButton materialButton;
     Character character;
     CharacterDao characterDao;
+    InventoryDao inventoryDao;
 
     private int characterID;
 
@@ -34,6 +36,7 @@ public class CharacterInfoScreenActivity extends AppCompatActivity {
 
         MainDatabase mainDatabase = MainDatabase.getInstance(getApplicationContext());
         characterDao = mainDatabase.characterDao();
+        inventoryDao = mainDatabase.inventoryDao();
 
         character = characterDao.getItem(characterID);
 
@@ -50,12 +53,16 @@ public class CharacterInfoScreenActivity extends AppCompatActivity {
         textViewMP.setText("MP: null");
         TextView textViewXP = (TextView) findViewById(R.id.textViewCharacterInfoScreenXP);
         textViewXP.setText("XP: null");
-        TextView textViewSTR = (TextView) findViewById(R.id.textViewCharacterInfoScreenSTR);
-        textViewSTR.setText("STR: " + character.getStatStr());
-        TextView textViewCON = (TextView) findViewById(R.id.textViewCharacterInfoScreenCON);
-        textViewCON.setText("CON: " + character.getStatCon());
-        TextView textViewDEX = (TextView) findViewById(R.id.textViewCharacterInfoScreenDEX);
-        textViewDEX.setText("DEX: " + character.getStatDex());
+        TextView textViewSTR = (TextView) findViewById(R.id.textViewCharacterInfoScreenSTRValue);
+        textViewSTR.setText(character.getStatStr());
+        TextView textViewCON = (TextView) findViewById(R.id.textViewCharacterInfoScreenCONValue);
+        textViewCON.setText(character.getStatCon());
+        TextView textViewDEX = (TextView) findViewById(R.id.textViewCharacterInfoScreenDEXValue);
+        textViewDEX.setText(character.getStatDex());
+        TextView textViewArmor = (TextView) findViewById(R.id.textViewCharacterInfoScreenArmorValue);
+        textViewArmor.setText(inventoryDao.getArmorFromCharacter(character.getId()).getArmor() + character.getStatDex()-10);
+        TextView textViewDMG = (TextView) findViewById(R.id.textViewCharacterInfoScreenDMGValue);
+        textViewDMG.setText("1 - " + inventoryDao.getWeaponFromCharacter(character.getId()).getMaxDamage() + (character.getStatStr()-10));
     }
 
     private void setUpCloseButton(){

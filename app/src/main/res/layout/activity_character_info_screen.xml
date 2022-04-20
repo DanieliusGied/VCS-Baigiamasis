@@ -91,6 +91,17 @@
         </TextView>
 
         <TextView
+            android:id="@+id/textViewCharacterInfoScreenSTRValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="STRVALUE"
+            app:layout_constraintTop_toTopOf="@+id/textViewCharacterInfoScreenSTR"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewCharacterInfoScreenSTR"
+            app:layout_constraintStart_toEndOf="@+id/textViewCharacterInfoScreenSTR">
+        </TextView>
+
+        <TextView
             android:id="@+id/textViewCharacterInfoScreenDEX"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -102,6 +113,16 @@
         </TextView>
 
         <TextView
+            android:id="@+id/textViewCharacterInfoScreenDEXValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DEXVALUE"
+            app:layout_constraintTop_toTopOf="@+id/textViewCharacterInfoScreenDEX"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewCharacterInfoScreenDEX"
+            app:layout_constraintStart_toStartOf="@+id/textViewCharacterInfoScreenSTRValue">
+        </TextView>
+
+        <TextView
             android:id="@+id/textViewCharacterInfoScreenCON"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -110,6 +131,60 @@
             android:text="CON: "
             app:layout_constraintTop_toBottomOf="@id/textViewCharacterInfoScreenDEX"
             app:layout_constraintStart_toStartOf="parent">
+        </TextView>
+
+        <TextView
+            android:id="@+id/textViewCharacterInfoScreenCONValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CONVALUE"
+            app:layout_constraintTop_toTopOf="@+id/textViewCharacterInfoScreenCON"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewCharacterInfoScreenCON"
+            app:layout_constraintStart_toStartOf="@+id/textViewCharacterInfoScreenSTRValue">
+        </TextView>
+
+        <TextView
+            android:id="@+id/textViewCharacterInfoScreenArmor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="160dp"
+            android:layout_marginBottom="16dp"
+            android:text="Armor: "
+            app:layout_constraintTop_toTopOf="@id/textViewCharacterInfoScreenDEX"
+            app:layout_constraintEnd_toEndOf="parent">
+        </TextView>
+
+        <TextView
+            android:id="@+id/textViewCharacterInfoScreenArmorValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ArmorVALUE"
+            app:layout_constraintTop_toTopOf="@+id/textViewCharacterInfoScreenArmor"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewCharacterInfoScreenArmor"
+            app:layout_constraintStart_toEndOf="@+id/textViewCharacterInfoScreenArmor">
+        </TextView>
+
+        <TextView
+            android:id="@+id/textViewCharacterInfoScreenDMG"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="160dp"
+            android:layout_marginBottom="16dp"
+            android:text="Damage: "
+            app:layout_constraintTop_toTopOf="@id/textViewCharacterInfoScreenCON"
+            app:layout_constraintEnd_toEndOf="parent">
+        </TextView>
+
+        <TextView
+            android:id="@+id/textViewCharacterInfoScreenDMGValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DMGVALUE"
+            app:layout_constraintTop_toTopOf="@+id/textViewCharacterInfoScreenDMG"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewCharacterInfoScreenDMG"
+            app:layout_constraintStart_toEndOf="@+id/textViewCharacterInfoScreenDMG">
         </TextView>
 
         <com.google.android.material.button.MaterialButton

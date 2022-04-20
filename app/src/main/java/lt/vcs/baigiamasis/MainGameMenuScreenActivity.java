@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import lt.vcs.baigiamasis.character.ui.CharacterInfoScreenActivity;
+import lt.vcs.baigiamasis.dungeon.ui.ExploreDungeonScreenActivity;
 import lt.vcs.baigiamasis.inventory.ui.InventoryScreenActivity;
 import lt.vcs.baigiamasis.repository.CharacterDao;
 import lt.vcs.baigiamasis.repository.MainDatabase;
@@ -23,10 +25,9 @@ public class MainGameMenuScreenActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton2;
     CharacterDao characterDao;
     Character character;
+    MaterialButton materialButtonExplore;
 
     private int characterID;
-
-    // TODO: 4/11/2022 DELETE THE WHOLE ACTIVITY AND MOVE CHAR CREATION TO FIRST SCREEN, CHANGE THE NAME 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +42,9 @@ public class MainGameMenuScreenActivity extends AppCompatActivity {
 
         character = characterDao.getItem(characterID);
 
-        TextView textView = (TextView) findViewById(R.id.textViewSecondScreen);
-        textView.setText("Welcome " + character.getName());
-
         setUpCharacterInfoScreenButton();
         setUpInventoryScreenButton();
+        setUpExploreDungeonButton();
     }
 
     private void setUpCharacterInfoScreenButton(){
@@ -66,6 +65,18 @@ public class MainGameMenuScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainGameMenuScreenActivity.this, InventoryScreenActivity.class);
+                intent.putExtra(CHARACTER, character.getId());
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setUpExploreDungeonButton(){
+        materialButtonExplore = findViewById(R.id.materialButtonMainGameMenuExploreDungeon);
+        materialButtonExplore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainGameMenuScreenActivity.this, ExploreDungeonScreenActivity.class);
                 intent.putExtra(CHARACTER, character.getId());
                 startActivity(intent);
             }
