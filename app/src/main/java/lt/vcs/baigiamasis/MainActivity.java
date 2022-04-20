@@ -1,7 +1,7 @@
 package lt.vcs.baigiamasis;
 
-import static lt.vcs.baigiamasis.zaidimukasclasses.ItemType.ARMOR;
-import static lt.vcs.baigiamasis.zaidimukasclasses.ItemType.WEAPON;
+import static lt.vcs.baigiamasis.inventory.model.ItemType.ARMOR;
+import static lt.vcs.baigiamasis.inventory.model.ItemType.WEAPON;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,7 +13,10 @@ import com.google.android.material.button.MaterialButton;
 
 import java.util.Random;
 
-import lt.vcs.baigiamasis.zaidimukasclasses.Item;
+import lt.vcs.baigiamasis.character.ui.CharacterSelectScreenActivity;
+import lt.vcs.baigiamasis.inventory.model.Item;
+import lt.vcs.baigiamasis.repository.ItemDao;
+import lt.vcs.baigiamasis.repository.MainDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,8 +38,7 @@ public class MainActivity extends AppCompatActivity {
 //    public static Item greatSword = new Item("Greatsword", WEAPON, 10, 50);
 
     public static Random random = new Random();
-    public static Item dagger = new Item("Dagger", WEAPON, 4, 0, 0);
-    public static Item clothShirt = new Item("Dagger", ARMOR, 0, 8, 0);
+    public static int characterID;
 
     MaterialButton materialButton;
 
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setUpPlayButton();
+        setUpItems();
     }
 
 
@@ -60,5 +63,16 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void setUpItems(){
+        Item dagger = new Item(1, "Dagger", WEAPON, 4, 0, 0);
+        Item clothShirt = new Item(2, "Dagger", ARMOR, 0, 8, 0);
+
+        MainDatabase mainDatabase = MainDatabase.getInstance(getApplicationContext());
+        ItemDao itemDao = mainDatabase.itemDao();
+
+        itemDao.insertItem(dagger);
+        itemDao.insertItem(clothShirt);
     }
 }

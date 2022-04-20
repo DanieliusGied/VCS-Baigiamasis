@@ -1,14 +1,16 @@
-package lt.vcs.baigiamasis;
+package lt.vcs.baigiamasis.dungeon.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class InventoryScreenActivity extends AppCompatActivity {
+import lt.vcs.baigiamasis.R;
+
+public class PuzzleRoomScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inventory_screen);
+        setContentView(R.layout.activity_puzzle_room_screen);
     }
 }

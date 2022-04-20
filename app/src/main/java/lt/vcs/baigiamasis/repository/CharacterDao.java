@@ -4,8 +4,8 @@ import androidx.room.*;
 
 import java.util.List;
 
-import lt.vcs.baigiamasis.zaidimukasclasses.Character;
-import lt.vcs.baigiamasis.zaidimukasclasses.Constant;
+import lt.vcs.baigiamasis.character.model.Character;
+import lt.vcs.baigiamasis.Constant;
 
 @Dao
 public interface CharacterDao {

@@ -8,9 +8,8 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import lt.vcs.baigiamasis.zaidimukasclasses.Character;
-import lt.vcs.baigiamasis.zaidimukasclasses.Constant;
-import lt.vcs.baigiamasis.zaidimukasclasses.Enemy;
+import lt.vcs.baigiamasis.Constant;
+import lt.vcs.baigiamasis.enemy.model.Enemy;
 
 @Dao
 public interface EnemyDao {

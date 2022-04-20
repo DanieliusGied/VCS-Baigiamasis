@@ -1,12 +1,12 @@
 package lt.vcs.baigiamasis.repository;
 
-import static lt.vcs.baigiamasis.zaidimukasclasses.ItemType.WEAPON;
-import static lt.vcs.baigiamasis.zaidimukasclasses.ItemType.ARMOR;
+import static lt.vcs.baigiamasis.inventory.model.ItemType.WEAPON;
+import static lt.vcs.baigiamasis.inventory.model.ItemType.ARMOR;
 
 import androidx.room.TypeConverter;
 
-import lt.vcs.baigiamasis.zaidimukasclasses.Constant;
-import lt.vcs.baigiamasis.zaidimukasclasses.ItemType;
+import lt.vcs.baigiamasis.Constant;
+import lt.vcs.baigiamasis.inventory.model.ItemType;
 
 public class Converter {
     @TypeConverter
@@ -30,5 +30,4 @@ public class Converter {
             return Constant.ARMOR;
         } else return null;
     }
-
 }

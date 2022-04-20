@@ -1,6 +1,4 @@
-package lt.vcs.baigiamasis.zaidimukasclasses;
-
-import static lt.vcs.baigiamasis.MainActivity.random;
+package lt.vcs.baigiamasis.enemy.model;
 
 public class Goblin extends Enemy{
 

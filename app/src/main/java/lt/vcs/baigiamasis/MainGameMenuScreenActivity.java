@@ -1,7 +1,8 @@
 package lt.vcs.baigiamasis;
 
+import static lt.vcs.baigiamasis.Constant.CHARACTER;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,10 +11,11 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import lt.vcs.baigiamasis.character.ui.CharacterInfoScreenActivity;
+import lt.vcs.baigiamasis.inventory.ui.InventoryScreenActivity;
 import lt.vcs.baigiamasis.repository.CharacterDao;
 import lt.vcs.baigiamasis.repository.MainDatabase;
-import lt.vcs.baigiamasis.zaidimukasclasses.Character;
-import lt.vcs.baigiamasis.zaidimukasclasses.Constant;
+import lt.vcs.baigiamasis.character.model.Character;
 
 public class MainGameMenuScreenActivity extends AppCompatActivity {
 
@@ -22,6 +24,8 @@ public class MainGameMenuScreenActivity extends AppCompatActivity {
     CharacterDao characterDao;
     Character character;
 
+    private int characterID;
+
     // TODO: 4/11/2022 DELETE THE WHOLE ACTIVITY AND MOVE CHAR CREATION TO FIRST SCREEN, CHANGE THE NAME 
 
     @Override
@@ -29,16 +33,13 @@ public class MainGameMenuScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_game_menu);
 
-        MainDatabase database = Room.databaseBuilder(
-                getApplicationContext(),
-                MainDatabase.class,
-                "main.db"
-        ).allowMainThreadQueries()
-                .fallbackToDestructiveMigration()
-                .build();
+        Intent intent = getIntent();
+        characterID = intent.getIntExtra(CHARACTER, 0);
 
-        characterDao = database.characterDao();
-        character = characterDao.getItem(Constant.CHARACTER_ID);
+        MainDatabase mainDatabase = MainDatabase.getInstance(getApplicationContext());
+        characterDao = mainDatabase.characterDao();
+
+        character = characterDao.getItem(characterID);
 
         TextView textView = (TextView) findViewById(R.id.textViewSecondScreen);
         textView.setText("Welcome " + character.getName());
@@ -53,6 +54,7 @@ public class MainGameMenuScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainGameMenuScreenActivity.this, CharacterInfoScreenActivity.class);
+                intent.putExtra(CHARACTER, character.getId());
                 startActivity(intent);
             }
         });
@@ -64,6 +66,7 @@ public class MainGameMenuScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainGameMenuScreenActivity.this, InventoryScreenActivity.class);
+                intent.putExtra(CHARACTER, character.getId());
                 startActivity(intent);
             }
         });

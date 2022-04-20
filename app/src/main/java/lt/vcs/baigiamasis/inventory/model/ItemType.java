@@ -1,4 +1,4 @@
-package lt.vcs.baigiamasis.zaidimukasclasses;
+package lt.vcs.baigiamasis.inventory.model;
 
 public enum ItemType {
     WEAPON,

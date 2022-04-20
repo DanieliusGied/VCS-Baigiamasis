@@ -1,15 +1,13 @@
-package lt.vcs.baigiamasis;
+package lt.vcs.baigiamasis.character.ui;
 
-import static lt.vcs.baigiamasis.zaidimukasclasses.Constant.CHARACTER_ID;
+import static lt.vcs.baigiamasis.Constant.CHARACTER;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,10 +19,13 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import lt.vcs.baigiamasis.MainGameMenuScreenActivity;
+import lt.vcs.baigiamasis.R;
+import lt.vcs.baigiamasis.inventory.model.Item;
 import lt.vcs.baigiamasis.repository.CharacterDao;
+import lt.vcs.baigiamasis.repository.ItemDao;
 import lt.vcs.baigiamasis.repository.MainDatabase;
-import lt.vcs.baigiamasis.zaidimukasclasses.Character;
-import lt.vcs.baigiamasis.zaidimukasclasses.Constant;
+import lt.vcs.baigiamasis.character.model.Character;
 
 public class CharacterSelectScreenActivity extends AppCompatActivity {
 
@@ -34,6 +35,7 @@ public class CharacterSelectScreenActivity extends AppCompatActivity {
     ListView elementListView;
     ArrayAdapter arrayAdapter;
     CharacterDao characterDao;
+    ItemDao itemDao;
     Character character;
 
     @Override
@@ -41,15 +43,10 @@ public class CharacterSelectScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_select_screen);
 
-        MainDatabase database = Room.databaseBuilder(
-                getApplicationContext(),
-                MainDatabase.class,
-                "main.db"
-        ).allowMainThreadQueries()
-                .fallbackToDestructiveMigration()
-                .build();
+        MainDatabase mainDatabase = MainDatabase.getInstance(getApplicationContext());
+        characterDao = mainDatabase.characterDao();
+        itemDao = mainDatabase.itemDao();
 
-        characterDao = database.characterDao();
         characterList = new ArrayList();
         characterList = characterDao.getAll();
 
@@ -66,17 +63,15 @@ public class CharacterSelectScreenActivity extends AppCompatActivity {
         materialButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Log.i("TEST_TAG", "Button clicked");
                 String name = editText.getText().toString();
-                Log.i("TEST_TAG", "Text read: " + name);
-                character = new Character(0, name);
-                Log.i("TEST_TAG", "character generated: " + character);
+                Item weaponItem = itemDao.getItem(1);
+                Item armorItem = itemDao.getItem(2);
+
+                character = new Character(0, name, weaponItem, armorItem);
                 characterDao.insertCharacter(character);
-                Log.i("TEST_TAG", "character inserted into db");
-                CHARACTER_ID = characterDao.returnMaxID();
-                Log.i("TEST_TAG", "now the ID we're working with is: " + CHARACTER_ID + " and the variable id is: " + character.id);
 
                 Intent intent = new Intent(CharacterSelectScreenActivity.this, MainGameMenuScreenActivity.class);
+                intent.putExtra(CHARACTER, characterDao.returnMaxID());
                 startActivity(intent);
                 finish();
             }
@@ -104,7 +99,7 @@ public class CharacterSelectScreenActivity extends AppCompatActivity {
                 Intent intent = new Intent(CharacterSelectScreenActivity.this, MainGameMenuScreenActivity.class);
 
                 Character clickedCharacter = characterList.get(position);
-                CHARACTER_ID = clickedCharacter.id;
+                intent.putExtra(CHARACTER, clickedCharacter.getId());
 
                 startActivity(intent);
 //                finish(); ENABLE FOR FINAL VERSION

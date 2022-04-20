@@ -1,21 +1,20 @@
-package lt.vcs.baigiamasis;
+package lt.vcs.baigiamasis.character.ui;
+
+import static lt.vcs.baigiamasis.Constant.CHARACTER;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 
+import lt.vcs.baigiamasis.R;
 import lt.vcs.baigiamasis.repository.CharacterDao;
 import lt.vcs.baigiamasis.repository.MainDatabase;
-import lt.vcs.baigiamasis.zaidimukasclasses.Character;
-import lt.vcs.baigiamasis.zaidimukasclasses.Constant;
+import lt.vcs.baigiamasis.character.model.Character;
 
 public class CharacterInfoScreenActivity extends AppCompatActivity {
 
@@ -23,21 +22,20 @@ public class CharacterInfoScreenActivity extends AppCompatActivity {
     Character character;
     CharacterDao characterDao;
 
+    private int characterID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_info_screen);
 
-        MainDatabase database = Room.databaseBuilder(
-                getApplicationContext(),
-                MainDatabase.class,
-                "main.db"
-        ).allowMainThreadQueries()
-                .fallbackToDestructiveMigration()
-                .build();
+        Intent intent = getIntent();
+        characterID = intent.getIntExtra(CHARACTER, 0);
 
-        characterDao = database.characterDao();
-        character = characterDao.getItem(Constant.CHARACTER_ID);
+        MainDatabase mainDatabase = MainDatabase.getInstance(getApplicationContext());
+        characterDao = mainDatabase.characterDao();
+
+        character = characterDao.getItem(characterID);
 
         setUpText();
         setUpCloseButton();

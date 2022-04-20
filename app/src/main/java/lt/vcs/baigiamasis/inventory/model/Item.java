@@ -1,15 +1,16 @@
-package lt.vcs.baigiamasis.zaidimukasclasses;
+package lt.vcs.baigiamasis.inventory.model;
 
 import static lt.vcs.baigiamasis.MainActivity.random;
+import static lt.vcs.baigiamasis.inventory.model.ItemType.WEAPON;
 
 import androidx.room.*;
+
+import lt.vcs.baigiamasis.Constant;
 
 @Entity(tableName = Constant.ENTITY_ITEM_TABLE)
 public class Item {
     @PrimaryKey
-    public int id;
-    @ColumnInfo(name = "item_character_id")
-    public int characterId;
+    private int id;
     @ColumnInfo(name = "item_name")
     private String name;
     @ColumnInfo(name = "item_type")
@@ -20,24 +21,30 @@ public class Item {
     private int maxDamage;
     @ColumnInfo(name = "item_price")
     private int price;
-    @ColumnInfo(name = "item_is_equipped")
-    private boolean isEquipped;
 
     @Ignore
     private int damage;
 
-    public Item(String name, ItemType itemType, int maxDamage, int armor, int price) {
+    public Item(int id, String name, ItemType itemType, int maxDamage, int armor, int price) {
+        this.id = id;
         this.name = name;
         this.itemType = itemType;
         this.maxDamage = maxDamage;
         this.armor = armor;
         this.price = price;
-        this.characterId = Constant.CHARACTER_ID;
     }
 
     public int calculateWeaponDamage(){
         this.damage = random.nextInt(maxDamage);
         return this.damage;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -88,11 +95,14 @@ public class Item {
         this.price = price;
     }
 
-    public boolean isEquipped() {
-        return isEquipped;
-    }
+    @Override
+    public String toString() {
 
-    public void setEquipped(boolean equipped) {
-        isEquipped = equipped;
+        if (itemType == WEAPON){
+            return name + ", weapon, base damage: 1-" + maxDamage;
+        } else {
+            return name + ", armor, base armor: " + armor;
+        }
+
     }
 }

@@ -1,17 +1,23 @@
-package lt.vcs.baigiamasis.zaidimukasclasses;
+package lt.vcs.baigiamasis.character.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
-import static lt.vcs.baigiamasis.zaidimukasclasses.ItemType.ARMOR;
-import static lt.vcs.baigiamasis.zaidimukasclasses.ItemType.WEAPON;
-import static lt.vcs.baigiamasis.MainActivity.*;
+import static lt.vcs.baigiamasis.inventory.model.ItemType.ARMOR;
+import static lt.vcs.baigiamasis.inventory.model.ItemType.WEAPON;
 
 import androidx.room.*;
+
+import lt.vcs.baigiamasis.Constant;
+import lt.vcs.baigiamasis.inventory.model.Item;
+import lt.vcs.baigiamasis.inventory.model.ItemType;
+import lt.vcs.baigiamasis.repository.ItemDao;
+import lt.vcs.baigiamasis.repository.MainDatabase;
 
 @Entity(tableName = Constant.ENTITY_CHARACTER_TABLE)
 public class Character {
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    private int id;
     @ColumnInfo(name = "character_name")
     private String name;
     @ColumnInfo(name = "character_level")
@@ -32,18 +38,17 @@ public class Character {
     private int armor;
 
     @Ignore
-    private int damage;
-    @Ignore
     private HashMap<ItemType, Item> equippedItems;
+    @Ignore
+    private ArrayList<Item> inventoryList;
+
+    @Ignore
+    private int damage;
 
 
     public Character(int id, String name){
         this.name = name;
         this.id = id;
-        equippedItems = new HashMap<ItemType, Item>();
-
-        equippedItems.put(WEAPON, dagger);
-        equippedItems.put(ARMOR, clothShirt);
 
         level = 1;
 
@@ -55,6 +60,39 @@ public class Character {
         setCurrentHealth();
         setArmor();
         setGold();
+    }
+
+    @Ignore
+    public Character(int id, String name, Item weaponItem, Item armorItem){
+        this.name = name;
+        this.id = id;
+        equippedItems = new HashMap();
+        inventoryList = new ArrayList();
+
+        MainDatabase mainDatabase = MainDatabase.getInstance(getApplicationContext());
+        ItemDao itemDao = mainDatabase.itemDao();
+
+        equippedItems.put(WEAPON, itemDao.getItem(1));
+        equippedItems.put(ARMOR, armorItem);
+
+        level = 1;
+
+        this.statStr = 10;
+        this.statCon = 10;
+        this.statDex = 10;
+
+        setMaxHealth();
+        setCurrentHealth();
+        setArmor();
+        setGold();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setGold(){
@@ -76,6 +114,50 @@ public class Character {
     public int calculateDamage(){
         this.damage = equippedItems.get(WEAPON).calculateWeaponDamage() + (this.statStr - 10);
         return this.damage;
+    }
+
+    public HashMap<ItemType, Item> getEquippedItems() {
+        return equippedItems;
+    }
+
+    public void setEquippedItems(HashMap<ItemType, Item> equippedItems) {
+        this.equippedItems = equippedItems;
+    }
+
+    public ArrayList<Item> getInventoryList() {
+        return inventoryList;
+    }
+
+    public void setInventoryList(ArrayList<Item> inventoryList) {
+        this.inventoryList = inventoryList;
+    }
+
+    public void unequipItem(Item item){
+        if (item.getItemType() == WEAPON) {
+            Item equippedWeapon = equippedItems.get(WEAPON);
+            equippedItems.remove(WEAPON);
+            inventoryList.add(equippedWeapon);
+        } else {
+            Item equippedArmor = equippedItems.get(ARMOR);
+            equippedItems.remove(ARMOR);
+            inventoryList.add(equippedArmor);
+        }
+    }
+
+    public void equipItem(Item item){
+        inventoryList.remove(item);
+
+        Item itemBeingUnequipped;
+
+        if (item.getItemType() == WEAPON){
+            itemBeingUnequipped = equippedItems.get(WEAPON);
+            inventoryList.add(itemBeingUnequipped);
+            equippedItems.put(WEAPON, item);
+        } else {
+            itemBeingUnequipped = equippedItems.get(ARMOR);
+            inventoryList.add(itemBeingUnequipped);
+            equippedItems.put(ARMOR, item);
+        }
     }
 
 //    public void increaseStats(){
@@ -108,33 +190,6 @@ public class Character {
 //        level++;
 //        increaseStats();
 //        setHealth();
-//    }
-
-//    public void getCharacterData(){
-//        System.out.println("");
-//        System.out.println("Character name: " + this.name);
-//        System.out.println("Character level: " + this.level);
-//        System.out.println("Character HP: " + this.maxHealth);
-//        System.out.println("Character STR: " + this.stats[0]);
-//        System.out.println("Character CON: " + this.stats[1]);
-//        System.out.println("Character DEX: " + this.stats[2]);
-//        System.out.println("Character Armor: " + this.armor);
-//        System.out.println("Character Damage: " + "1 - " + (inventory.get(WEAPON).maxDamage + this.stats[0] - 10));
-//    }
-
-//    public void death(){
-//        System.out.println("Oh no! Your character has died!");
-//        System.out.println("");
-//        System.out.println("      ██     ");
-//        System.out.println("  ▓▓▓▓██▓▓▓▓");
-//        System.out.println("  ░░░░██░░  ");
-//        System.out.println("      ██  ");
-//        System.out.println("      ██  ");
-//        System.out.println("    ▒▒████");
-//        System.out.println("  ▓▓██████▓▓");
-//        System.out.println("");
-//        System.out.println("GAME OVER!");
-//        System.exit(0);
 //    }
 
     public String getName() {

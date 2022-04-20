@@ -8,8 +8,8 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import lt.vcs.baigiamasis.zaidimukasclasses.Constant;
-import lt.vcs.baigiamasis.zaidimukasclasses.Item;
+import lt.vcs.baigiamasis.Constant;
+import lt.vcs.baigiamasis.inventory.model.Item;
 
 @Dao
 public interface ItemDao {
@@ -22,15 +22,6 @@ public interface ItemDao {
 
     @Query("SELECT * FROM " + Constant.ENTITY_ITEM_TABLE + " WHERE id =:id")
     Item getItem(int id);
-
-    @Query("SELECT * FROM " + Constant.ENTITY_ITEM_TABLE + " WHERE item_character_id =:characterId AND item_is_equipped = 1 AND item_type = 'WEAPON'")
-    Item getEquippedWeapon(int characterId);
-
-    @Query("SELECT * FROM " + Constant.ENTITY_ITEM_TABLE + " WHERE item_character_id =:characterId AND item_is_equipped = 1 AND item_type = 'ARMOR'")
-    Item getEquippedArmor(int characterId);
-
-    @Query("SELECT * FROM " + Constant.ENTITY_ITEM_TABLE + " WHERE item_is_equipped = 0")
-    List<Item> getAllNotEquipped();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertItem(List<Item> items);
