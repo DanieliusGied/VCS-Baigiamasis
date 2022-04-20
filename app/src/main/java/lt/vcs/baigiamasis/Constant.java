@@ -11,4 +11,5 @@ public class Constant {
     public final static String ARMOR = "ARMOR";
     public final static String CHARACTER = "character";
     public final static String INVENTORY = "inventory";
+    public final static String RANDOM_DUNGEON = "random_dungeon";
 }
