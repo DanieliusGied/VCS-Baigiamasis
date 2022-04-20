@@ -21,8 +21,10 @@ import java.util.List;
 
 import lt.vcs.baigiamasis.MainGameMenuScreenActivity;
 import lt.vcs.baigiamasis.R;
+import lt.vcs.baigiamasis.inventory.model.Inventory;
 import lt.vcs.baigiamasis.inventory.model.Item;
 import lt.vcs.baigiamasis.repository.CharacterDao;
+import lt.vcs.baigiamasis.repository.InventoryDao;
 import lt.vcs.baigiamasis.repository.ItemDao;
 import lt.vcs.baigiamasis.repository.MainDatabase;
 import lt.vcs.baigiamasis.character.model.Character;
@@ -36,6 +38,7 @@ public class CharacterSelectScreenActivity extends AppCompatActivity {
     ArrayAdapter arrayAdapter;
     CharacterDao characterDao;
     ItemDao itemDao;
+    InventoryDao inventoryDao;
     Character character;
 
     @Override
@@ -46,6 +49,7 @@ public class CharacterSelectScreenActivity extends AppCompatActivity {
         MainDatabase mainDatabase = MainDatabase.getInstance(getApplicationContext());
         characterDao = mainDatabase.characterDao();
         itemDao = mainDatabase.itemDao();
+        inventoryDao = mainDatabase.inventoryDao();
 
         characterList = new ArrayList();
         characterList = characterDao.getAll();
@@ -67,8 +71,15 @@ public class CharacterSelectScreenActivity extends AppCompatActivity {
                 Item weaponItem = itemDao.getItem(1);
                 Item armorItem = itemDao.getItem(2);
 
-                character = new Character(0, name, weaponItem, armorItem);
+                character = new Character(0, name);
                 characterDao.insertCharacter(character);
+
+                Character createdCharacter = characterDao.getItem(characterDao.returnMaxID());
+
+                Inventory inventory1 = new Inventory(true, createdCharacter.getId(), 1);
+                inventoryDao.insertItem(inventory1);
+                Inventory inventory2 = new Inventory(true, createdCharacter.getId(), 2);
+                inventoryDao.insertItem(inventory2);
 
                 Intent intent = new Intent(CharacterSelectScreenActivity.this, MainGameMenuScreenActivity.class);
                 intent.putExtra(CHARACTER, characterDao.returnMaxID());

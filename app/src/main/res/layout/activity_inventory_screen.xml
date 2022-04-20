@@ -37,18 +37,17 @@
 
         </TextView>
 
-        <Button
-            android:id="@+id/buttonInventoryScreenEquippedWeapon"
+        <ListView
+            android:id="@+id/listViewInventoryScreenEquippedWeapon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/textViewInventoryScreenEquippedWeapon"
             app:layout_constraintTop_toTopOf="@+id/textViewInventoryScreenEquippedWeapon"
             app:layout_constraintBottom_toBottomOf="@+id/textViewInventoryScreenEquippedWeapon"
             android:layout_marginStart="16dp"
-
             >
 
-        </Button>
+        </ListView>
 
         <TextView
             android:id="@+id/textViewInventoryScreenEquippedArmor"
@@ -62,16 +61,18 @@
 
         </TextView>
 
-        <Button
-            android:id="@+id/buttonInventoryScreenEquippedArmor"
+        <ListView
+            android:id="@+id/listViewInventoryScreenEquippedArmor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/buttonInventoryScreenEquippedWeapon"
+            android:tooltipText="EMPTY"
+            app:layout_constraintStart_toStartOf="@id/listViewInventoryScreenEquippedWeapon"
             app:layout_constraintTop_toTopOf="@+id/textViewInventoryScreenEquippedArmor"
             app:layout_constraintBottom_toBottomOf="@+id/textViewInventoryScreenEquippedArmor"
+            android:layout_marginStart="16dp"
             >
 
-        </Button>
+        </ListView>
 
         <TextView
             android:id="@+id/textViewInventoryScreenInventory"

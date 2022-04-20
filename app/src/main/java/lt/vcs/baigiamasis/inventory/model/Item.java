@@ -1,6 +1,7 @@
 package lt.vcs.baigiamasis.inventory.model;
 
 import static lt.vcs.baigiamasis.MainActivity.random;
+import static lt.vcs.baigiamasis.inventory.model.ItemType.ARMOR;
 import static lt.vcs.baigiamasis.inventory.model.ItemType.WEAPON;
 
 import androidx.room.*;
@@ -14,18 +15,18 @@ public class Item {
     @ColumnInfo(name = "item_name")
     private String name;
     @ColumnInfo(name = "item_type")
-    private ItemType itemType;
+    private String itemType;
     @ColumnInfo(name = "item_armor")
-    private int armor;
+    private Integer armor;
     @ColumnInfo(name = "item_max_damage")
-    private int maxDamage;
+    private Integer maxDamage;
     @ColumnInfo(name = "item_price")
     private int price;
 
     @Ignore
     private int damage;
 
-    public Item(int id, String name, ItemType itemType, int maxDamage, int armor, int price) {
+    public Item(int id, String name, String itemType, int maxDamage, int armor, int price) {
         this.id = id;
         this.name = name;
         this.itemType = itemType;
@@ -55,15 +56,15 @@ public class Item {
         this.name = name;
     }
 
-    public ItemType getItemType() {
+    public String getItemType() {
         return itemType;
     }
 
-    public void setItemType(ItemType itemType) {
+    public void setItemType(String itemType) {
         this.itemType = itemType;
     }
 
-    public int getArmor() {
+    public Integer getArmor() {
         return armor;
     }
 
@@ -71,7 +72,7 @@ public class Item {
         this.armor = armor;
     }
 
-    public int getDamage() {
+    public Integer getDamage() {
         return damage;
     }
 
@@ -97,12 +98,13 @@ public class Item {
 
     @Override
     public String toString() {
-
-        if (itemType == WEAPON){
-            return name + ", weapon, base damage: 1-" + maxDamage;
-        } else {
-            return name + ", armor, base armor: " + armor;
+        switch (itemType){
+            case Constant.WEAPON:
+                return name + ", weapon, base damage: 1-" + maxDamage;
+            case Constant.ARMOR:
+                return name + ", armor, base armor: " + armor;
+            default:
+                return "ERROR";
         }
-
     }
 }

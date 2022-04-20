@@ -14,9 +14,6 @@ import lt.vcs.baigiamasis.inventory.model.Item;
 @Dao
 public interface ItemDao {
 
-    boolean isTrue = true;
-    boolean isFalse = false;
-
     @Query("SELECT * FROM " + Constant.ENTITY_ITEM_TABLE)
     List<Item> getAll();
 

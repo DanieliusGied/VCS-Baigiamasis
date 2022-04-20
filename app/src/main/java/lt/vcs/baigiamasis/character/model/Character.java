@@ -2,6 +2,7 @@ package lt.vcs.baigiamasis.character.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static lt.vcs.baigiamasis.inventory.model.ItemType.ARMOR;
 import static lt.vcs.baigiamasis.inventory.model.ItemType.WEAPON;
@@ -38,11 +39,6 @@ public class Character {
     private int armor;
 
     @Ignore
-    private HashMap<ItemType, Item> equippedItems;
-    @Ignore
-    private ArrayList<Item> inventoryList;
-
-    @Ignore
     private int damage;
 
 
@@ -55,35 +51,12 @@ public class Character {
         this.statStr = 10;
         this.statCon = 10;
         this.statDex = 10;
-
-        setMaxHealth();
-        setCurrentHealth();
-        setArmor();
-        setGold();
     }
 
-    @Ignore
-    public Character(int id, String name, Item weaponItem, Item armorItem){
-        this.name = name;
-        this.id = id;
-        equippedItems = new HashMap();
-        inventoryList = new ArrayList();
-
-        MainDatabase mainDatabase = MainDatabase.getInstance(getApplicationContext());
-        ItemDao itemDao = mainDatabase.itemDao();
-
-        equippedItems.put(WEAPON, itemDao.getItem(1));
-        equippedItems.put(ARMOR, armorItem);
-
-        level = 1;
-
-        this.statStr = 10;
-        this.statCon = 10;
-        this.statDex = 10;
-
+    public void initializeCharacter(){
         setMaxHealth();
         setCurrentHealth();
-        setArmor();
+//        setArmor();
         setGold();
     }
 
@@ -107,60 +80,24 @@ public class Character {
         this.currentHealth = this.maxHealth;
     }
 
-    public void setArmor(){
-        this.armor = equippedItems.get(ARMOR).getArmor() + (this.statDex - 10);
-    }
+//    public void setArmor(){
+//        this.armor = equippedItems.get(ARMOR).getArmor() + (this.statDex - 10);
+//    }
+//
+//    public int calculateDamage(){
+//        this.damage = equippedItems.get(WEAPON).calculateWeaponDamage() + (this.statStr - 10);
+//        return this.damage;
+//    }
+//
+//    public HashMap<ItemType, Item> getEquippedItems() {
+//        return equippedItems;
+//    }
+//
+//    public void setEquippedItems(HashMap<ItemType, Item> equippedItems) {
+//        this.equippedItems = equippedItems;
+//    }
 
-    public int calculateDamage(){
-        this.damage = equippedItems.get(WEAPON).calculateWeaponDamage() + (this.statStr - 10);
-        return this.damage;
-    }
-
-    public HashMap<ItemType, Item> getEquippedItems() {
-        return equippedItems;
-    }
-
-    public void setEquippedItems(HashMap<ItemType, Item> equippedItems) {
-        this.equippedItems = equippedItems;
-    }
-
-    public ArrayList<Item> getInventoryList() {
-        return inventoryList;
-    }
-
-    public void setInventoryList(ArrayList<Item> inventoryList) {
-        this.inventoryList = inventoryList;
-    }
-
-    public void unequipItem(Item item){
-        if (item.getItemType() == WEAPON) {
-            Item equippedWeapon = equippedItems.get(WEAPON);
-            equippedItems.remove(WEAPON);
-            inventoryList.add(equippedWeapon);
-        } else {
-            Item equippedArmor = equippedItems.get(ARMOR);
-            equippedItems.remove(ARMOR);
-            inventoryList.add(equippedArmor);
-        }
-    }
-
-    public void equipItem(Item item){
-        inventoryList.remove(item);
-
-        Item itemBeingUnequipped;
-
-        if (item.getItemType() == WEAPON){
-            itemBeingUnequipped = equippedItems.get(WEAPON);
-            inventoryList.add(itemBeingUnequipped);
-            equippedItems.put(WEAPON, item);
-        } else {
-            itemBeingUnequipped = equippedItems.get(ARMOR);
-            inventoryList.add(itemBeingUnequipped);
-            equippedItems.put(ARMOR, item);
-        }
-    }
-
-//    public void increaseStats(){
+    //    public void increaseStats(){
 //        System.out.println("");
 //        System.out.println("You have 1 ability point! Increase STR or CON:");
 //        System.out.println("1 - STR");
