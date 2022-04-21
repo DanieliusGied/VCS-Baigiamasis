@@ -1,46 +1,32 @@
 package lt.vcs.baigiamasis;
 
-import static lt.vcs.baigiamasis.inventory.model.ItemType.ARMOR;
-import static lt.vcs.baigiamasis.inventory.model.ItemType.WEAPON;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.google.android.material.button.MaterialButton;
 
 import java.util.Random;
 
 import lt.vcs.baigiamasis.character.ui.CharacterSelectScreenActivity;
-import lt.vcs.baigiamasis.inventory.model.Inventory;
+import lt.vcs.baigiamasis.dungeon.model.EncounterCombat;
+import lt.vcs.baigiamasis.dungeon.model.EncounterPuzzle;
+import lt.vcs.baigiamasis.dungeon.model.EncounterTreasure;
+import lt.vcs.baigiamasis.enemy.model.Enemy;
+import lt.vcs.baigiamasis.enemy.model.GiantRat;
+import lt.vcs.baigiamasis.enemy.model.Goblin;
+import lt.vcs.baigiamasis.enemy.model.Skeleton;
+import lt.vcs.baigiamasis.enemy.model.Slime;
 import lt.vcs.baigiamasis.inventory.model.Item;
-import lt.vcs.baigiamasis.repository.InventoryDao;
+import lt.vcs.baigiamasis.repository.EncounterDao;
+import lt.vcs.baigiamasis.repository.EnemyDao;
 import lt.vcs.baigiamasis.repository.ItemDao;
 import lt.vcs.baigiamasis.repository.MainDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
-//    public static Blacksmith blacksmith = new Blacksmith();
-//    public static Dungeon dungeon = new Dungeon();
-//    public static Room room = new Room();
-//    public static Room roomPuzzle = new RoomPuzzle();
-//    public static Room roomCombat = new RoomCombat();
-//    public static Room roomTreasure = new RoomTreasure();
-//    public static Room roomBoss = new RoomBoss();
-//    public static Item leatherTunic = new Item("Dagger", 10, ARMOR, 10);
-//    public static Item chainVest = new Item("Dagger", 12, ARMOR, 25);
-//    public static Item plateMail = new Item("Dagger", 15, ARMOR, 50);
-//    public static Enemy enemy = new Enemy();
-//    public static Enemy goblin = new Goblin();
-//    public static Combat combat = new Combat();
-//    public static Item sword = new Item("Sword", WEAPON, 6, 10);
-//    public static Item longSword = new Item("Longsword", WEAPON, 8, 25);
-//    public static Item greatSword = new Item("Greatsword", WEAPON, 10, 50);
-
     public static Random random = new Random();
-    public static int characterID;
 
     MaterialButton materialButton;
     MainDatabase mainDatabase;
@@ -55,18 +41,17 @@ public class MainActivity extends AppCompatActivity {
 
         setUpPlayButton();
         setUpItems();
+        setUpEnemies();
+        setUpEncounters();
     }
 
 
     private void setUpPlayButton(){
         materialButton = findViewById(R.id.materialButtonMainPlay);
-        materialButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CharacterSelectScreenActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        materialButton.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, CharacterSelectScreenActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 
@@ -80,10 +65,30 @@ public class MainActivity extends AppCompatActivity {
         itemDao.insertItem(clothShirt);
     }
 
-    private void setUpInventory(){
-        InventoryDao inventoryDao = mainDatabase.inventoryDao();
+    private void setUpEnemies(){
+        Enemy goblin = new Goblin(1);
+        Enemy skeleton = new Skeleton(2);
+        Enemy giantRat = new GiantRat(3);
+        Enemy slime = new Slime(4);
 
-        Inventory inventory1 = new Inventory(true, 1, 1);
-        Inventory inventory2 = new Inventory(true, 1, 2);
+        EnemyDao enemyDao = mainDatabase.enemyDao();
+
+        enemyDao.insertEnemy(goblin);
+        enemyDao.insertEnemy(giantRat);
+        enemyDao.insertEnemy(slime);
+        enemyDao.insertEnemy(skeleton);
+    }
+
+    private void setUpEncounters(){
+        EncounterDao encounterDao = mainDatabase.encounterDao();
+
+        encounterDao.insertItem(new EncounterCombat(1, 1));
+        encounterDao.insertItem(new EncounterCombat(2, 2));
+        encounterDao.insertItem(new EncounterCombat(3, 3));
+        encounterDao.insertItem(new EncounterCombat(4, 4));
+        encounterDao.insertItem(new EncounterPuzzle(5));
+        encounterDao.insertItem(new EncounterPuzzle(6));
+        encounterDao.insertItem(new EncounterTreasure(7, 15));
+        encounterDao.insertItem(new EncounterTreasure(8, 8));
     }
 }

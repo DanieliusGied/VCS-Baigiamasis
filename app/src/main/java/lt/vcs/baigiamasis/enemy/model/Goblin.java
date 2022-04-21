@@ -2,8 +2,8 @@ package lt.vcs.baigiamasis.enemy.model;
 
 public class Goblin extends Enemy{
 
-    @Override
-    public void initializeEnemy(){
+    public Goblin(int id) {
+        super(id);
         super.setName("Goblin");
         super.setHealth(3);
         super.setArmor(7);

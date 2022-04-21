@@ -95,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="STRVALUE"
+            android:text="valueOfSTR"
             app:layout_constraintTop_toTopOf="@+id/textViewCharacterInfoScreenSTR"
             app:layout_constraintBottom_toBottomOf="@+id/textViewCharacterInfoScreenSTR"
             app:layout_constraintStart_toEndOf="@+id/textViewCharacterInfoScreenSTR">
@@ -116,7 +116,7 @@
             android:id="@+id/textViewCharacterInfoScreenDEXValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DEXVALUE"
+            android:text="valueOfDEX"
             app:layout_constraintTop_toTopOf="@+id/textViewCharacterInfoScreenDEX"
             app:layout_constraintBottom_toBottomOf="@+id/textViewCharacterInfoScreenDEX"
             app:layout_constraintStart_toStartOf="@+id/textViewCharacterInfoScreenSTRValue">
@@ -137,7 +137,7 @@
             android:id="@+id/textViewCharacterInfoScreenCONValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CONVALUE"
+            android:text="valueOfCON"
             app:layout_constraintTop_toTopOf="@+id/textViewCharacterInfoScreenCON"
             app:layout_constraintBottom_toBottomOf="@+id/textViewCharacterInfoScreenCON"
             app:layout_constraintStart_toStartOf="@+id/textViewCharacterInfoScreenSTRValue">
@@ -159,7 +159,7 @@
             android:id="@+id/textViewCharacterInfoScreenArmorValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ArmorVALUE"
+            android:text="valueOfArmor"
             app:layout_constraintTop_toTopOf="@+id/textViewCharacterInfoScreenArmor"
             app:layout_constraintBottom_toBottomOf="@+id/textViewCharacterInfoScreenArmor"
             app:layout_constraintStart_toEndOf="@+id/textViewCharacterInfoScreenArmor">
@@ -181,7 +181,7 @@
             android:id="@+id/textViewCharacterInfoScreenDMGValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DMGVALUE"
+            android:text="valueOfDMG"
             app:layout_constraintTop_toTopOf="@+id/textViewCharacterInfoScreenDMG"
             app:layout_constraintBottom_toBottomOf="@+id/textViewCharacterInfoScreenDMG"
             app:layout_constraintStart_toEndOf="@+id/textViewCharacterInfoScreenDMG">

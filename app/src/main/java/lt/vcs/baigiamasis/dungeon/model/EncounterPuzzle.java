@@ -1,13 +1,25 @@
-//package lt.vcs.baigiamasis.zaidimukasclasses;
-//
-//import java.util.ArrayList;
-//import java.util.InputMismatchException;
-//
-//import static lt.vcs.zaidimukas.Main.*;
-//
-//public class RoomPuzzle extends Room {
-//
-//    @Override
+package lt.vcs.baigiamasis.dungeon.model;
+
+import lt.vcs.baigiamasis.Constant;
+
+public class EncounterPuzzle extends Encounter {
+    public EncounterPuzzle(int id) {
+        super(id);
+        super.setEncounterType(Constant.PUZZLE);
+        super.setActivateButtonText("Enter puzzle");
+
+        switch (id) {
+            case 5:
+                super.setDescriptionText("Skeleton / puzzle (clanking of bones)");
+                break;
+            case 6:
+                super.setDescriptionText("Giant rat / puzzle ");
+                break;
+            default:
+        }
+    }
+
+    //    @Override
 //    public void initialize(){
 //        System.out.println("ROOM " + dungeon.dungeonProgress);
 //        System.out.println("You see an ominous door before you. You see ancient lettering and a number dial on the lock.");
@@ -67,4 +79,4 @@
 //            }
 //        }
 //    }
-//}
+}

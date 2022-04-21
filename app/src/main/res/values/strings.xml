@@ -1,9 +1,18 @@
 <resources>
     <string name="app_name">Baigiamasis</string>
+    <string name="main_app_name">Baigiamasis darbas</string>
+
     <string name="select_character_create_new_character">Confirm</string>
     <string name="select_character_load_saved_character">Load Saved Character</string>
     <string name="select_character_select_your_character">Select your character:</string>
-    <string name="main_app_name">Baigiamasis darbas</string>
     <string name="character_select_new_character">New Character</string>
+
     <string name="main_game_menu_explore_the_dungeon">Explore the dungeon</string>
+
+
+    <string name="Character_Info_Screen_Name">Name: %1$s</string>
+    <string name="Character_Info_Screen_HP">HP: %1$d / %2$d</string>
+    <string name="Character_Info_Screen_MP">MP: %1$s</string>
+    <string name="Character_Info_Screen_XP">XP: %1$s</string>
+    <string name="Character_Info_Screen_DMG">1 - %1$d</string>
 </resources>

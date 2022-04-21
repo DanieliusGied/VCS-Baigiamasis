@@ -25,6 +25,10 @@ public class Enemy {
     @Ignore
     private int damage;
 
+    public Enemy(int id) {
+        this.id = id;
+    }
+
     public int calculateDamage(){
         this.damage = random.nextInt(maxDamage);
         return this.damage;
@@ -34,8 +38,6 @@ public class Enemy {
 //        player.gold += goldDrop;
 //        System.out.println(player.name + " has received " + this.goldDrop + " gold!");
 //    }
-
-    public void initializeEnemy(){}
 
     //give exp
 
