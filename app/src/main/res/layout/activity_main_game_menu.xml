@@ -20,7 +20,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/text_border"></ImageView>
+            android:background="@drawable/text_border"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButtonMainGameMenuExploreDungeon"
@@ -29,23 +29,18 @@
             app:layout_constraintTop_toBottomOf="@+id/imageViewMainGameMenu1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/main_game_menu_explore_the_dungeon">
-        </com.google.android.material.button.MaterialButton>
+            android:text="@string/main_game_menu_explore_the_dungeon"/>
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButtonCharacterInfoScreen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="250dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
             android:src="@drawable/ic_baseline_account_circle_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/floatingActionButtonInventoryScreen"
-            app:layout_constraintStart_toStartOf="parent">
-
-        </com.google.android.material.floatingactionbutton.FloatingActionButton>
+            app:layout_constraintBottom_toTopOf="@+id/floatingActionButtonInventoryScreen"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/floatingActionButtonInventoryScreen"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButtonInventoryScreen"
@@ -55,10 +50,7 @@
             android:layout_marginBottom="16dp"
             android:src="@drawable/ic_baseline_backpack_24"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/floatingActionButtonCharacterInfoScreen">
-
-        </com.google.android.material.floatingactionbutton.FloatingActionButton>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

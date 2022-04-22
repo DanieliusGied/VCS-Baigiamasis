@@ -1,6 +1,6 @@
-package lt.vcs.baigiamasis.character.ui;
+package lt.vcs.baigiamasis.player.ui;
 
-import static lt.vcs.baigiamasis.Constant.CHARACTER;
+import static lt.vcs.baigiamasis.Constant.PLAYER;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,45 +21,44 @@ import java.util.List;
 
 import lt.vcs.baigiamasis.MainGameMenuScreenActivity;
 import lt.vcs.baigiamasis.R;
+import lt.vcs.baigiamasis.player.model.Player;
 import lt.vcs.baigiamasis.dungeon.model.Dungeon;
 import lt.vcs.baigiamasis.inventory.model.Inventory;
-import lt.vcs.baigiamasis.inventory.model.Item;
-import lt.vcs.baigiamasis.repository.CharacterDao;
+import lt.vcs.baigiamasis.repository.PlayerDao;
 import lt.vcs.baigiamasis.repository.DungeonDao;
 import lt.vcs.baigiamasis.repository.InventoryDao;
 import lt.vcs.baigiamasis.repository.ItemDao;
 import lt.vcs.baigiamasis.repository.MainDatabase;
-import lt.vcs.baigiamasis.character.model.Character;
 
-public class CharacterSelectScreenActivity extends AppCompatActivity {
+public class PlayerSelectScreenActivity extends AppCompatActivity {
 
     MaterialButton materialButton;
     EditText editText;
     ListView elementListView;
     ArrayAdapter arrayAdapter;
 
-    List<Character> characterList;
+    List<Player> playerList;
 
-    CharacterDao characterDao;
+    PlayerDao playerDao;
     ItemDao itemDao;
     InventoryDao inventoryDao;
     DungeonDao dungeonDao;
 
-    Character character;
+    Player player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_character_select_screen);
+        setContentView(R.layout.activity_player_select_screen);
 
         MainDatabase mainDatabase = MainDatabase.getInstance(getApplicationContext());
-        characterDao = mainDatabase.characterDao();
+        playerDao = mainDatabase.playerDao();
         itemDao = mainDatabase.itemDao();
         inventoryDao = mainDatabase.inventoryDao();
         dungeonDao = mainDatabase.dungeonDao();
 
-        characterList = new ArrayList();
-        characterList = characterDao.getAll();
+        playerList = new ArrayList();
+        playerList = playerDao.getAll();
 
         setUpListView();
         setUpCreateButton();
@@ -76,21 +75,23 @@ public class CharacterSelectScreenActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String name = editText.getText().toString();
 
-                character = new Character(0, name);
-                characterDao.insertCharacter(character);
+                player = new Player(0, name);
+                player.setLeveledUp(true);
+                player.setLevelUpPoints(10);
+                playerDao.insertItem(player);
 
-                Character createdCharacter = characterDao.getItem(characterDao.returnMaxID());
+                Player createdPlayer = playerDao.getItem(playerDao.returnMaxID());
 
-                Inventory inventory1 = new Inventory(true, createdCharacter.getId(), 1);
+                Inventory inventory1 = new Inventory(true, createdPlayer.getId(), 1);
                 inventoryDao.insertItem(inventory1);
-                Inventory inventory2 = new Inventory(true, createdCharacter.getId(), 2);
+                Inventory inventory2 = new Inventory(true, createdPlayer.getId(), 2);
                 inventoryDao.insertItem(inventory2);
 
-                Dungeon dungeon = new Dungeon(createdCharacter.getId(), 0, 2, false);
+                Dungeon dungeon = new Dungeon(createdPlayer.getId(), 0, 2, false, false);
                 dungeonDao.insertItem(dungeon);
 
-                Intent intent = new Intent(CharacterSelectScreenActivity.this, MainGameMenuScreenActivity.class);
-                intent.putExtra(CHARACTER, characterDao.returnMaxID());
+                Intent intent = new Intent(PlayerSelectScreenActivity.this, MainGameMenuScreenActivity.class);
+                intent.putExtra(PLAYER, playerDao.returnMaxID());
                 startActivity(intent);
                 finish();
             }
@@ -103,7 +104,7 @@ public class CharacterSelectScreenActivity extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter(
                 this,
                 android.R.layout.simple_list_item_1,
-                characterList);
+                playerList);
 
         elementListView.setAdapter(arrayAdapter);
     }
@@ -112,10 +113,10 @@ public class CharacterSelectScreenActivity extends AppCompatActivity {
         elementListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Intent intent = new Intent(CharacterSelectScreenActivity.this, MainGameMenuScreenActivity.class);
+                Intent intent = new Intent(PlayerSelectScreenActivity.this, MainGameMenuScreenActivity.class);
 
-                Character clickedCharacter = characterList.get(position);
-                intent.putExtra(CHARACTER, clickedCharacter.getId());
+                Player clickedPlayer = playerList.get(position);
+                intent.putExtra(PLAYER, clickedPlayer.getId());
 
                 startActivity(intent);
 //                finish(); ENABLE FOR FINAL VERSION
@@ -135,18 +136,18 @@ public class CharacterSelectScreenActivity extends AppCompatActivity {
     }
 
     public void showErrorDialog(int position){
-        AlertDialog.Builder builder = new AlertDialog.Builder(CharacterSelectScreenActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(PlayerSelectScreenActivity.this);
         builder.setMessage("Would you like to delete this character?");
 
         builder.setPositiveButton("Yes",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        characterDao.deleteCharacter(characterList.get(position));
-                        inventoryDao.deleteItemFromCharacter(characterList.get(position).getId());
-                        dungeonDao.deleteItemFromCharacter(characterList.get(position).getId());
+                        playerDao.deleteItem(playerList.get(position));
+                        inventoryDao.deleteItemFromCharacter(playerList.get(position).getId());
+                        dungeonDao.deleteItemFromCharacter(playerList.get(position).getId());
 
-                        characterList.remove(position);
+                        playerList.remove(position);
 
                         arrayAdapter.notifyDataSetChanged();
                     }

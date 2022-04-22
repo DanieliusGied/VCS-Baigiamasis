@@ -1,12 +1,48 @@
-//package lt.vcs.baigiamasis.zaidimukasclasses;
-//
-//import java.util.InputMismatchException;
-//
-//import static lt.vcs.zaidimukas.Main.*;
-//
-//public class Combat {
-//
-//    public int checkIfPlayerHits(java.lang.Character player, Enemy enemy) {
+package lt.vcs.baigiamasis.combat.model;
+
+import java.util.Random;
+
+import lt.vcs.baigiamasis.player.model.Player;
+import lt.vcs.baigiamasis.enemy.model.Enemy;
+
+public class Combat {
+
+    private Player player;
+    private Enemy enemy;
+    private int playerWeaponDamage;
+    private int playerArmor;
+    private Random random;
+
+    public Combat(Player player, Enemy enemy, int playerWeaponDamage, int playerArmor) {
+        this.player = player;
+        this.enemy = enemy;
+        this.playerWeaponDamage = playerWeaponDamage;
+        this.playerArmor = playerArmor;
+        random = new Random();
+    }
+
+    public int calculatePlayerDamage(){
+        int attackValue = random.nextInt(20) + 1 + player.getStatStr()-10;
+        int hit = (attackValue >= enemy.getArmor())? 1 : 0;
+        if (attackValue == 20) hit = 2;
+
+        int playerMaxDamage = playerWeaponDamage + player.getStatStr()-10;
+        int damage = hit * random.nextInt(playerMaxDamage+1);
+
+        return damage;
+    }
+
+    public int calculateEnemyDamage(){
+        int attackValue = random.nextInt(20) + 1;
+        int hit = (attackValue >= playerArmor)? 1 : 0;
+        if (attackValue == 20) hit = 2;
+
+        int damage = hit * random.nextInt(enemy.getMaxDamage()+1);
+
+        return damage;
+    }
+
+    //    public int checkIfPlayerHits(java.lang.Character player, Enemy enemy) {
 //        int attackAccuracy = random.nextInt(20) + (player.stats[0] - 10);
 //        if (attackAccuracy >= enemy.armor) {
 //            return player.calculateDamage();
@@ -82,4 +118,4 @@
 //
 //
 //    }
-//}
+}

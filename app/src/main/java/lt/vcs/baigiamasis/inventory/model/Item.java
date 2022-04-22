@@ -23,9 +23,6 @@ public class Item {
     @ColumnInfo(name = "item_price")
     private int price;
 
-    @Ignore
-    private int damage;
-
     public Item(int id, String name, String itemType, int maxDamage, int armor, int price) {
         this.id = id;
         this.name = name;
@@ -33,11 +30,6 @@ public class Item {
         this.maxDamage = maxDamage;
         this.armor = armor;
         this.price = price;
-    }
-
-    public int calculateWeaponDamage(){
-        this.damage = random.nextInt(maxDamage);
-        return this.damage;
     }
 
     public int getId() {
@@ -70,14 +62,6 @@ public class Item {
 
     public void setArmor(int armor) {
         this.armor = armor;
-    }
-
-    public Integer getDamage() {
-        return damage;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
     }
 
     public Integer getMaxDamage() {

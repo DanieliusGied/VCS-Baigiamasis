@@ -20,7 +20,7 @@ public class Inventory {
     private int id;
     @ColumnInfo(name = "inventory_item_is_equipped")
     private boolean isEquipped;
-    @ColumnInfo(name = "inventory_character_id")
+    @ColumnInfo(name = "inventory_player_id")
     private int characterId;
     @ColumnInfo(name = "inventory_item_id")
     private int itemId;

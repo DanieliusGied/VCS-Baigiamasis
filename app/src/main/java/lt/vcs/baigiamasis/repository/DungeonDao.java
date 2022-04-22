@@ -23,17 +23,17 @@ public interface DungeonDao {
     @Query("SELECT * FROM " + Constant.ENTITY_DUNGEON_TABLE + " WHERE id =:id")
     Dungeon getItem(int id);
 
-    @Query("SELECT * FROM " + Constant.ENTITY_DUNGEON_TABLE + " WHERE dungeon_character_id =:id")
+    @Query("SELECT * FROM " + Constant.ENTITY_DUNGEON_TABLE + " WHERE dungeon_player_id =:id")
     Dungeon getItemFromCharacter(int id);
 
-    @Query("SELECT * FROM " + Constant.ENTITY_DUNGEON_TABLE + " WHERE dungeon_character_id =:id")
+    @Query("SELECT * FROM " + Constant.ENTITY_DUNGEON_TABLE + " WHERE dungeon_player_id =:id")
     List<Dungeon> getAllFromCharacter(int id);
 
     @Query("SELECT encounter.* FROM "
             + Constant.ENTITY_DUNGEON_TABLE
             + " dungeon LEFT JOIN " + Constant.ENTITY_ENCOUNTER_TABLE
             + " encounter ON dungeon.dungeon_encounter_id = encounter.id " +
-            "WHERE dungeon.dungeon_character_id =:characterId")
+            "WHERE dungeon.dungeon_player_id =:characterId")
     Encounter getEncounterFromCharacter(int characterId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -51,20 +51,6 @@ public interface DungeonDao {
     @Query("DELETE FROM " + Constant.ENTITY_DUNGEON_TABLE + " WHERE id =:id")
     void deleteItem(int id);
 
-    @Query("DELETE FROM " + Constant.ENTITY_DUNGEON_TABLE + " WHERE dungeon_character_id =:id")
+    @Query("DELETE FROM " + Constant.ENTITY_DUNGEON_TABLE + " WHERE dungeon_player_id =:id")
     void deleteItemFromCharacter(int id);
-
-//    @Query("SELECT inventory.id FROM "
-//            + Constant.ENTITY_DUNGEON_TABLE
-//            + " inventory LEFT JOIN " + Constant.ENTITY_ITEM_TABLE
-//            + " item ON inventory.inventory_item_id = item.id " +
-//            "WHERE inventory.inventory_character_id =:characterId AND item.item_type = 'WEAPON'")
-//    int returnWeaponId(int characterId);
-//
-//    @Query("SELECT inventory.id FROM "
-//            + Constant.ENTITY_DUNGEON_TABLE
-//            + " inventory LEFT JOIN " + Constant.ENTITY_ITEM_TABLE
-//            + " item ON inventory.inventory_item_id = item.id " +
-//            "WHERE inventory.inventory_character_id =:characterId AND item.item_type = 'ARMOR'")
-//    int returnArmorId(int characterId);
 }

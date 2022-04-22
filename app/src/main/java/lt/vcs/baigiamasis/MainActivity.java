@@ -9,7 +9,7 @@ import com.google.android.material.button.MaterialButton;
 
 import java.util.Random;
 
-import lt.vcs.baigiamasis.character.ui.CharacterSelectScreenActivity;
+import lt.vcs.baigiamasis.player.ui.PlayerSelectScreenActivity;
 import lt.vcs.baigiamasis.dungeon.model.EncounterCombat;
 import lt.vcs.baigiamasis.dungeon.model.EncounterPuzzle;
 import lt.vcs.baigiamasis.dungeon.model.EncounterTreasure;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private void setUpPlayButton(){
         materialButton = findViewById(R.id.materialButtonMainPlay);
         materialButton.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, CharacterSelectScreenActivity.class);
+            Intent intent = new Intent(MainActivity.this, PlayerSelectScreenActivity.class);
             startActivity(intent);
             finish();
         });

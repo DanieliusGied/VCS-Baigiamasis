@@ -1,27 +1,31 @@
 package lt.vcs.baigiamasis.dungeon.ui;
 
+import static lt.vcs.baigiamasis.Constant.PLAYER;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.*;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Random;
 
 import lt.vcs.baigiamasis.Constant;
+import lt.vcs.baigiamasis.MainGameMenuScreenActivity;
 import lt.vcs.baigiamasis.R;
-import lt.vcs.baigiamasis.character.model.Character;
+import lt.vcs.baigiamasis.inventory.ui.InventoryScreenActivity;
+import lt.vcs.baigiamasis.player.model.Player;
 import lt.vcs.baigiamasis.combat.ui.CombatScreenActivity;
 import lt.vcs.baigiamasis.dungeon.model.Dungeon;
 import lt.vcs.baigiamasis.dungeon.model.Encounter;
-import lt.vcs.baigiamasis.repository.CharacterDao;
+import lt.vcs.baigiamasis.player.ui.PlayerInfoScreenActivity;
+import lt.vcs.baigiamasis.repository.PlayerDao;
 import lt.vcs.baigiamasis.repository.DungeonDao;
 import lt.vcs.baigiamasis.repository.EncounterDao;
 import lt.vcs.baigiamasis.repository.MainDatabase;
@@ -33,18 +37,20 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
     private MaterialButton materialButtonActivate;
     private MaterialButton materialButtonSkip;
     private MaterialButton materialButtonFlee;
+    private FloatingActionButton floatingActionButtonPlayerInfo;
+    private FloatingActionButton floatingActionButtonInventory;
 
-    private CharacterDao characterDao;
+    private PlayerDao playerDao;
     private EncounterDao encounterDao;
     private DungeonDao dungeonDao;
 
-    private Character character;
+    private Player player;
     private Dungeon dungeon;
     private Encounter encounter;
 
     private Resources resources;
 
-    private int randomInt;
+    private int randomEncounterID;
     private int characterID;
 
 
@@ -53,15 +59,15 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        characterID = intent.getIntExtra(Constant.CHARACTER, 0);
+        characterID = intent.getIntExtra(Constant.PLAYER, 0);
 
         MainDatabase mainDatabase = MainDatabase.getInstance(getApplicationContext());
-        characterDao = mainDatabase.characterDao();
+        playerDao = mainDatabase.playerDao();
         encounterDao = mainDatabase.encounterDao();
         dungeonDao = mainDatabase.dungeonDao();
 
-        character = characterDao.getItem(characterID);
-        dungeon = dungeonDao.getItemFromCharacter(character.getId());
+        player = playerDao.getItem(characterID);
+        dungeon = dungeonDao.getItemFromCharacter(player.getId());
 
         resources = getResources();
 
@@ -79,18 +85,23 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
         setUpActivateButton();
         setUpSkipButton();
         setUpFleeButton();
+        setUpCharacterInfoScreenButton();
+        setUpInventoryScreenButton();
 
         setUpImageView();
         setUpTextView();
 
         makeSnackbarOnSkip();
+        makeSnackbarOnLevelUp();
+        makeSnackbarWhenLeveledUp();
+        makeSnackbarOnFlee();
     }
 
     private void setUpRandomEncounter() {
         Random random = new Random();
-        randomInt = random.nextInt(8) + 1;
+        randomEncounterID = random.nextInt(8) + 1;
 
-        encounter = encounterDao.getItem(randomInt);
+        encounter = encounterDao.getItem(randomEncounterID);
     }
 
     private void setUpActivateButton(){
@@ -100,29 +111,32 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
         materialButtonActivate.setOnClickListener(view -> {
             Intent intent;
 
-            switch(randomInt){
+            switch(randomEncounterID){
                 case 1:
                 case 2:
                 case 3:
                 case 4:
                     intent = new Intent(ExploreDungeonScreenActivity.this, CombatScreenActivity.class);
-                    intent.putExtra(Constant.CHARACTER, characterID);
-                    intent.putExtra(Constant.RANDOM_DUNGEON, randomInt);
+                    intent.putExtra(Constant.PLAYER, characterID);
+                    intent.putExtra(Constant.RANDOM_DUNGEON, randomEncounterID);
                     startActivity(intent);
+                    finish();
                     break;
                 case 5:
                 case 6:
                     intent = new Intent(ExploreDungeonScreenActivity.this, PuzzleRoomScreenActivity.class);
-                    intent.putExtra(Constant.CHARACTER, characterID);
-                    intent.putExtra(Constant.RANDOM_DUNGEON, randomInt);
+                    intent.putExtra(Constant.PLAYER, characterID);
+                    intent.putExtra(Constant.RANDOM_DUNGEON, randomEncounterID);
                     startActivity(intent);
+                    finish();
                     break;
                 case 7:
                 case 8:
                     intent = new Intent(ExploreDungeonScreenActivity.this, TreasureRoomScreenActivity.class);
-                    intent.putExtra(Constant.CHARACTER, characterID);
-                    intent.putExtra(Constant.RANDOM_DUNGEON, randomInt);
+                    intent.putExtra(Constant.PLAYER, characterID);
+                    intent.putExtra(Constant.RANDOM_DUNGEON, randomEncounterID);
                     startActivity(intent);
+                    finish();
                     break;
                 default:
                     break;
@@ -152,6 +166,41 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
         });
     }
 
+    private void setUpFleeButton(){
+        materialButtonFlee = findViewById(R.id.materialButtonExploreScreenFlee);
+        materialButtonFlee.setText(R.string.explore_dungeon_screen_flee);
+        materialButtonFlee.setOnClickListener(view -> {
+            Intent intent = new Intent(ExploreDungeonScreenActivity.this, MainGameMenuScreenActivity.class);
+            intent.putExtra(PLAYER, player.getId());
+
+            dungeon.setDungeonProgress(0);
+            dungeon.setSkipsRemaining(2);
+            dungeonDao.insertItem(dungeon);
+            playerDao.insertItem(player);
+
+            startActivity(intent);
+            finish();
+        });
+    }
+
+    private void setUpCharacterInfoScreenButton(){
+        floatingActionButtonPlayerInfo = findViewById(R.id.floatingActionButtonExploreDungeonScreenPlayerInfo);
+        floatingActionButtonPlayerInfo.setOnClickListener(view -> {
+            Intent intent = new Intent(ExploreDungeonScreenActivity.this, PlayerInfoScreenActivity.class);
+            intent.putExtra(PLAYER, player.getId());
+            startActivity(intent);
+        });
+    }
+
+    private void setUpInventoryScreenButton(){
+        floatingActionButtonInventory = findViewById(R.id.floatingActionButtonExploreDungeonInventoryScreen);
+        floatingActionButtonInventory.setOnClickListener(view -> {
+            Intent intent = new Intent(ExploreDungeonScreenActivity.this, InventoryScreenActivity.class);
+            intent.putExtra(PLAYER, player.getId());
+            startActivity(intent);
+        });
+    }
+
     private void makeSnackbarOnSkip(){
         if (dungeon.isSkipped()){
 
@@ -160,20 +209,70 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
             Snackbar
                     .make(coordinatorLayout, resources.getString(R.string.explore_dungeon_screen_encounter_skipped), Snackbar.LENGTH_LONG)
                     .show();
+
+            dungeon.setSkipped(false);
+            dungeonDao.insertItem(dungeon);
         }
     }
 
-    private void setUpFleeButton(){
-        materialButtonFlee = findViewById(R.id.materialButtonExploreScreenFlee);
-        materialButtonFlee.setText(R.string.explore_dungeon_screen_flee);
-        materialButtonFlee.setOnClickListener(view -> {
+    private void makeSnackbarOnFlee(){
+        if (dungeon.isDidFlee()){
 
-        });
+
+            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutExploreDungeonScreen);
+            Snackbar
+                    .make(coordinatorLayout, resources.getString(R.string.explore_dungeon_screen_encounter_flee), Snackbar.LENGTH_LONG)
+                    .show();
+
+            dungeon.setDidFlee(false);
+            dungeonDao.insertItem(dungeon);
+        }
     }
 
+    private void makeSnackbarOnLevelUp(){
+        if (player.getCurrentXP() >= player.getXpToLevel()){
+            player.setLeveledUp(true);
+            player.setLevelUpPoints(player.getLevelUpPoints()+3);
+            player.setLevel(player.getLevel()+1);
+            player.calculateXPToLevel();
+            player.setCurrentXP(0);
+
+            playerDao.insertItem(player);
+
+            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutExploreDungeonScreen);
+            Snackbar
+                    .make(coordinatorLayout, resources.getString(R.string.explore_dungeon_screen_level_up_available), Snackbar.LENGTH_LONG)
+                    .show();
+        }
+    }
+
+    private void makeSnackbarWhenLeveledUp(){
+        if (player.isLeveledUp()) {
+            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutExploreDungeonScreen);
+            Snackbar
+                    .make(coordinatorLayout, resources.getString(R.string.explore_dungeon_screen_level_up_available), Snackbar.LENGTH_LONG)
+                    .show();
+        }
+    }
+
+
+    // TODO: 4/22/2022 set-up images when creating the ui
     private void setUpImageView(){
         imageView = findViewById(R.id.imageViewExploreScreen);
-        imageView.setImageResource(R.drawable.ic_baseline_account_circle_24); //insert image here
+        switch (randomEncounterID){
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            default:
+                break;
+        }
+
+        imageView.setImageResource(R.drawable.ic_baseline_account_circle_24);
     }
 
     private void setUpTextView(){

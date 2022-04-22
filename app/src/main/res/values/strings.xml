@@ -4,20 +4,35 @@
 
     <string name="select_character_create_new_character">Confirm</string>
     <string name="select_character_load_saved_character">Load Saved Character</string>
-    <string name="select_character_select_your_character">Select your character:</string>
+    <string name="select_character_select_your_character">Select your player:</string>
     <string name="character_select_new_character">New Character</string>
 
     <string name="main_game_menu_explore_the_dungeon">Explore the dungeon</string>
 
 
-    <string name="Character_Info_Screen_Name">Name: %1$s</string>
-    <string name="Character_Info_Screen_HP">HP: %1$d / %2$d</string>
-    <string name="Character_Info_Screen_MP">MP: %1$s</string>
-    <string name="Character_Info_Screen_XP">XP: %1$s</string>
-    <string name="Character_Info_Screen_DMG">1 - %1$d</string>
+    <string name="player_info_screen_name">Name: %1$s</string>
+    <string name="player_info_screen_hp">HP: %1$d / %2$d</string>
+    <string name="player_info_screen_mp">MP: %1$d / %2$d</string>
+    <string name="player_info_screen_xp">XP: %1$d / %2$d</string>
+    <string name="player_info_screen_level">Level: %1$d</string>
+    <string name="player_info_screen_stat">%1$d</string>
+    <string name="player_info_screen_dmg">1 - %1$d</string>
+    <string name="player_info_screen_level_up_points">Level up points available: %1$d</string>
 
     <string name="explore_dungeon_screen_skips_remaining">Skip (%1$d skips remaining)</string>
     <string name="explore_dungeon_screen_flee">Flee</string>
     <string name="explore_dungeon_screen_encounter_skipped">Encounter skipped! A new encounter was generated!</string>
     <string name="explore_dungeon_screen_no_skips_remaining">No skips remaining!</string>
+    <string name="explore_dungeon_screen_level_up_available">Level up available! Open Character info to assign points.</string>
+    <string name="explore_dungeon_screen_encounter_flee">Ran away to the start of the dungeon!</string>
+
+
+    <string name="combat_screen_name">%1$s</string>
+    <string name="combat_screen_hp_mp">HP: %1$d / %2$d</string>
+    <string name="combat_screen_player_victory">%1$s was defeated! Received 2 XP and %2$d gold.</string>
+    <string name="combat_screen_player_defeat">%1$s was defeated... Game Over.</string>
+    <string name="combat_screen_attack_missed">%1$s missed!</string>
+    <string name="combat_screen_attack_hit">%1$s\'s attack hit for %2$d damage!</string>
+    <string name="combat_screen_turn_break"> </string>
+
 </resources>

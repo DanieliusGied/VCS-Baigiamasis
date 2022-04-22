@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Baigiamasis">
         <activity
-            android:name=".character.ui.CharacterSelectScreenActivity"
+            android:name=".player.ui.PlayerSelectScreenActivity"
             android:exported="false" />
         <activity
             android:name=".MainGameMenuScreenActivity"
@@ -31,7 +31,7 @@
             android:name=".combat.ui.CombatScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".character.ui.CharacterInfoScreenActivity"
+            android:name=".player.ui.PlayerInfoScreenActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -1,6 +1,6 @@
 package lt.vcs.baigiamasis.inventory.ui;
 
-import static lt.vcs.baigiamasis.Constant.CHARACTER;
+import static lt.vcs.baigiamasis.Constant.PLAYER;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -19,7 +18,7 @@ import java.util.List;
 
 import lt.vcs.baigiamasis.Constant;
 import lt.vcs.baigiamasis.R;
-import lt.vcs.baigiamasis.character.model.Character;
+import lt.vcs.baigiamasis.player.model.Player;
 import lt.vcs.baigiamasis.inventory.model.Inventory;
 import lt.vcs.baigiamasis.inventory.model.Item;
 import lt.vcs.baigiamasis.repository.*;
@@ -32,8 +31,8 @@ public class InventoryScreenActivity extends AppCompatActivity {
     ArrayAdapter arrayAdapterInventory;
     ArrayAdapter arrayAdapterWeapon;
     ArrayAdapter arrayAdapterArmor;
-    Character character;
-    CharacterDao characterDao;
+    Player player;
+    PlayerDao playerDao;
     ItemDao itemDao;
     InventoryDao inventoryDao;
 
@@ -55,14 +54,14 @@ public class InventoryScreenActivity extends AppCompatActivity {
         armorList = new ArrayList();
 
         MainDatabase mainDatabase = MainDatabase.getInstance(getApplicationContext());
-        characterDao = mainDatabase.characterDao();
+        playerDao = mainDatabase.playerDao();
         itemDao = mainDatabase.itemDao();
         inventoryDao = mainDatabase.inventoryDao();
 
         Intent intent = getIntent();
-        characterID = intent.getIntExtra(CHARACTER, 0);
+        characterID = intent.getIntExtra(PLAYER, 0);
 
-        character = characterDao.getItem(characterID);
+        player = playerDao.getItem(characterID);
         setUpItemList();
 
         setUpUI();
@@ -71,10 +70,10 @@ public class InventoryScreenActivity extends AppCompatActivity {
     // SET UP UI:
 
     private void setUpItemList(){
-        Item equippedWeapon = inventoryDao.getWeaponFromCharacter(character.getId());
-        Item equippedArmor = inventoryDao.getArmorFromCharacter(character.getId());
+        Item equippedWeapon = inventoryDao.getWeaponFromCharacter(player.getId());
+        Item equippedArmor = inventoryDao.getArmorFromCharacter(player.getId());
 
-        inventoryList = inventoryDao.getAllFromCharacterNotEquipped(character.getId());
+        inventoryList = inventoryDao.getAllFromCharacterNotEquipped(player.getId());
         if (equippedWeapon != null) weaponList.add(equippedWeapon);
         if (equippedArmor != null) armorList.add(equippedArmor);
     }
@@ -102,24 +101,24 @@ public class InventoryScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                inventoryDao.deleteItemFromCharacter(character.getId());
+                inventoryDao.deleteItemFromCharacter(player.getId());
 
                 for (Item item : inventoryList){
-                    Inventory inventory = new Inventory(false, character.getId(), item.getId());
+                    Inventory inventory = new Inventory(false, player.getId(), item.getId());
                     inventoryDao.insertItem(inventory);
                 }
 
                 for (Item item : weaponList){
-                    Inventory inventory = new Inventory(true, character.getId(), item.getId());
+                    Inventory inventory = new Inventory(true, player.getId(), item.getId());
                     inventoryDao.insertItem(inventory);
                 }
 
                 for (Item item : armorList){
-                    Inventory inventory = new Inventory(true, character.getId(), item.getId());
+                    Inventory inventory = new Inventory(true, player.getId(), item.getId());
                     inventoryDao.insertItem(inventory);
                 }
 
-                characterDao.insertCharacter(character);
+                playerDao.insertItem(player);
                 finish();
             }
         });
@@ -128,16 +127,13 @@ public class InventoryScreenActivity extends AppCompatActivity {
     // SET UP LIST VIEWS:
 
     private void setUpInventoryListView() {
-        // Graphic element
         elementListViewInventory = findViewById(R.id.listViewInventoryScreenInventory);
 
-        // Adapter Graphic element <-> Data
         arrayAdapterInventory = new ArrayAdapter(
                 this,
                 android.R.layout.simple_list_item_1,
                 inventoryList);
 
-        // Graphic element connected with adapter
         elementListViewInventory.setAdapter(arrayAdapterInventory);
     }
 
@@ -173,48 +169,36 @@ public class InventoryScreenActivity extends AppCompatActivity {
 
     private void setUpInventoryListViewItemClick() {
         // Set-up clicking on specific items in the list:
-        elementListViewInventory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Item clickedItem = inventoryList.get(position);
+        elementListViewInventory.setOnItemClickListener((adapterView, view, position, id) -> {
+            Item clickedItem = inventoryList.get(position);
 
-                showErrorDialogEquipItem(clickedItem, position);
-            }
+            showErrorDialogEquipItem(clickedItem, position);
         });
     }
 
     private void setUpInventoryListViewItemLongClick() {
         // Set-up clicking on specific items in the list:
-        elementListViewInventory.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+        elementListViewInventory.setOnItemLongClickListener((adapterView, view, position, id) -> {
 //                Log.i("test_tag", "Just long-clicked the item " + position + " from the list :)");
 //                Log.i("test_tag", noteListText.get(position).toString());
-                showErrorDialogDiscardItem(position);
-                return true;
-            }
+            showErrorDialogDiscardItem(position);
+            return true;
         });
     }
 
     private void setUpEquippedWeaponListViewItemClick(){
-        elementListViewWeapon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Item clickedItem = weaponList.get(position);
+        elementListViewWeapon.setOnItemClickListener((adapterView, view, position, id) -> {
+            Item clickedItem = weaponList.get(position);
 
-                showErrorDialogUnequipItem(clickedItem, position);
-            }
+            showErrorDialogUnequipItem(clickedItem, position);
         });
     }
 
     private void setUpEquippedArmorListViewItemClick(){
-        elementListViewArmor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Item clickedItem = armorList.get(position);
+        elementListViewArmor.setOnItemClickListener((adapterView, view, position, id) -> {
+            Item clickedItem = armorList.get(position);
 
-                showErrorDialogUnequipItem(clickedItem, position);
-            }
+            showErrorDialogUnequipItem(clickedItem, position);
         });
     }
 
@@ -233,7 +217,7 @@ public class InventoryScreenActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         inventoryList.remove(clickedItem);
                         arrayAdapterInventory.notifyDataSetChanged();
-                        characterDao.insertCharacter(character);
+                        playerDao.insertItem(player);
                     }
                 });
         builder.setNegativeButton("Cancel", null);
@@ -246,15 +230,12 @@ public class InventoryScreenActivity extends AppCompatActivity {
         builder.setMessage(item.toString());
 
         builder.setPositiveButton("Equip",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        equipItem(item, position);
-                        arrayAdapterInventory.notifyDataSetChanged();
-                        arrayAdapterArmor.notifyDataSetChanged();
-                        arrayAdapterWeapon.notifyDataSetChanged();
-                        characterDao.insertCharacter(character);
-                    }
+                (dialogInterface, i) -> {
+                    equipItem(item, position);
+                    arrayAdapterInventory.notifyDataSetChanged();
+                    arrayAdapterArmor.notifyDataSetChanged();
+                    arrayAdapterWeapon.notifyDataSetChanged();
+                    playerDao.insertItem(player);
                 });
         builder.setNegativeButton("Cancel", null);
         builder.show();
@@ -265,15 +246,12 @@ public class InventoryScreenActivity extends AppCompatActivity {
         builder.setMessage(item.toString());
 
         builder.setPositiveButton("Un-equip",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        unequipItem(item, position);
-                        arrayAdapterInventory.notifyDataSetChanged();
-                        arrayAdapterArmor.notifyDataSetChanged();
-                        arrayAdapterWeapon.notifyDataSetChanged();
-                        characterDao.insertCharacter(character);
-                    }
+                (dialogInterface, i) -> {
+                    unequipItem(item, position);
+                    arrayAdapterInventory.notifyDataSetChanged();
+                    arrayAdapterArmor.notifyDataSetChanged();
+                    arrayAdapterWeapon.notifyDataSetChanged();
+                    playerDao.insertItem(player);
                 });
         builder.setNegativeButton("Cancel", null);
         builder.show();
@@ -292,22 +270,22 @@ public class InventoryScreenActivity extends AppCompatActivity {
                 inventoryList.add(equippedWeapon);
                 weaponList.remove(position);
 
-                inventory1 = new Inventory(false, character.getId(), equippedWeapon.getId());
-                inventory2 = new Inventory(true, character.getId(), item.getId());
+                inventory1 = new Inventory(false, player.getId(), equippedWeapon.getId());
+                inventory2 = new Inventory(true, player.getId(), item.getId());
                 inventoryDao.insertItem(inventory1);
                 inventoryDao.insertItem(inventory2);
-                inventoryDao.deleteItem(inventoryDao.returnWeaponId(character.getId()));
+                inventoryDao.deleteItem(inventoryDao.returnWeaponId(player.getId()));
                 break;
             case Constant.ARMOR:
                 Item equippedArmor = armorList.get(position);
                 inventoryList.add(equippedArmor);
                 armorList.remove(position);
 
-                inventory1 = new Inventory(false, character.getId(), equippedArmor.getId());
-                inventory2 = new Inventory(true, character.getId(), item.getId());
+                inventory1 = new Inventory(false, player.getId(), equippedArmor.getId());
+                inventory2 = new Inventory(true, player.getId(), item.getId());
                 inventoryDao.insertItem(inventory1);
                 inventoryDao.insertItem(inventory2);
-                inventoryDao.deleteItem(inventoryDao.returnArmorId(character.getId()));
+                inventoryDao.deleteItem(inventoryDao.returnArmorId(player.getId()));
                 break;
             default:
                 break;
@@ -329,7 +307,7 @@ public class InventoryScreenActivity extends AppCompatActivity {
 
                 weaponList.add(itemBeingEquipped);
 
-                inventoryDao.deleteItem(inventoryDao.returnWeaponId(character.getId()));
+                inventoryDao.deleteItem(inventoryDao.returnWeaponId(player.getId()));
                 break;
             case Constant.ARMOR:
                 if (armorList.isEmpty() == false) {
@@ -340,7 +318,7 @@ public class InventoryScreenActivity extends AppCompatActivity {
 
                 armorList.add(itemBeingEquipped);
 
-                inventoryDao.deleteItem(inventoryDao.returnArmorId(character.getId()));
+                inventoryDao.deleteItem(inventoryDao.returnArmorId(player.getId()));
                 break;
             default:
                 break;
@@ -349,7 +327,7 @@ public class InventoryScreenActivity extends AppCompatActivity {
 
         inventoryList.remove(position);
 
-        inventory = new Inventory(true, character.getId(), itemBeingEquipped.getId());
+        inventory = new Inventory(true, player.getId(), itemBeingEquipped.getId());
         inventoryDao.insertItem(inventory);
     }
 }

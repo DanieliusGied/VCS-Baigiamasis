@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".player.ui.PlayerInfoScreenActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/textViewPlayerInfoScreenPortrait"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_baseline_account_circle_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPlayerInfoScreenName"/>
+
+        <TextView
+            android:id="@+id/textViewPlayerInfoScreenName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Name: "
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/textViewPlayerInfoScreenHP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="HP: "
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPlayerInfoScreenPortrait"/>
+
+        <ProgressBar
+            android:id="@+id/progressBarPlayerInfoScreenHP"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/textViewPlayerInfoScreenHP"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toTopOf="@id/textViewPlayerInfoScreenHP"
+            app:layout_constraintBottom_toBottomOf="@id/textViewPlayerInfoScreenHP"/>
+
+        <ProgressBar
+            android:id="@+id/progressBarPlayerInfoScreenMP"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/progressBarPlayerInfoScreenHP"
+            app:layout_constraintTop_toTopOf="@id/textViewPlayerInfoScreenMP"
+            app:layout_constraintBottom_toBottomOf="@id/textViewPlayerInfoScreenMP"/>
+
+        <TextView
+            android:id="@+id/textViewPlayerInfoScreenMP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="MP: "
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPlayerInfoScreenHP"/>
+
+        <TextView
+            android:id="@+id/textViewPlayerInfoScreenLevelUpPts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/player_info_screen_level_up_points"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/floatingActionButtonPlayerInfoScreenSTRIncrease"/>
+
+        <TextView
+            android:id="@+id/textViewPlayerInfoScreenSTR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="78dp"
+            android:text="STR: "
+            app:layout_constraintTop_toBottomOf="@id/textViewPlayerInfoScreenMP"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/textViewPlayerInfoScreenSTRValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="valueOfSTR"
+            app:layout_constraintTop_toTopOf="@+id/textViewPlayerInfoScreenSTR"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewPlayerInfoScreenSTR"
+            app:layout_constraintStart_toEndOf="@+id/textViewPlayerInfoScreenSTR"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButtonPlayerInfoScreenSTRIncrease"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_baseline_exposure_plus_1_24"
+            app:layout_constraintTop_toTopOf="@+id/textViewPlayerInfoScreenSTR"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewPlayerInfoScreenSTR"
+            app:layout_constraintStart_toStartOf="@+id/floatingActionButtonPlayerInfoScreenCONIncrease"/>
+
+        <TextView
+            android:id="@+id/textViewPlayerInfoScreenDEX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="DEX: "
+            app:layout_constraintTop_toBottomOf="@id/textViewPlayerInfoScreenSTR"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/textViewPlayerInfoScreenDEXValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="valueOfDEX"
+            app:layout_constraintTop_toTopOf="@+id/textViewPlayerInfoScreenDEX"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewPlayerInfoScreenDEX"
+            app:layout_constraintStart_toStartOf="@+id/textViewPlayerInfoScreenSTRValue"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButtonPlayerInfoScreenDEXIncrease"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_baseline_exposure_plus_1_24"
+            app:layout_constraintTop_toTopOf="@+id/textViewPlayerInfoScreenDEX"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewPlayerInfoScreenDEX"
+            app:layout_constraintStart_toStartOf="@+id/floatingActionButtonPlayerInfoScreenCONIncrease"
+            />
+
+        <TextView
+            android:id="@+id/textViewPlayerInfoScreenCON"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="CON: "
+            app:layout_constraintTop_toBottomOf="@id/textViewPlayerInfoScreenDEX"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/textViewPlayerInfoScreenCONValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="valueOfCON"
+            app:layout_constraintTop_toTopOf="@+id/textViewPlayerInfoScreenCON"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewPlayerInfoScreenCON"
+            app:layout_constraintStart_toStartOf="@+id/textViewPlayerInfoScreenSTRValue"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButtonPlayerInfoScreenCONIncrease"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_baseline_exposure_plus_1_24"
+            app:layout_constraintTop_toTopOf="@+id/textViewPlayerInfoScreenCON"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewPlayerInfoScreenCON"
+            app:layout_constraintStart_toEndOf="@+id/textViewPlayerInfoScreenCONValue"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/textViewPlayerInfoScreenWIS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="WIS: "
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewPlayerInfoScreenCON"/>
+
+        <TextView
+            android:id="@+id/textViewPlayerInfoScreenWISValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="valueOfWIS"
+            app:layout_constraintTop_toTopOf="@+id/textViewPlayerInfoScreenWIS"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewPlayerInfoScreenWIS"
+            app:layout_constraintStart_toStartOf="@+id/textViewPlayerInfoScreenSTRValue"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButtonPlayerInfoScreenWISIncrease"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_baseline_exposure_plus_1_24"
+            app:layout_constraintTop_toTopOf="@+id/textViewPlayerInfoScreenWIS"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewPlayerInfoScreenWIS"
+            app:layout_constraintStart_toStartOf="@+id/floatingActionButtonPlayerInfoScreenCONIncrease"/>
+
+        <TextView
+            android:id="@+id/textViewPlayerInfoScreenArmor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="160dp"
+            android:layout_marginBottom="16dp"
+            android:text="Armor: "
+            app:layout_constraintTop_toTopOf="@id/textViewPlayerInfoScreenCON"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/textViewPlayerInfoScreenArmorValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="valueOfArmor"
+            app:layout_constraintTop_toTopOf="@+id/textViewPlayerInfoScreenArmor"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewPlayerInfoScreenArmor"
+            app:layout_constraintStart_toEndOf="@+id/textViewPlayerInfoScreenArmor"/>
+
+        <TextView
+            android:id="@+id/textViewPlayerInfoScreenDMG"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="160dp"
+            android:layout_marginBottom="16dp"
+            android:text="Damage: "
+            app:layout_constraintTop_toTopOf="@id/textViewPlayerInfoScreenWIS"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/textViewPlayerInfoScreenDMGValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="valueOfDMG"
+            app:layout_constraintTop_toTopOf="@+id/textViewPlayerInfoScreenDMG"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewPlayerInfoScreenDMG"
+            app:layout_constraintStart_toEndOf="@+id/textViewPlayerInfoScreenDMG"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/materialButtonPlayerInfoScreenClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="close"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/textViewPlayerInfoScreenLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="4dp"
+            android:text="Level: "
+            app:layout_constraintBottom_toTopOf="@id/textViewPlayerInfoScreenXP"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/textViewPlayerInfoScreenXP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="XP: "
+            app:layout_constraintBottom_toTopOf="@id/materialButtonPlayerInfoScreenClose"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <ProgressBar
+            android:id="@+id/progressBarPlayerInfoScreenXP"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/textViewPlayerInfoScreenXP"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toTopOf="@id/textViewPlayerInfoScreenXP"
+            app:layout_constraintBottom_toBottomOf="@id/textViewPlayerInfoScreenXP"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

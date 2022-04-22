@@ -8,7 +8,7 @@ import lt.vcs.baigiamasis.Constant;
 public class Dungeon {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    @ColumnInfo(name = "dungeon_character_id")
+    @ColumnInfo(name = "dungeon_player_id")
     private int characterId;
     @ColumnInfo(name = "dungeon_progress")
     private int dungeonProgress;
@@ -18,12 +18,15 @@ public class Dungeon {
     private int skipsRemaining;
     @ColumnInfo(name = "dungeon_encounter_skipped")
     private boolean isSkipped;
+    @ColumnInfo(name = "dungeon_encounter_flee")
+    private boolean didFlee;
 
-    public Dungeon(int characterId, int dungeonProgress, int skipsRemaining, boolean isSkipped) {
+    public Dungeon(int characterId, int dungeonProgress, int skipsRemaining, boolean isSkipped, boolean didFlee) {
         this.characterId = characterId;
         this.dungeonProgress = dungeonProgress;
         this.skipsRemaining = skipsRemaining;
         this.isSkipped = isSkipped;
+        this.didFlee = didFlee;
     }
 
     public int getId() {
@@ -72,5 +75,13 @@ public class Dungeon {
 
     public void setSkipped(boolean skipped) {
         isSkipped = skipped;
+    }
+
+    public boolean isDidFlee() {
+        return didFlee;
+    }
+
+    public void setDidFlee(boolean didFlee) {
+        this.didFlee = didFlee;
     }
 }
