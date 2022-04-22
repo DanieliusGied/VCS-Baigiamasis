@@ -80,7 +80,7 @@ public class Item {
         this.damage = damage;
     }
 
-    public int getMaxDamage() {
+    public Integer getMaxDamage() {
         return maxDamage;
     }
 

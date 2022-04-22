@@ -15,4 +15,9 @@
     <string name="Character_Info_Screen_MP">MP: %1$s</string>
     <string name="Character_Info_Screen_XP">XP: %1$s</string>
     <string name="Character_Info_Screen_DMG">1 - %1$d</string>
+
+    <string name="explore_dungeon_screen_skips_remaining">Skip (%1$d skips remaining)</string>
+    <string name="explore_dungeon_screen_flee">Flee</string>
+    <string name="explore_dungeon_screen_encounter_skipped">Encounter skipped! A new encounter was generated!</string>
+    <string name="explore_dungeon_screen_no_skips_remaining">No skips remaining!</string>
 </resources>

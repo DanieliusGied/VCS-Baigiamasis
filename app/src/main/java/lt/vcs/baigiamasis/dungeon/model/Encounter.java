@@ -4,7 +4,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+import lt.vcs.baigiamasis.Constant;
+
+@Entity(tableName = Constant.ENTITY_ENCOUNTER_TABLE)
 public class Encounter {
 
     @PrimaryKey

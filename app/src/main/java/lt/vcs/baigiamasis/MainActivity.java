@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpItems(){
         Item dagger = new Item(1, "Dagger", Constant.WEAPON, 4, 0, 0);
-        Item clothShirt = new Item(2, "Cloth armor", Constant.ARMOR, 0, 8, 0);
+        Item clothShirt = new Item(2, "Cloth armor", Constant.ARMOR, 0, 1, 0);
 
         ItemDao itemDao = mainDatabase.itemDao();
 

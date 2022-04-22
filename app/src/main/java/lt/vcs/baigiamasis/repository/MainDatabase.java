@@ -9,13 +9,14 @@ import androidx.room.TypeConverters;
 
 import lt.vcs.baigiamasis.character.model.Character;
 import lt.vcs.baigiamasis.Constant;
+import lt.vcs.baigiamasis.dungeon.model.Dungeon;
 import lt.vcs.baigiamasis.dungeon.model.Encounter;
 import lt.vcs.baigiamasis.enemy.model.Enemy;
 import lt.vcs.baigiamasis.inventory.model.Inventory;
 import lt.vcs.baigiamasis.inventory.model.Item;
 
 @Database(
-        entities = {Character.class, Item.class, Enemy.class, Inventory.class, Encounter.class},
+        entities = {Character.class, Item.class, Enemy.class, Inventory.class, Encounter.class, Dungeon.class},
         version = Constant.MAIN_DATABASE_VERSION,
         exportSchema = false
 )
@@ -28,6 +29,7 @@ public abstract class MainDatabase extends RoomDatabase {
     public abstract ItemDao itemDao();
     public abstract InventoryDao inventoryDao();
     public abstract EncounterDao encounterDao();
+    public abstract DungeonDao dungeonDao();
 
     public static synchronized MainDatabase getInstance(Context context){
         instance = Room.databaseBuilder(

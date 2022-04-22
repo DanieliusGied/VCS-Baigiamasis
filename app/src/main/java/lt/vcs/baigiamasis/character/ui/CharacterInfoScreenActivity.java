@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 
+import lt.vcs.baigiamasis.Constant;
 import lt.vcs.baigiamasis.R;
 import lt.vcs.baigiamasis.repository.CharacterDao;
 import lt.vcs.baigiamasis.repository.InventoryDao;
@@ -43,7 +44,6 @@ public class CharacterInfoScreenActivity extends AppCompatActivity {
         setUpCloseButton();
     }
 
-    // TODO: 4/21/2022 FIX GET ARMOR BUG IF ARMOR IS NOT EQUIPPED
     private void setUpText() {
         Resources resources = getResources();
 
@@ -71,7 +71,7 @@ public class CharacterInfoScreenActivity extends AppCompatActivity {
         textViewDEX.setText(Integer.toString(character.getStatDex()));
 
         TextView textViewArmor = findViewById(R.id.textViewCharacterInfoScreenArmorValue);
-        int characterArmor = character.getStatDex()-10;
+        int characterArmor = character.getStatDex()-10 + Constant.BASE_ARMOR;
         if (inventoryDao.getArmorFromCharacter(character.getId()) != null) {
             characterArmor += inventoryDao.getArmorFromCharacter(character.getId()).getArmor();
         }
@@ -79,7 +79,7 @@ public class CharacterInfoScreenActivity extends AppCompatActivity {
         textViewArmor.setText(textArmor);
 
         TextView textViewDMG = findViewById(R.id.textViewCharacterInfoScreenDMGValue);
-        int characterMaxDmg = character.getStatStr()-10;
+        int characterMaxDmg = character.getStatStr()-10 + Constant.BASE_DAMAGE;
         if (inventoryDao.getWeaponFromCharacter(character.getId()) != null){
             characterMaxDmg += inventoryDao.getWeaponFromCharacter(character.getId()).getMaxDamage();
         }

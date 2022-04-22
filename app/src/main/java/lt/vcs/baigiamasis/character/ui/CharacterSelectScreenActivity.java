@@ -21,9 +21,11 @@ import java.util.List;
 
 import lt.vcs.baigiamasis.MainGameMenuScreenActivity;
 import lt.vcs.baigiamasis.R;
+import lt.vcs.baigiamasis.dungeon.model.Dungeon;
 import lt.vcs.baigiamasis.inventory.model.Inventory;
 import lt.vcs.baigiamasis.inventory.model.Item;
 import lt.vcs.baigiamasis.repository.CharacterDao;
+import lt.vcs.baigiamasis.repository.DungeonDao;
 import lt.vcs.baigiamasis.repository.InventoryDao;
 import lt.vcs.baigiamasis.repository.ItemDao;
 import lt.vcs.baigiamasis.repository.MainDatabase;
@@ -33,12 +35,16 @@ public class CharacterSelectScreenActivity extends AppCompatActivity {
 
     MaterialButton materialButton;
     EditText editText;
-    List<Character> characterList;
     ListView elementListView;
     ArrayAdapter arrayAdapter;
+
+    List<Character> characterList;
+
     CharacterDao characterDao;
     ItemDao itemDao;
     InventoryDao inventoryDao;
+    DungeonDao dungeonDao;
+
     Character character;
 
     @Override
@@ -50,6 +56,7 @@ public class CharacterSelectScreenActivity extends AppCompatActivity {
         characterDao = mainDatabase.characterDao();
         itemDao = mainDatabase.itemDao();
         inventoryDao = mainDatabase.inventoryDao();
+        dungeonDao = mainDatabase.dungeonDao();
 
         characterList = new ArrayList();
         characterList = characterDao.getAll();
@@ -68,8 +75,6 @@ public class CharacterSelectScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String name = editText.getText().toString();
-                Item weaponItem = itemDao.getItem(1);
-                Item armorItem = itemDao.getItem(2);
 
                 character = new Character(0, name);
                 characterDao.insertCharacter(character);
@@ -80,6 +85,9 @@ public class CharacterSelectScreenActivity extends AppCompatActivity {
                 inventoryDao.insertItem(inventory1);
                 Inventory inventory2 = new Inventory(true, createdCharacter.getId(), 2);
                 inventoryDao.insertItem(inventory2);
+
+                Dungeon dungeon = new Dungeon(createdCharacter.getId(), 0, 2, false);
+                dungeonDao.insertItem(dungeon);
 
                 Intent intent = new Intent(CharacterSelectScreenActivity.this, MainGameMenuScreenActivity.class);
                 intent.putExtra(CHARACTER, characterDao.returnMaxID());
@@ -136,7 +144,10 @@ public class CharacterSelectScreenActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         characterDao.deleteCharacter(characterList.get(position));
                         inventoryDao.deleteItemFromCharacter(characterList.get(position).getId());
+                        dungeonDao.deleteItemFromCharacter(characterList.get(position).getId());
+
                         characterList.remove(position);
+
                         arrayAdapter.notifyDataSetChanged();
                     }
                 });
