@@ -1,4 +1,4 @@
-package lt.vcs.baigiamasis.player.ui;
+package lt.vcs.baigiamasis.mainmenu.ui;
 
 import static lt.vcs.baigiamasis.common.Constant.PLAYER;
 
@@ -19,7 +19,6 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import lt.vcs.baigiamasis.mainmenu.ui.MainGameMenuScreenActivity;
 import lt.vcs.baigiamasis.R;
 import lt.vcs.baigiamasis.player.model.Player;
 import lt.vcs.baigiamasis.dungeon.model.Dungeon;
@@ -70,31 +69,28 @@ public class PlayerSelectScreenActivity extends AppCompatActivity {
     private void setUpCreateButton(){
         materialButton = findViewById(R.id.materialButtonCharacterSelectConfirm);
         editText = findViewById(R.id.editTextCreateCharacter);
-        materialButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                String name = editText.getText().toString();
+        materialButton.setOnClickListener(view -> {
+            String name = editText.getText().toString();
 
-                player = new Player(0, name);
-                player.setLeveledUp(true);
-                player.setLevelUpPoints(10);
-                playerDao.insertItem(player);
+            player = new Player(0, name);
+            player.setLeveledUp(true);
+            player.setLevelUpPoints(10);
+            playerDao.insertItem(player);
 
-                Player createdPlayer = playerDao.getItem(playerDao.returnMaxID());
+            Player createdPlayer = playerDao.getItem(playerDao.returnMaxID());
 
-                Inventory inventory1 = new Inventory(true, createdPlayer.getId(), 1);
-                inventoryDao.insertItem(inventory1);
-                Inventory inventory2 = new Inventory(true, createdPlayer.getId(), 2);
-                inventoryDao.insertItem(inventory2);
+            Inventory inventory1 = new Inventory(true, createdPlayer.getId(), 1);
+            inventoryDao.insertItem(inventory1);
+            Inventory inventory2 = new Inventory(true, createdPlayer.getId(), 2);
+            inventoryDao.insertItem(inventory2);
 
-                Dungeon dungeon = new Dungeon(createdPlayer.getId(), 0, 2, false, false);
-                dungeonDao.insertItem(dungeon);
+            Dungeon dungeon = new Dungeon(createdPlayer.getId(), 0, 2, false, false);
+            dungeonDao.insertItem(dungeon);
 
-                Intent intent = new Intent(PlayerSelectScreenActivity.this, MainGameMenuScreenActivity.class);
-                intent.putExtra(PLAYER, playerDao.returnMaxID());
-                startActivity(intent);
-                finish();
-            }
+            Intent intent = new Intent(PlayerSelectScreenActivity.this, MainGameMenuScreenActivity.class);
+            intent.putExtra(PLAYER, playerDao.returnMaxID());
+            startActivity(intent);
+            finish();
         });
     }
 
@@ -110,28 +106,21 @@ public class PlayerSelectScreenActivity extends AppCompatActivity {
     }
 
     private void setUpListViewItemClick() {
-        elementListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Intent intent = new Intent(PlayerSelectScreenActivity.this, MainGameMenuScreenActivity.class);
+        elementListView.setOnItemClickListener((adapterView, view, position, id) -> {
+            Intent intent = new Intent(PlayerSelectScreenActivity.this, MainGameMenuScreenActivity.class);
 
-                Player clickedPlayer = playerList.get(position);
-                intent.putExtra(PLAYER, clickedPlayer.getId());
+            Player clickedPlayer = playerList.get(position);
+            intent.putExtra(PLAYER, clickedPlayer.getId());
 
-                startActivity(intent);
-//                finish(); ENABLE FOR FINAL VERSION
-            }
+            startActivity(intent);
+            finish();
         });
     }
 
     private void setUpListViewItemLongClick() {
-        // Set-up clicking on specific items in the list:
-        elementListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                showErrorDialog(position);
-                return true;
-            }
+        elementListView.setOnItemLongClickListener((adapterView, view, position, id) -> {
+            showErrorDialog(position);
+            return true;
         });
     }
 
@@ -140,17 +129,14 @@ public class PlayerSelectScreenActivity extends AppCompatActivity {
         builder.setMessage("Would you like to delete this character?");
 
         builder.setPositiveButton("Yes",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        playerDao.deleteItem(playerList.get(position));
-                        inventoryDao.deleteItemFromCharacter(playerList.get(position).getId());
-                        dungeonDao.deleteItemFromCharacter(playerList.get(position).getId());
+                (dialogInterface, i) -> {
+                    playerDao.deleteItem(playerList.get(position));
+                    inventoryDao.deleteItemFromCharacter(playerList.get(position).getId());
+                    dungeonDao.deleteItemFromCharacter(playerList.get(position).getId());
 
-                        playerList.remove(position);
+                    playerList.remove(position);
 
-                        arrayAdapter.notifyDataSetChanged();
-                    }
+                    arrayAdapter.notifyDataSetChanged();
                 });
         builder.setNegativeButton("No", null);
         builder.show();

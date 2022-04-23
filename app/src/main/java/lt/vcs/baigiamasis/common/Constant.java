@@ -1,7 +1,7 @@
 package lt.vcs.baigiamasis.common;
 
 public class Constant {
-    public static final int MAIN_DATABASE_VERSION = 11;
+    public static final int MAIN_DATABASE_VERSION = 12;
 
     public final static String ENTITY_PLAYER_TABLE = "player";
     public final static String ENTITY_INVENTORY_TABLE = "inventory";
@@ -11,7 +11,7 @@ public class Constant {
     public final static String ENTITY_ENEMY_TABLE = "enemy";
     public final static String ENTITY_GRAVEYARD_TABLE = "graveyard";
     public final static String ENTITY_PUZZLE_TABLE = "puzzle";
-    public final static String ENTITY_PUZZLE_ANSWER_TABLE = "puzzle";
+    public final static String ENTITY_PUZZLE_ANSWER_TABLE = "puzzle_answer";
 
     public final static String WEAPON = "WEAPON";
     public final static String ARMOR = "ARMOR";
@@ -25,5 +25,7 @@ public class Constant {
 
     public final static int BASE_ARMOR = 8;
     public final static int BASE_DAMAGE = 1;
+
+    // TODO: 4/24/2022 Set-up progress bars, write text for explore screen, draw the UI and find + images, make HP visible in the puzzle room, clean up the project
 
 }

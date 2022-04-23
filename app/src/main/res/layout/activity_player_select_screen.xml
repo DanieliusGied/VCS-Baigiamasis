@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".player.ui.PlayerSelectScreenActivity">
+    tools:context=".mainmenu.ui.PlayerSelectScreenActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginStart="32dp"
             android:text="@string/select_character_select_your_character"
-            android:textSize="24dp">
+            android:textSize="24sp">
         </TextView>
 
         <View
@@ -43,6 +43,8 @@
             tools:layout_editor_absoluteY="97dp"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/textViewCreateCharacterSelectYourCharacter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             />
 
         <TextView
@@ -54,7 +56,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginStart="32dp"
             android:text="@string/character_select_new_character"
-            android:textSize="24dp">
+            android:textSize="24sp">
         </TextView>
 
         <EditText
@@ -66,9 +68,7 @@
             android:text="Enter your player's name"
             app:layout_constraintTop_toBottomOf="@+id/textViewCreateCharacterNewCharacter"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-        </EditText>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButtonCharacterSelectConfirm"
@@ -92,6 +92,8 @@
             tools:layout_editor_absoluteY="97dp"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/materialButtonCharacterSelectConfirm"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             />
 
         <TextView
@@ -101,7 +103,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginStart="32dp"
             android:text="@string/select_character_load_saved_character"
-            android:textSize="24dp"
+            android:textSize="24sp"
             app:layout_constraintTop_toBottomOf="@+id/divider2"
             app:layout_constraintStart_toStartOf="parent">
 

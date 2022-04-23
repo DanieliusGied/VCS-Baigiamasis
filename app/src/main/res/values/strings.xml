@@ -32,7 +32,7 @@
     <string name="combat_screen_hp">HP: %1$d / %2$d</string>
     <string name="combat_screen_mp">MP: %1$d / %2$d</string>
     <string name="combat_screen_player_victory">%1$s was defeated! Received 2 XP and %2$d gold.</string>
-    <string name="combat_screen_player_defeat">%1$s was defeated... Game Over.</string>
+    <string name="combat_screen_player_defeat">%1$s was defeated. Game Over.</string>
     <string name="combat_screen_attack_missed">%1$s missed!</string>
     <string name="combat_screen_attack_hit">%1$s\'s attack hit for %2$d damage!</string>
     <string name="combat_screen_turn_break"> </string>
@@ -47,5 +47,10 @@
     <string name="treasure_screen_proceed">Proceed</string>
     <string name="treasure_screen_item_claimed">%1$s was added to %2$s\'s inventory!</string>
     <string name="treasure_screen_healing_claimed">%1$s recovered %2$d HP and %3$d MP!</string>
+
+    <string name="puzzle_screen_description">%1$s approaches a large stone door. Runes begin to form, as if from mist, etched upon the door\'s surface. %1$s recognises the runes as a riddle.</string>
+    <string name="puzzle_screen_puzzle_text">%1$s</string>
+    <string name="puzzle_screen_incorrect_choice">%1$s feels a racking headache as the room around dims. %1$s suffers 2 damage. The riddle shifts and changes.</string>
+    <string name="puzzle_screen_correct_choice">The words of the riddle fade and the door opens with a rumble.</string>
 
 </resources>

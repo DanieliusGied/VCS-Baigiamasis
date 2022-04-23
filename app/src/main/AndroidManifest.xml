@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Baigiamasis">
         <activity
-            android:name=".player.ui.PlayerSelectScreenActivity"
+            android:name=".mainmenu.ui.PlayerSelectScreenActivity"
             android:exported="false" />
         <activity
             android:name=".mainmenu.ui.MainGameMenuScreenActivity"

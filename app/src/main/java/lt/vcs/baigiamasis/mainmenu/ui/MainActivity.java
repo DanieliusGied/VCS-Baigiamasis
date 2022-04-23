@@ -13,7 +13,6 @@ import lt.vcs.baigiamasis.R;
 import lt.vcs.baigiamasis.common.Constant;
 import lt.vcs.baigiamasis.dungeon.puzzle.model.Puzzle;
 import lt.vcs.baigiamasis.dungeon.puzzle.model.PuzzleAnswer;
-import lt.vcs.baigiamasis.player.ui.PlayerSelectScreenActivity;
 import lt.vcs.baigiamasis.dungeon.combat.model.EncounterCombat;
 import lt.vcs.baigiamasis.dungeon.puzzle.model.EncounterPuzzle;
 import lt.vcs.baigiamasis.dungeon.treasure.model.EncounterTreasure;
@@ -127,14 +126,14 @@ public class MainActivity extends AppCompatActivity {
         PuzzleAnswerDao puzzleAnswerDao = mainDatabase.puzzleAnswerDao();
 
         puzzleAnswerDao.insertItem(new PuzzleAnswer(1, "A needle", false));
-        puzzleAnswerDao.insertItem(new PuzzleAnswer(1, "A pine tree", false));
-        puzzleAnswerDao.insertItem(new PuzzleAnswer(1, "A clock", false));
-        puzzleAnswerDao.insertItem(new PuzzleAnswer(1, "A table", false));
-        puzzleAnswerDao.insertItem(new PuzzleAnswer(1, "A bed", false));
-        puzzleAnswerDao.insertItem(new PuzzleAnswer(1, "A cold", false));
-        puzzleAnswerDao.insertItem(new PuzzleAnswer(1, "A rubber", false));
-        puzzleAnswerDao.insertItem(new PuzzleAnswer(1, "A comb", false));
-        puzzleAnswerDao.insertItem(new PuzzleAnswer(1, "A deck of cards", false));
-        puzzleAnswerDao.insertItem(new PuzzleAnswer(1, "A book", false));
+        puzzleAnswerDao.insertItem(new PuzzleAnswer(2, "A pine tree", false));
+        puzzleAnswerDao.insertItem(new PuzzleAnswer(3, "A clock", false));
+        puzzleAnswerDao.insertItem(new PuzzleAnswer(4, "A table", false));
+        puzzleAnswerDao.insertItem(new PuzzleAnswer(5, "A bed", false));
+        puzzleAnswerDao.insertItem(new PuzzleAnswer(6, "A cold", false));
+        puzzleAnswerDao.insertItem(new PuzzleAnswer(7, "A rubber", false));
+        puzzleAnswerDao.insertItem(new PuzzleAnswer(8, "A comb", false));
+        puzzleAnswerDao.insertItem(new PuzzleAnswer(9, "A deck of cards", false));
+        puzzleAnswerDao.insertItem(new PuzzleAnswer(10, "A book", false));
     }
 }
