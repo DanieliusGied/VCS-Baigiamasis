@@ -13,13 +13,13 @@
             android:name=".player.ui.PlayerSelectScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".MainGameMenuScreenActivity"
+            android:name=".mainmenu.ui.MainGameMenuScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".dungeon.ui.TreasureRoomScreenActivity"
+            android:name=".dungeon.treasure.ui.TreasureRoomScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".dungeon.ui.PuzzleRoomScreenActivity"
+            android:name=".dungeon.puzzle.ui.PuzzleRoomScreenActivity"
             android:exported="false" />
         <activity
             android:name=".inventory.ui.InventoryScreenActivity"
@@ -28,13 +28,13 @@
             android:name=".dungeon.ui.ExploreDungeonScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".combat.ui.CombatScreenActivity"
+            android:name=".dungeon.combat.ui.CombatScreenActivity"
             android:exported="false" />
         <activity
             android:name=".player.ui.PlayerInfoScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".mainmenu.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

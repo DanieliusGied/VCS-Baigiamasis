@@ -1,6 +1,6 @@
 package lt.vcs.baigiamasis.player.ui;
 
-import static lt.vcs.baigiamasis.Constant.PLAYER;
+import static lt.vcs.baigiamasis.common.Constant.PLAYER;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import lt.vcs.baigiamasis.Constant;
+import lt.vcs.baigiamasis.common.Constant;
 import lt.vcs.baigiamasis.R;
 import lt.vcs.baigiamasis.player.model.Player;
 import lt.vcs.baigiamasis.repository.PlayerDao;
@@ -95,7 +95,7 @@ public class PlayerInfoScreenActivity extends AppCompatActivity {
         textViewWIS.setText(String.format(resources.getString(R.string.player_info_screen_stat), player.getStatWis()));
 
         TextView textViewArmor = findViewById(R.id.textViewPlayerInfoScreenArmorValue);
-        int characterArmor = player.getStatDex()-10 + Constant.BASE_ARMOR;
+        int characterArmor = player.getArmor();
         if (inventoryDao.getArmorFromCharacter(player.getId()) != null) {
             characterArmor += inventoryDao.getArmorFromCharacter(player.getId()).getArmor();
         }

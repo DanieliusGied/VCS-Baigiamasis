@@ -1,6 +1,6 @@
 package lt.vcs.baigiamasis.inventory.ui;
 
-import static lt.vcs.baigiamasis.Constant.PLAYER;
+import static lt.vcs.baigiamasis.common.Constant.PLAYER;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +16,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import lt.vcs.baigiamasis.Constant;
+import lt.vcs.baigiamasis.common.Constant;
 import lt.vcs.baigiamasis.R;
 import lt.vcs.baigiamasis.player.model.Player;
 import lt.vcs.baigiamasis.inventory.model.Inventory;

@@ -2,7 +2,7 @@ package lt.vcs.baigiamasis.player.model;
 
 import androidx.room.*;
 
-import lt.vcs.baigiamasis.Constant;
+import lt.vcs.baigiamasis.common.Constant;
 
 @Entity(tableName = Constant.ENTITY_PLAYER_TABLE)
 public class Player {
@@ -56,13 +56,12 @@ public class Player {
         this.statDex = 10;
         this.statWis = 10;
 
-        this.armor = 5 + this.statDex - 10;
-
         calculateMaxHP();
         calculateMaxMP();
         calculateCurrentHP();
         calculateCurrentMP();
         calculateXPToLevel();
+        calculateArmor();
 
         this.gold = 10;
         this.currentXP = 0;
@@ -90,6 +89,10 @@ public class Player {
         this.xpToLevel = xpToLevel;
         this.isLeveledUp = isLeveledUp;
         this.levelUpPoints = levelUpPoints;
+    }
+
+    public void calculateArmor(){
+        this.armor = Constant.BASE_ARMOR + this.statDex - 10;
     }
 
     public void calculateMaxHP(){
@@ -135,6 +138,7 @@ public class Player {
         calculateMaxMP();
         calculateCurrentHP();
         calculateCurrentMP();
+        calculateArmor();
 
         if (this.levelUpPoints == 0) isLeveledUp = false;
     }

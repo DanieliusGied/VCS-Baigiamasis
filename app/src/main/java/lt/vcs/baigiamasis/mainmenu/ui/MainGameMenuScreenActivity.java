@@ -1,6 +1,6 @@
-package lt.vcs.baigiamasis;
+package lt.vcs.baigiamasis.mainmenu.ui;
 
-import static lt.vcs.baigiamasis.Constant.PLAYER;
+import static lt.vcs.baigiamasis.common.Constant.PLAYER;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,7 @@ import android.os.Bundle;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import lt.vcs.baigiamasis.R;
 import lt.vcs.baigiamasis.player.model.Player;
 import lt.vcs.baigiamasis.player.ui.PlayerInfoScreenActivity;
 import lt.vcs.baigiamasis.dungeon.ui.ExploreDungeonScreenActivity;

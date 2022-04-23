@@ -1,12 +1,8 @@
 package lt.vcs.baigiamasis.inventory.model;
 
-import static lt.vcs.baigiamasis.MainActivity.random;
-import static lt.vcs.baigiamasis.inventory.model.ItemType.ARMOR;
-import static lt.vcs.baigiamasis.inventory.model.ItemType.WEAPON;
-
 import androidx.room.*;
 
-import lt.vcs.baigiamasis.Constant;
+import lt.vcs.baigiamasis.common.Constant;
 
 @Entity(tableName = Constant.ENTITY_ITEM_TABLE)
 public class Item {

@@ -1,17 +1,10 @@
 package lt.vcs.baigiamasis.inventory.model;
 
-import static lt.vcs.baigiamasis.inventory.model.ItemType.ARMOR;
-import static lt.vcs.baigiamasis.inventory.model.ItemType.WEAPON;
-
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import lt.vcs.baigiamasis.Constant;
+import lt.vcs.baigiamasis.common.Constant;
 
 @Entity(tableName = Constant.ENTITY_INVENTORY_TABLE)
 public class Inventory {

@@ -8,9 +8,8 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import lt.vcs.baigiamasis.Constant;
+import lt.vcs.baigiamasis.common.Constant;
 import lt.vcs.baigiamasis.dungeon.model.Encounter;
-import lt.vcs.baigiamasis.inventory.model.Item;
 
 @Dao
 public interface EncounterDao {

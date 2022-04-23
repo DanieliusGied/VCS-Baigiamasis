@@ -5,7 +5,7 @@ import androidx.room.*;
 import java.util.List;
 
 import lt.vcs.baigiamasis.player.model.Player;
-import lt.vcs.baigiamasis.Constant;
+import lt.vcs.baigiamasis.common.Constant;
 
 @Dao
 public interface PlayerDao {

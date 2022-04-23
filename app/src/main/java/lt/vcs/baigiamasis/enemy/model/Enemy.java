@@ -1,10 +1,10 @@
 package lt.vcs.baigiamasis.enemy.model;
 
-import static lt.vcs.baigiamasis.MainActivity.random;
+import static lt.vcs.baigiamasis.mainmenu.ui.MainActivity.random;
 
 import androidx.room.*;
 
-import lt.vcs.baigiamasis.Constant;
+import lt.vcs.baigiamasis.common.Constant;
 
 @Entity(tableName = Constant.ENTITY_ENEMY_TABLE)
 public class Enemy {

@@ -8,7 +8,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import lt.vcs.baigiamasis.Constant;
+import lt.vcs.baigiamasis.common.Constant;
 import lt.vcs.baigiamasis.enemy.model.Enemy;
 
 @Dao

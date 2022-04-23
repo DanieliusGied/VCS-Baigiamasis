@@ -1,6 +1,7 @@
-package lt.vcs.baigiamasis.dungeon.model;
+package lt.vcs.baigiamasis.dungeon.combat.model;
 
-import lt.vcs.baigiamasis.Constant;
+import lt.vcs.baigiamasis.common.Constant;
+import lt.vcs.baigiamasis.dungeon.model.Encounter;
 
 public class EncounterCombat extends Encounter {
 

@@ -8,10 +8,8 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import lt.vcs.baigiamasis.Constant;
-import lt.vcs.baigiamasis.combat.model.Graveyard;
-import lt.vcs.baigiamasis.inventory.model.Inventory;
-import lt.vcs.baigiamasis.inventory.model.Item;
+import lt.vcs.baigiamasis.common.Constant;
+import lt.vcs.baigiamasis.dungeon.combat.model.Graveyard;
 
 @Dao
 public interface GraveyardDao {

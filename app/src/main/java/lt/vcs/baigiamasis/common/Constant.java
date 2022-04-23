@@ -1,4 +1,4 @@
-package lt.vcs.baigiamasis;
+package lt.vcs.baigiamasis.common;
 
 public class Constant {
     public static final int MAIN_DATABASE_VERSION = 11;
@@ -10,6 +10,8 @@ public class Constant {
     public final static String ENTITY_ENCOUNTER_TABLE = "encounter";
     public final static String ENTITY_ENEMY_TABLE = "enemy";
     public final static String ENTITY_GRAVEYARD_TABLE = "graveyard";
+    public final static String ENTITY_PUZZLE_TABLE = "puzzle";
+    public final static String ENTITY_PUZZLE_ANSWER_TABLE = "puzzle";
 
     public final static String WEAPON = "WEAPON";
     public final static String ARMOR = "ARMOR";

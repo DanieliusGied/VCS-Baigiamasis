@@ -1,6 +1,6 @@
 package lt.vcs.baigiamasis.dungeon.ui;
 
-import static lt.vcs.baigiamasis.Constant.PLAYER;
+import static lt.vcs.baigiamasis.common.Constant.PLAYER;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -16,12 +16,14 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Random;
 
-import lt.vcs.baigiamasis.Constant;
-import lt.vcs.baigiamasis.MainGameMenuScreenActivity;
+import lt.vcs.baigiamasis.common.Constant;
+import lt.vcs.baigiamasis.dungeon.puzzle.ui.PuzzleRoomScreenActivity;
+import lt.vcs.baigiamasis.dungeon.treasure.ui.TreasureRoomScreenActivity;
+import lt.vcs.baigiamasis.mainmenu.ui.MainGameMenuScreenActivity;
 import lt.vcs.baigiamasis.R;
 import lt.vcs.baigiamasis.inventory.ui.InventoryScreenActivity;
 import lt.vcs.baigiamasis.player.model.Player;
-import lt.vcs.baigiamasis.combat.ui.CombatScreenActivity;
+import lt.vcs.baigiamasis.dungeon.combat.ui.CombatScreenActivity;
 import lt.vcs.baigiamasis.dungeon.model.Dungeon;
 import lt.vcs.baigiamasis.dungeon.model.Encounter;
 import lt.vcs.baigiamasis.player.ui.PlayerInfoScreenActivity;
@@ -57,7 +59,15 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setUpDatabase();
+        setUpUI();
 
+
+    }
+
+
+    //SET-UP DATABASE:
+    private void setUpDatabase() {
         Intent intent = getIntent();
         characterID = intent.getIntExtra(Constant.PLAYER, 0);
 
@@ -70,10 +80,6 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
         dungeon = dungeonDao.getItemFromCharacter(player.getId());
 
         resources = getResources();
-
-        setUpUI();
-
-
     }
 
     //SET UP UI:

@@ -5,7 +5,7 @@
 //
 //import androidx.room.TypeConverter;
 //
-//import lt.vcs.baigiamasis.Constant;
+//import lt.vcs.baigiamasis.common.Constant;
 //import lt.vcs.baigiamasis.inventory.model.ItemType;
 //
 //public class Converter {

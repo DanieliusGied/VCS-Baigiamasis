@@ -1,6 +1,6 @@
 package lt.vcs.baigiamasis.player.ui;
 
-import static lt.vcs.baigiamasis.Constant.PLAYER;
+import static lt.vcs.baigiamasis.common.Constant.PLAYER;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +19,7 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import lt.vcs.baigiamasis.MainGameMenuScreenActivity;
+import lt.vcs.baigiamasis.mainmenu.ui.MainGameMenuScreenActivity;
 import lt.vcs.baigiamasis.R;
 import lt.vcs.baigiamasis.player.model.Player;
 import lt.vcs.baigiamasis.dungeon.model.Dungeon;

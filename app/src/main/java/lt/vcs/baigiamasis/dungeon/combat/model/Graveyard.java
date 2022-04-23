@@ -1,10 +1,10 @@
-package lt.vcs.baigiamasis.combat.model;
+package lt.vcs.baigiamasis.dungeon.combat.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import lt.vcs.baigiamasis.Constant;
+import lt.vcs.baigiamasis.common.Constant;
 
 @Entity(tableName = Constant.ENTITY_GRAVEYARD_TABLE)
 public class Graveyard {

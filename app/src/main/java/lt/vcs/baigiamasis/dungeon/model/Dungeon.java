@@ -2,7 +2,7 @@ package lt.vcs.baigiamasis.dungeon.model;
 
 import androidx.room.*;
 
-import lt.vcs.baigiamasis.Constant;
+import lt.vcs.baigiamasis.common.Constant;
 
 @Entity(tableName = Constant.ENTITY_DUNGEON_TABLE)
 public class Dungeon {
