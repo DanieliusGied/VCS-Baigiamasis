@@ -57,5 +57,8 @@
     <string name="inventory_icon">.</string>
     <string name="button_close">close</string>
     <string name="inventory_screen_inventory_title">INVENTORY</string>
+    <string name="combat_screen_attack">Attack</string>
+    <string name="combat_screen_cast_a_spell">Cast a spell</string>
+    <string name="combat_screen_flee">Flee</string>
 
 </resources>

@@ -260,8 +260,6 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
         }
     }
 
-
-    // TODO: 4/22/2022 set-up images when creating the ui
     private void setUpImageView(){
         imageView = findViewById(R.id.imageViewExploreScreen);
 

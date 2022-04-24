@@ -123,8 +123,35 @@ public class CombatScreenActivity extends AppCompatActivity {
         setUpMaterialButtonSpell();
         setUpMaterialButtonFlee();
 
+        setUpPortraits();
+
         setUpEnemy();
         setUpPlayer();
+    }
+
+    private void setUpPortraits(){
+        ImageView imageViewPlayer = findViewById(R.id.imageViewCombatScreenPlayerPortrait);
+        imageViewPlayer.setImageResource(R.drawable.player_portrait);
+
+        ImageView imageViewEnemy = findViewById(R.id.imageViewCombatScreenEnemyPortrait);
+        switch (enemy.getId()){
+            case 1:
+                imageViewEnemy.setImageResource(R.drawable.goblin_portrait);
+                break;
+            case 2:
+                imageViewEnemy.setImageResource(R.drawable.skeleton_portrait);
+                break;
+            case 3:
+                imageViewEnemy.setImageResource(R.drawable.rat_portrait);
+                break;
+            case 4:
+                imageViewEnemy.setImageResource(R.drawable.slime_portrait);
+                break;
+            default:
+                break;
+        }
+
+
     }
 
     private void setUpEnemy(){
@@ -133,6 +160,8 @@ public class CombatScreenActivity extends AppCompatActivity {
 
         textViewEnemyHP = findViewById(R.id.textViewCombatScreenEnemyHP);
         textViewEnemyHP.setText(String.format(resources.getString(R.string.combat_screen_hp), enemy.getHealth(), enemyMaxHP));
+
+        setUpProgressBars();
     }
 
     private void setUpPlayer(){
@@ -144,6 +173,8 @@ public class CombatScreenActivity extends AppCompatActivity {
 
         textViewPlayerMP = findViewById(R.id.textViewCombatScreenPlayerMP);
         textViewPlayerMP.setText(String.format(resources.getString(R.string.combat_screen_mp), player.getCurrentMana(), player.getMaxMana()));
+
+        setUpProgressBars();
     }
 
     private void setUpCombatTextLog(){
@@ -224,6 +255,21 @@ public class CombatScreenActivity extends AppCompatActivity {
                 });
         builder.setPositiveButton("Fight!", null);
         builder.show();
+    }
+
+    private void setUpProgressBars(){
+        ProgressBar progressBarEnemyHP = findViewById(R.id.progressBarCombatScreenEnemyHP);
+        ProgressBar progressBarPlayerHP = findViewById(R.id.progressBarCombatScreenPlayerHP);
+        ProgressBar progressBarPlayerMP = findViewById(R.id.progressBarCombatScreenPlayerMP);
+
+        int progressEnemyHP = (int) Math.round((double) enemy.getHealth() / (double) enemyMaxHP * 100);
+        progressBarEnemyHP.setProgress(progressEnemyHP);
+
+        int progressPlayerHP = (int) Math.round((double) player.getCurrentHealth() / (double) player.getMaxHealth() * 100);
+        progressBarPlayerHP.setProgress(progressPlayerHP);
+
+        int progressPlayerMP = (int) Math.round((double) player.getCurrentMana() / (double) player.getMaxMana() * 100);
+        progressBarPlayerMP.setProgress(progressPlayerMP);
     }
 
     //SET-UP COMBAT
