@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.widget.*;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Random;
@@ -39,8 +38,8 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
     private MaterialButton materialButtonActivate;
     private MaterialButton materialButtonSkip;
     private MaterialButton materialButtonFlee;
-    private FloatingActionButton floatingActionButtonPlayerInfo;
-    private FloatingActionButton floatingActionButtonInventory;
+    private MaterialButton materialButtonPlayerInfo;
+    private MaterialButton materialButtonInventory;
 
     private PlayerDao playerDao;
     private EncounterDao encounterDao;
@@ -190,8 +189,8 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
     }
 
     private void setUpCharacterInfoScreenButton(){
-        floatingActionButtonPlayerInfo = findViewById(R.id.floatingActionButtonExploreDungeonScreenPlayerInfo);
-        floatingActionButtonPlayerInfo.setOnClickListener(view -> {
+        materialButtonPlayerInfo = findViewById(R.id.materialButtonExploreDungeonScreenPlayerInfo);
+        materialButtonPlayerInfo.setOnClickListener(view -> {
             Intent intent = new Intent(ExploreDungeonScreenActivity.this, PlayerInfoScreenActivity.class);
             intent.putExtra(PLAYER, player.getId());
             startActivity(intent);
@@ -199,8 +198,8 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
     }
 
     private void setUpInventoryScreenButton(){
-        floatingActionButtonInventory = findViewById(R.id.floatingActionButtonExploreDungeonInventoryScreen);
-        floatingActionButtonInventory.setOnClickListener(view -> {
+        materialButtonInventory = findViewById(R.id.materialButtonExploreDungeonInventoryScreen);
+        materialButtonInventory.setOnClickListener(view -> {
             Intent intent = new Intent(ExploreDungeonScreenActivity.this, InventoryScreenActivity.class);
             intent.putExtra(PLAYER, player.getId());
             startActivity(intent);
@@ -265,20 +264,21 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
     // TODO: 4/22/2022 set-up images when creating the ui
     private void setUpImageView(){
         imageView = findViewById(R.id.imageViewExploreScreen);
-        switch (randomEncounterID){
+
+        Random random = new Random();
+        switch (random.nextInt(3)){
+            case 0:
+                imageView.setImageResource(R.drawable.explore_hallway);
+                break;
             case 1:
+                imageView.setImageResource(R.drawable.explore_hallway_2);
+                break;
             case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
+                imageView.setImageResource(R.drawable.explore_hallway_3);
+                break;
             default:
                 break;
         }
-
-        imageView.setImageResource(R.drawable.ic_baseline_account_circle_24);
     }
 
     private void setUpTextView(){

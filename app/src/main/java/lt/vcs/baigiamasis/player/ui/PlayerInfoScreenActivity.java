@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
@@ -54,6 +55,7 @@ public class PlayerInfoScreenActivity extends AppCompatActivity {
 
         setUpText();
         setUpCloseButton();
+        setUpProgressBars();
 
         setUpLevelUpButtonsAndText();
         checkForLevelUp();
@@ -63,7 +65,7 @@ public class PlayerInfoScreenActivity extends AppCompatActivity {
         Resources resources = getResources();
 
         TextView textViewName = findViewById(R.id.textViewPlayerInfoScreenName);
-        String textName = String.format(resources.getString(R.string.player_info_screen_name), player.getName());
+        String textName = String.format(resources.getString(R.string.player_info_screen_name), player.getName(), player.getLevel());
         textViewName.setText(textName);
 
         TextView textViewHP = findViewById(R.id.textViewPlayerInfoScreenHP);
@@ -77,10 +79,6 @@ public class PlayerInfoScreenActivity extends AppCompatActivity {
         TextView textViewXP = findViewById(R.id.textViewPlayerInfoScreenXP);
         String textXP = String.format(resources.getString(R.string.player_info_screen_xp), player.getCurrentXP(), player.getXpToLevel());
         textViewXP.setText(textXP);
-
-        TextView textViewLevel = findViewById(R.id.textViewPlayerInfoScreenLevel);
-        String textLevel = String.format(resources.getString(R.string.player_info_screen_level), player.getLevel());
-        textViewLevel.setText(textLevel);
 
         TextView textViewSTR = findViewById(R.id.textViewPlayerInfoScreenSTRValue);
         textViewSTR.setText(String.format(resources.getString(R.string.player_info_screen_stat), player.getStatStr()));
@@ -195,5 +193,20 @@ public class PlayerInfoScreenActivity extends AppCompatActivity {
     private void setUpCloseButton(){
         materialButton = findViewById(R.id.materialButtonPlayerInfoScreenClose);
         materialButton.setOnClickListener(view -> finish());
+    }
+
+    private void setUpProgressBars(){
+        ProgressBar progressBarHP = findViewById(R.id.progressBarPlayerInfoScreenHP);
+        ProgressBar progressBarMP = findViewById(R.id.progressBarPlayerInfoScreenMP);
+        ProgressBar progressBarXP = findViewById(R.id.progressBarPlayerInfoScreenXP);
+
+        int progressHP = (int) Math.round((double) player.getCurrentHealth() / (double) player.getMaxHealth() * 100);
+        progressBarHP.setProgress(progressHP);
+
+        int progressMP = (int) Math.round((double) player.getCurrentMana() / (double) player.getMaxMana() * 100);
+        progressBarMP.setProgress(progressMP);
+
+        int progressXP = (int) Math.round((double) player.getCurrentXP() / (double) player.getXpToLevel() * 100);
+        progressBarXP.setProgress(progressXP);
     }
 }

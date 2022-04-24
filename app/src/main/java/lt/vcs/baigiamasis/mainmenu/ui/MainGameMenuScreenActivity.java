@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import lt.vcs.baigiamasis.R;
 import lt.vcs.baigiamasis.player.model.Player;
@@ -20,8 +19,8 @@ import lt.vcs.baigiamasis.repository.MainDatabase;
 
 public class MainGameMenuScreenActivity extends AppCompatActivity {
 
-    FloatingActionButton floatingActionButtonPlayerInfo;
-    FloatingActionButton floatingActionButtonInventory;
+    MaterialButton materialButtonPlayerInfo;
+    MaterialButton materialButtonInventory;
     PlayerDao playerDao;
     Player player;
     MaterialButton materialButtonExplore;
@@ -47,8 +46,8 @@ public class MainGameMenuScreenActivity extends AppCompatActivity {
     }
 
     private void setUpCharacterInfoScreenButton(){
-        floatingActionButtonPlayerInfo = findViewById(R.id.floatingActionButtonCharacterInfoScreen);
-        floatingActionButtonPlayerInfo.setOnClickListener(view -> {
+        materialButtonPlayerInfo = findViewById(R.id.materialButtonCharacterInfoScreen);
+        materialButtonPlayerInfo.setOnClickListener(view -> {
             Intent intent = new Intent(MainGameMenuScreenActivity.this, PlayerInfoScreenActivity.class);
             intent.putExtra(PLAYER, player.getId());
             startActivity(intent);
@@ -56,8 +55,8 @@ public class MainGameMenuScreenActivity extends AppCompatActivity {
     }
 
     private void setUpInventoryScreenButton(){
-        floatingActionButtonInventory = findViewById(R.id.floatingActionButtonInventoryScreen);
-        floatingActionButtonInventory.setOnClickListener(view -> {
+        materialButtonInventory = findViewById(R.id.materialButtonInventoryScreen);
+        materialButtonInventory.setOnClickListener(view -> {
             Intent intent = new Intent(MainGameMenuScreenActivity.this, InventoryScreenActivity.class);
             intent.putExtra(PLAYER, player.getId());
             startActivity(intent);

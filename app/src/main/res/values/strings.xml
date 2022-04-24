@@ -3,14 +3,14 @@
     <string name="main_app_name">Baigiamasis darbas</string>
 
     <string name="select_character_create_new_character">Confirm</string>
-    <string name="select_character_load_saved_character">Load Saved Character</string>
-    <string name="select_character_select_your_character">Select your player:</string>
-    <string name="character_select_new_character">New Character</string>
+    <string name="select_character_load_saved_character">LOAD SAVED CHARACTER</string>
+    <string name="select_character_select_your_character">SELECT YOUR PLAYER:</string>
+    <string name="character_select_new_character">NEW CHARACTER</string>
 
-    <string name="main_game_menu_explore_the_dungeon">Explore the dungeon</string>
+    <string name="main_game_menu_explore_the_dungeon">Enter the dungeon</string>
 
 
-    <string name="player_info_screen_name">Name: %1$s</string>
+    <string name="player_info_screen_name">Name: %1$s, Level %2$d</string>
     <string name="player_info_screen_hp">HP: %1$d / %2$d</string>
     <string name="player_info_screen_mp">MP: %1$d / %2$d</string>
     <string name="player_info_screen_xp">XP: %1$d / %2$d</string>
@@ -52,5 +52,10 @@
     <string name="puzzle_screen_puzzle_text">%1$s</string>
     <string name="puzzle_screen_incorrect_choice">%1$s feels a racking headache as the room around dims. %1$s suffers 2 damage. The riddle shifts and changes.</string>
     <string name="puzzle_screen_correct_choice">The words of the riddle fade and the door opens with a rumble.</string>
+
+    <string name="character_sheet_icon">I</string>
+    <string name="inventory_icon">.</string>
+    <string name="button_close">close</string>
+    <string name="inventory_screen_inventory_title">INVENTORY</string>
 
 </resources>

@@ -9,85 +9,104 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/bg">
 
         <ImageView
             android:id="@+id/imageViewExploreScreen"
             android:layout_width="350dp"
             android:layout_height="150dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/text_border"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="450dp"
+            android:layout_height="450dp"
+            android:src="@drawable/text_350_350"
+            app:layout_constraintTop_toTopOf="@+id/textViewExploreScreen"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewExploreScreen"
+            app:layout_constraintStart_toStartOf="@+id/textViewExploreScreen"
+            app:layout_constraintEnd_toEndOf="@+id/textViewExploreScreen"
+            android:layout_marginTop="-75dp"
+            android:layout_marginBottom="-75dp"/>
 
         <TextView
             android:id="@+id/textViewExploreScreen"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
+            android:fontFamily="@font/vecna_italic"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewExploreScreen"
-            android:background="@drawable/text_border"/>
+            app:layout_constraintTop_toBottomOf="@+id/imageViewExploreScreen" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButtonExploreScreenActivate"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewExploreScreen"
-            app:layout_constraintBottom_toTopOf="@+id/materialButtonExploreScreenSkip"/>
+            app:layout_constraintBottom_toTopOf="@+id/materialButtonExploreScreenSkip"
+            android:fontFamily="@font/breathe_fire_normal"
+            android:textColor="@color/foreground_yellow"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButtonExploreScreenSkip"
-            android:layout_width="300dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintStart_toStartOf="@+id/textViewExploreScreen"
+            app:layout_constraintStart_toStartOf="@+id/materialButtonExploreScreenActivate"
             app:layout_constraintTop_toBottomOf="@+id/materialButtonExploreScreenActivate"
-            app:layout_constraintBottom_toTopOf="@+id/materialButtonExploreScreenFlee"/>
+            app:layout_constraintBottom_toTopOf="@+id/materialButtonExploreScreenFlee"
+            android:fontFamily="@font/breathe_fire_normal"
+            android:textColor="@color/foreground_yellow"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButtonExploreScreenFlee"
-            android:layout_width="300dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintStart_toStartOf="@+id/textViewExploreScreen"
-            app:layout_constraintTop_toBottomOf="@+id/materialButtonExploreScreenSkip"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButtonExploreDungeonScreenPlayerInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_baseline_account_circle_24"
-            app:layout_constraintTop_toBottomOf="@+id/materialButtonExploreScreenActivate"
-            app:layout_constraintBottom_toTopOf="@+id/floatingActionButtonExploreDungeonInventoryScreen"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/floatingActionButtonExploreDungeonInventoryScreen"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButtonExploreDungeonInventoryScreen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:src="@drawable/ic_baseline_backpack_24"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintStart_toEndOf="@+id/materialButtonExploreDungeonScreenPlayerInfo"
+            app:layout_constraintEnd_toStartOf="@+id/materialButtonExploreDungeonInventoryScreen"
+            app:layout_constraintTop_toBottomOf="@+id/materialButtonExploreScreenSkip"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:fontFamily="@font/breathe_fire_normal"
+            android:textColor="@color/foreground_yellow"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/materialButtonExploreDungeonScreenPlayerInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="@string/character_sheet_icon"
+            android:fontFamily="@font/donjonicons"
+            android:textSize="32sp"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="@+id/materialButtonExploreScreenFlee"
+            app:layout_constraintBottom_toBottomOf="@+id/materialButtonExploreScreenFlee"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/materialButtonExploreDungeonInventoryScreen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:text="@string/inventory_icon"
+            android:fontFamily="@font/donjonicons"
+            android:textSize="32sp"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="@+id/materialButtonExploreScreenFlee"
+            app:layout_constraintBottom_toBottomOf="@+id/materialButtonExploreScreenFlee"
             app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

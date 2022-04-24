@@ -7,57 +7,49 @@
     tools:context=".mainmenu.ui.PlayerSelectScreenActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/imageViewCharacterSelect"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="32dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </ImageView>
+        android:layout_height="match_parent"
+        android:background="@drawable/bg">
 
         <TextView
             android:id="@+id/textViewCreateCharacterSelectYourCharacter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewCharacterSelect"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="32dp"
+            android:background="@drawable/text_350_50"
+            android:fontFamily="@font/breathe_fire_normal"
+            android:gravity="center"
             android:text="@string/select_character_select_your_character"
-            android:textSize="24sp">
-        </TextView>
-
-        <View
-            android:id="@+id/divider1"
-            android:layout_width="409dp"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="97dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCreateCharacterSelectYourCharacter"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/background_brown"
+            android:textSize="32sp"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/imageViewNewCharacter"
+            android:layout_width="425dp"
+            android:layout_height="350dp"
+            android:src="@drawable/text_350_250"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="140dp" />
 
         <TextView
             android:id="@+id/textViewCreateCharacterNewCharacter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/divider1"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="85dp"
+            android:fontFamily="@font/shadows_into_light"
             android:text="@string/character_select_new_character"
-            android:textSize="24sp">
-        </TextView>
+            android:textColor="@color/background_brown"
+            android:textSize="24sp"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageViewNewCharacter"/>
 
         <EditText
             android:id="@+id/editTextCreateCharacter"
@@ -65,47 +57,51 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/vecna"
             android:text="Enter your player's name"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCreateCharacterNewCharacter"
+            android:textColor="@color/background_brown"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/textViewCreateCharacterNewCharacter" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButtonCharacterSelectConfirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="36dp"
+            android:fontFamily="@font/breathe_fire_normal"
             android:text="@string/select_character_create_new_character"
+            android:textColor="@color/foreground_yellow"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextCreateCharacter">
 
         </com.google.android.material.button.MaterialButton>
 
-        <View
-            android:id="@+id/divider2"
-            android:layout_width="409dp"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="97dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/materialButtonCharacterSelectConfirm"
-            app:layout_constraintStart_toStartOf="parent"
+        <ImageView
+            android:id="@+id/imageViewLoadCharacter"
+            android:layout_width="425dp"
+            android:layout_height="350dp"
+            android:src="@drawable/text_350_250"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="390dp" />
 
         <TextView
             android:id="@+id/textViewCharacterSelectLoadSavedCharacter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="85dp"
+            android:fontFamily="@font/shadows_into_light"
             android:text="@string/select_character_load_saved_character"
+            android:textColor="@color/background_brown"
             android:textSize="24sp"
-            app:layout_constraintTop_toBottomOf="@+id/divider2"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageViewLoadCharacter">
 
         </TextView>
 
@@ -113,11 +109,11 @@
             android:id="@+id/listViewMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textViewCharacterSelectLoadSavedCharacter"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-        </ListView>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewCharacterSelectLoadSavedCharacter" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
