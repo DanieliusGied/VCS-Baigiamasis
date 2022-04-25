@@ -20,7 +20,6 @@ public class Enemy {
     private int goldDrop;
     @ColumnInfo(name = "enemy_max_damage")
     private int maxDamage;
-    // create a bunch of enemies that extend this class
 
     @Ignore
     private int damage;
@@ -33,13 +32,6 @@ public class Enemy {
         this.damage = random.nextInt(maxDamage);
         return this.damage;
     }
-
-//    public void giveLoot(java.lang.Character player){
-//        player.gold += goldDrop;
-//        System.out.println(player.name + " has received " + this.goldDrop + " gold!");
-//    }
-
-    //give exp
 
     public int getId() {
         return id;

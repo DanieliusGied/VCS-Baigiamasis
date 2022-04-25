@@ -33,7 +33,6 @@ import lt.vcs.baigiamasis.repository.PlayerDao;
 
 public class TreasureRoomScreenActivity extends AppCompatActivity {
 
-    private ImageView imageView;
     private MaterialButton materialButtonClaim;
 
     private PlayerDao playerDao;
@@ -98,6 +97,34 @@ public class TreasureRoomScreenActivity extends AppCompatActivity {
         setUpText();
     }
 
+    private void setUpText(){
+        TextView textView = findViewById(R.id.textViewTreasureRoom);
+
+        if (encounter.getId() == 7) {
+            textView.setText(String.format(resources.getString(R.string.treasure_screen_item_text), rewardItem.getName(), player.getName()));
+            materialButtonClaim.setText(String.format(resources.getString(R.string.treasure_screen_claim_item), rewardItem.getName()));
+        } else if (encounter.getId() == 8) {
+            textView.setText(String.format(resources.getString(R.string.treasure_screen_healing_text), player.getName()));
+            materialButtonClaim.setText(R.string.treasure_screen_claim_healing);
+        }
+    }
+
+    private void showSnackBarClaimItem(){
+        CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutTreasureRoom);
+        Snackbar
+                .make(coordinatorLayout, String.format(resources.getString(R.string.treasure_screen_item_claimed), rewardItem.getName(), player.getName()), Snackbar.LENGTH_LONG)
+                .show();
+    }
+
+    private void showSnackBarClaimHealing(){
+        CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutTreasureRoom);
+        Snackbar
+                .make(coordinatorLayout, String.format(resources.getString(R.string.treasure_screen_healing_claimed), player.getName(), healthReward, manaReward), Snackbar.LENGTH_LONG)
+                .show();
+    }
+
+
+    //SET-UP BUTTONS
     private void setUpClaimButton(){
         materialButtonClaim = findViewById(R.id.materialButtonTreasureRoomClaim);
         materialButtonClaim.setOnClickListener(view -> {
@@ -117,20 +144,6 @@ public class TreasureRoomScreenActivity extends AppCompatActivity {
         });
     }
 
-    private void showSnackBarClaimItem(){
-        CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutTreasureRoom);
-        Snackbar
-                .make(coordinatorLayout, String.format(resources.getString(R.string.treasure_screen_item_claimed), rewardItem.getName(), player.getName()), Snackbar.LENGTH_LONG)
-                .show();
-    }
-
-    private void showSnackBarClaimHealing(){
-        CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutTreasureRoom);
-        Snackbar
-                .make(coordinatorLayout, String.format(resources.getString(R.string.treasure_screen_healing_claimed), player.getName(), healthReward, manaReward), Snackbar.LENGTH_LONG)
-                .show();
-    }
-
     private void setUpProceedButton(){
         MaterialButton materialButtonProceed = findViewById(R.id.materialButtonTreasureRoomProceed);
         materialButtonProceed.setText(R.string.treasure_screen_proceed);
@@ -146,18 +159,6 @@ public class TreasureRoomScreenActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-    }
-
-    private void setUpText(){
-        TextView textView = findViewById(R.id.textViewTreasureRoom);
-
-        if (encounter.getId() == 7) {
-            textView.setText(String.format(resources.getString(R.string.treasure_screen_item_text), rewardItem.getName(), player.getName()));
-            materialButtonClaim.setText(String.format(resources.getString(R.string.treasure_screen_claim_item), rewardItem.getName()));
-        } else if (encounter.getId() == 8) {
-            textView.setText(String.format(resources.getString(R.string.treasure_screen_healing_text), player.getName()));
-            materialButtonClaim.setText(R.string.treasure_screen_claim_healing);
-        }
     }
 
     //SET-UP REWARD CLAIM FUNCTIONALITY

@@ -7,12 +7,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -25,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lt.vcs.baigiamasis.R;
+import lt.vcs.baigiamasis.common.Constant;
+import lt.vcs.baigiamasis.inventory.ui.InventoryScreenActivity;
 import lt.vcs.baigiamasis.player.model.Player;
 import lt.vcs.baigiamasis.dungeon.model.Dungeon;
 import lt.vcs.baigiamasis.inventory.model.Inventory;
@@ -53,8 +57,12 @@ public class PlayerSelectScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_player_select_screen);
+        setUpDatabase();
+        setUpUI();
+    }
 
+    //SET-UP DATABASE
+    private void setUpDatabase() {
         MainDatabase mainDatabase = MainDatabase.getInstance(getApplicationContext());
         playerDao = mainDatabase.playerDao();
         itemDao = mainDatabase.itemDao();
@@ -63,42 +71,49 @@ public class PlayerSelectScreenActivity extends AppCompatActivity {
 
         playerList = new ArrayList();
         playerList = playerDao.getAll();
+    }
+
+    //SET-UP UI
+    private void setUpUI(){
+        setContentView(R.layout.activity_player_select_screen);
 
         setUpListView();
         setUpCreateButton();
         setUpListViewItemClick();
         setUpListViewItemLongClick();
-
     }
 
+    //SET-UP CREATE CHARACTER FUNCTIONALITY
     private void setUpCreateButton(){
         materialButton = findViewById(R.id.materialButtonCharacterSelectConfirm);
         editText = findViewById(R.id.editTextCreateCharacter);
         materialButton.setOnClickListener(view -> {
-            String name = editText.getText().toString();
-
-            player = new Player(0, name);
-            player.setLeveledUp(true);
-            player.setLevelUpPoints(10);
-            playerDao.insertItem(player);
-
-            Player createdPlayer = playerDao.getItem(playerDao.returnMaxID());
-
-            Inventory inventory1 = new Inventory(true, createdPlayer.getId(), 1);
-            inventoryDao.insertItem(inventory1);
-            Inventory inventory2 = new Inventory(true, createdPlayer.getId(), 2);
-            inventoryDao.insertItem(inventory2);
-
-            Dungeon dungeon = new Dungeon(createdPlayer.getId(), 0, 2, false, false);
-            dungeonDao.insertItem(dungeon);
-
-            Intent intent = new Intent(PlayerSelectScreenActivity.this, MainGameMenuScreenActivity.class);
-            intent.putExtra(PLAYER, playerDao.returnMaxID());
-            startActivity(intent);
-            finish();
+            createCharacter();
         });
     }
 
+    private void createCharacter(){
+        String name = editText.getText().toString();
+
+        player = new Player(0, name);
+        playerDao.insertItem(player);
+
+        Player createdPlayer = playerDao.getItem(playerDao.returnMaxID());
+
+        Inventory inventory1 = new Inventory(true, createdPlayer.getId(), 1);
+        Inventory inventory2 = new Inventory(true, createdPlayer.getId(), 2);
+        Dungeon dungeon = new Dungeon(createdPlayer.getId(), 0, 2, false, false);
+        inventoryDao.insertItem(inventory1);
+        inventoryDao.insertItem(inventory2);
+        dungeonDao.insertItem(dungeon);
+
+        Intent intent = new Intent(PlayerSelectScreenActivity.this, MainGameMenuScreenActivity.class);
+        intent.putExtra(PLAYER, playerDao.returnMaxID());
+        startActivity(intent);
+        finish();
+    }
+
+    //SET-UP LOAD CHARACTER FUNCTIONALITY
     private void setUpListView() {
         elementListView = findViewById(R.id.listViewMain);
 
@@ -142,20 +157,31 @@ public class PlayerSelectScreenActivity extends AppCompatActivity {
     }
 
     public void showErrorDialog(int position){
-        AlertDialog.Builder builder = new AlertDialog.Builder(PlayerSelectScreenActivity.this);
-        builder.setMessage("Would you like to delete this character?");
+        final Dialog dialog = new Dialog(PlayerSelectScreenActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_custom);
 
-        builder.setPositiveButton("Yes",
-                (dialogInterface, i) -> {
-                    playerDao.deleteItem(playerList.get(position));
-                    inventoryDao.deleteItemFromCharacter(playerList.get(position).getId());
-                    dungeonDao.deleteItemFromCharacter(playerList.get(position).getId());
+        TextView textView = dialog.findViewById(R.id.dialogTextView);
+        MaterialButton buttonPositive = dialog.findViewById(R.id.dialogPositiveButton);
+        MaterialButton buttonNegative = dialog.findViewById(R.id.dialogNegativeButton);
 
-                    playerList.remove(position);
+        textView.setText(R.string.player_select_delete_confirmation);
+        buttonPositive.setText(R.string.button_yes);
+        buttonNegative.setText(R.string.button_no);
 
-                    arrayAdapter.notifyDataSetChanged();
-                });
-        builder.setNegativeButton("No", null);
-        builder.show();
+        buttonPositive.setOnClickListener(view -> {
+            playerDao.deleteItem(playerList.get(position));
+            inventoryDao.deleteItemFromCharacter(playerList.get(position).getId());
+            dungeonDao.deleteItemFromCharacter(playerList.get(position).getId());
+
+            playerList.remove(position);
+
+            arrayAdapter.notifyDataSetChanged();
+            dialog.dismiss();
+        });
+        buttonNegative.setOnClickListener(view -> dialog.dismiss());
+
+        dialog.show();
     }
 }

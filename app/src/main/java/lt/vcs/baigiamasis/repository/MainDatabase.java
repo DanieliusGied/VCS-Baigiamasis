@@ -22,7 +22,6 @@ import lt.vcs.baigiamasis.inventory.model.Item;
         version = Constant.MAIN_DATABASE_VERSION,
         exportSchema = false
 )
-//@TypeConverters({Converter.class})
 public abstract class MainDatabase extends RoomDatabase {
     private static MainDatabase instance;
 

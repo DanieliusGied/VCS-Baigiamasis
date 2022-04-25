@@ -16,7 +16,6 @@ public class Constant {
     public final static String WEAPON = "WEAPON";
     public final static String ARMOR = "ARMOR";
     public final static String PLAYER = "player";
-    public final static String INVENTORY = "inventory";
     public final static String RANDOM_DUNGEON = "random_dungeon";
 
     public final static String COMBAT = "combat";
@@ -25,7 +24,5 @@ public class Constant {
 
     public final static int BASE_ARMOR = 8;
     public final static int BASE_DAMAGE = 1;
-
-    // TODO: 4/24/2022 write all text, clean up the project
 
 }

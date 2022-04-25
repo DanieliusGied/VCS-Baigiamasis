@@ -102,5 +102,10 @@ The room is beset by an eerie silence, sometimes broken by sharp squeaks. Bones 
     <string name="player_info_defense">Defense:</string>
     <string name="player_info_damage">Damage:</string>
     <string name="player_select_enter_name">Enter name</string>
+    <string name="inventory_gold">Gold: %1$d</string>
+    <string name="player_select_delete_confirmation">Would you like to delete this character?</string>
+    <string name="button_yes">Yes</string>
+    <string name="button_no">No</string>
+    <string name="inventory_equipped_items">Equipped Items</string>
 
 </resources>

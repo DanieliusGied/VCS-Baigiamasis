@@ -59,21 +59,13 @@ public class PuzzleRoomScreenActivity extends AppCompatActivity {
     private List<PuzzleAnswer> puzzleAnswerChoiceList;
 
     private ListView listView;
-    private ArrayAdapter<String> arrayAdapter;
-
-    private TextView textViewDescription;
-    private TextView textViewPuzzle;
 
     private MainDatabase mainDatabase;
     private PlayerDao playerDao;
     private DungeonDao dungeonDao;
-    private EncounterDao encounterDao;
-    private PuzzleDao puzzleDao;
-    private PuzzleAnswerDao puzzleAnswerDao;
 
     private Player player;
     private Dungeon dungeon;
-    private Encounter encounter;
     private Puzzle chosenPuzzle;
     private PuzzleAnswer chosenPuzzleAnswer;
 
@@ -89,17 +81,14 @@ public class PuzzleRoomScreenActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int characterID = intent.getIntExtra(Constant.PLAYER, 0);
-        int encounterID = intent.getIntExtra(Constant.RANDOM_DUNGEON, 0);
 
         mainDatabase = MainDatabase.getInstance(getApplicationContext());
         playerDao = mainDatabase.playerDao();
         dungeonDao = mainDatabase.dungeonDao();
-        encounterDao = mainDatabase.encounterDao();
-        puzzleAnswerDao = mainDatabase.puzzleAnswerDao();
-        puzzleDao = mainDatabase.puzzleDao();
+        PuzzleAnswerDao puzzleAnswerDao = mainDatabase.puzzleAnswerDao();
+        PuzzleDao puzzleDao = mainDatabase.puzzleDao();
 
         player = playerDao.getItem(characterID);
-        encounter = encounterDao.getItem(encounterID);
         dungeon = dungeonDao.getItemFromCharacter(player.getId());
         puzzleList = puzzleDao.getAll();
         puzzleAnswerList = puzzleAnswerDao.getAll();
@@ -116,6 +105,26 @@ public class PuzzleRoomScreenActivity extends AppCompatActivity {
         setUpListViewItemClick();
     }
 
+    private void setUpText(){
+        TextView textViewHP = findViewById(R.id.textViewPuzzleRoomHP);
+
+        TextView textViewDescription = findViewById(R.id.textViewPuzzleRoomDescription);
+        textViewDescription.setText(String.format(getResources().getString(R.string.puzzle_screen_description), player.getName()));
+
+        TextView textViewPuzzle = findViewById(R.id.textViewPuzzlePuzzle);
+        textViewPuzzle.setText(String.format(getResources().getString(R.string.puzzle_screen_puzzle_text), chosenPuzzle.getPuzzle()));
+
+        textViewHP.setText(String.format(getResources().getString(R.string.combat_screen_hp), player.getCurrentHealth(), player.getMaxHealth()));
+    }
+
+    private void setUpProgressBar(){
+        ProgressBar progressBarPlayerHP = findViewById(R.id.progressBarPuzzleRoomHP);
+
+        int progressPlayerHP = (int) Math.round((double) player.getCurrentHealth() / (double) player.getMaxHealth() * 100);
+        progressBarPlayerHP.setProgress(progressPlayerHP);
+    }
+
+    //SET-UP ANSWER LIST
     private void setUpPuzzle(){
         Random random = new Random();
         int randomInt = random.nextInt(puzzleList.size());
@@ -127,16 +136,27 @@ public class PuzzleRoomScreenActivity extends AppCompatActivity {
         populateAnswerList(randomInt);
     }
 
-    private void setUpText(){
-        TextView textViewHP = findViewById(R.id.textViewPuzzleRoomHP);
+    private void setUpAnswerChoiceListView(){
+        listView = findViewById(R.id.listViewPuzzleRoomAnswers);
 
-        textViewDescription  = findViewById(R.id.textViewPuzzleRoomDescription);
-        textViewDescription.setText(String.format(getResources().getString(R.string.puzzle_screen_description), player.getName()));
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter(
+                this,
+                android.R.layout.simple_list_item_1,
+                puzzleAnswerChoiceList) {
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                TextView item = (TextView) super.getView(position, convertView, parent);
 
-        textViewPuzzle = findViewById(R.id.textViewPuzzlePuzzle);
-        textViewPuzzle.setText(String.format(getResources().getString(R.string.puzzle_screen_puzzle_text), chosenPuzzle.getPuzzle()));
+                item.setTypeface(getResources().getFont(R.font.vecna_bold_italic));
+                item.setTextColor(getResources().getColor(R.color.background_brown));
+                item.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
 
-        textViewHP.setText(String.format(getResources().getString(R.string.combat_screen_hp), player.getCurrentHealth(), player.getMaxHealth()));
+                return item;
+            }
+        };
+
+        listView.setAdapter(arrayAdapter);
     }
 
     private void populateAnswerList(int randomInt){
@@ -148,36 +168,6 @@ public class PuzzleRoomScreenActivity extends AppCompatActivity {
 
         puzzleAnswerChoiceList.add(chosenPuzzleAnswer);
         Collections.shuffle(puzzleAnswerChoiceList);
-    }
-
-    private void setUpProgressBar(){
-        ProgressBar progressBarPlayerHP = findViewById(R.id.progressBarPuzzleRoomHP);
-
-        int progressPlayerHP = (int) Math.round((double) player.getCurrentHealth() / (double) player.getMaxHealth() * 100);
-        progressBarPlayerHP.setProgress(progressPlayerHP);
-    }
-
-    private void setUpAnswerChoiceListView(){
-        listView = findViewById(R.id.listViewPuzzleRoomAnswers);
-
-        arrayAdapter = new ArrayAdapter(
-                this,
-                android.R.layout.simple_list_item_1,
-                puzzleAnswerChoiceList){
-            @NonNull
-            @Override
-            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                TextView item = (TextView) super.getView(position,convertView,parent);
-
-                item.setTypeface(getResources().getFont(R.font.vecna_bold_italic));
-                item.setTextColor(getResources().getColor(R.color.background_brown));
-                item.setTextSize(TypedValue.COMPLEX_UNIT_DIP,18);
-
-                return item;
-            }
-        };;
-
-        listView.setAdapter(arrayAdapter);
     }
 
     private void setUpListViewItemClick() {
@@ -192,6 +182,8 @@ public class PuzzleRoomScreenActivity extends AppCompatActivity {
             }
         });
     }
+
+    //SET-UP DIALOGS
 
     public void showErrorDialogIncorrectChoice(){
         final Dialog dialog = new Dialog(PuzzleRoomScreenActivity.this);
@@ -211,6 +203,7 @@ public class PuzzleRoomScreenActivity extends AppCompatActivity {
         buttonPositive.setText(R.string.button_close);
         buttonPositive.setOnClickListener(view -> {
             player.setCurrentHealth(player.getCurrentHealth() - 2);
+            setUpProgressBar();
             playerDao.insertItem(player);
             if (player.getCurrentHealth() <= 0){
                 player.setCurrentHealth(0);

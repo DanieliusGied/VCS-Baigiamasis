@@ -49,32 +49,12 @@ import lt.vcs.baigiamasis.repository.MainDatabase;
 
 public class CombatScreenActivity extends AppCompatActivity {
 
-    private ListView listView;
     private ArrayAdapter<String> arrayAdapter;
     private List<String> combatText;
 
-    private MaterialButton materialButtonAttack;
-    private MaterialButton materialButtonSpell;
-    private MaterialButton materialButtonFlee;
-
-    private ProgressBar progressBarEnemyHP;
-    private ProgressBar progressBarPlayerHP;
-    private ProgressBar progressBarPlayerMP;
-
-    private TextView textViewEnemyHP;
-    private TextView textViewEnemyName;
-    private TextView textViewPlayerHP;
-    private TextView textViewPlayerMP;
-    private TextView textViewPlayerName;
-
-    private ImageView imageViewEnemyPortrait;
-    private ImageView imageViewPlayerPortrait;
-
     private MainDatabase mainDatabase;
-    private EnemyDao enemyDao;
     private PlayerDao playerDao;
     private DungeonDao dungeonDao;
-    private EncounterDao encounterDao;
     private InventoryDao inventoryDao;
 
     private Enemy enemy;
@@ -86,7 +66,6 @@ public class CombatScreenActivity extends AppCompatActivity {
 
     private int enemyMaxHP;
     private int playerDamage;
-    private int enemyDamage;
 
 
     @Override
@@ -106,10 +85,10 @@ public class CombatScreenActivity extends AppCompatActivity {
         int encounterID = intent.getIntExtra(Constant.RANDOM_DUNGEON, 0);
 
         mainDatabase = MainDatabase.getInstance(getApplicationContext());
-        enemyDao = mainDatabase.enemyDao();
+        EnemyDao enemyDao = mainDatabase.enemyDao();
         playerDao = mainDatabase.playerDao();
         dungeonDao = mainDatabase.dungeonDao();
-        encounterDao = mainDatabase.encounterDao();
+        EncounterDao encounterDao = mainDatabase.encounterDao();
         inventoryDao = mainDatabase.inventoryDao();
 
         player = playerDao.getItem(characterID);
@@ -159,13 +138,13 @@ public class CombatScreenActivity extends AppCompatActivity {
     }
 
     private void setUpEnemy(){
-        textViewEnemyName = findViewById(R.id.textViewCombatScreenEnemyName);
+        TextView textViewEnemyName = findViewById(R.id.textViewCombatScreenEnemyName);
         textViewEnemyName.setText(String.format(
                 getResources().getString(R.string.combat_screen_name),
                 enemy.getName()
         ));
 
-        textViewEnemyHP = findViewById(R.id.textViewCombatScreenEnemyHP);
+        TextView textViewEnemyHP = findViewById(R.id.textViewCombatScreenEnemyHP);
         textViewEnemyHP.setText(String.format(
                 getResources().getString(R.string.combat_screen_hp),
                 enemy.getHealth(),
@@ -176,20 +155,20 @@ public class CombatScreenActivity extends AppCompatActivity {
     }
 
     private void setUpPlayer(){
-        textViewPlayerName = findViewById(R.id.textViewCombatScreenPlayerName);
+        TextView textViewPlayerName = findViewById(R.id.textViewCombatScreenPlayerName);
         textViewPlayerName.setText(String.format(
                 getResources().getString(R.string.combat_screen_name),
                 player.getName()
         ));
 
-        textViewPlayerHP = findViewById(R.id.textViewCombatScreenPlayerHP);
+        TextView textViewPlayerHP = findViewById(R.id.textViewCombatScreenPlayerHP);
         textViewPlayerHP.setText(String.format(
                 getResources().getString(R.string.combat_screen_hp),
                 player.getCurrentHealth(),
                 player.getMaxHealth()
         ));
 
-        textViewPlayerMP = findViewById(R.id.textViewCombatScreenPlayerMP);
+        TextView textViewPlayerMP = findViewById(R.id.textViewCombatScreenPlayerMP);
         textViewPlayerMP.setText(String.format(
                 getResources().getString(R.string.combat_screen_mp),
                 player.getCurrentMana(),
@@ -197,125 +176,6 @@ public class CombatScreenActivity extends AppCompatActivity {
         ));
 
         setUpProgressBars();
-    }
-
-    private void setUpCombatTextLog(){
-        combatText = new ArrayList();
-
-        listView = findViewById(R.id.listViewCombatScreenText);
-
-        arrayAdapter = new ArrayAdapter(
-                this,
-                android.R.layout.simple_list_item_1,
-                combatText){
-            @NonNull
-            @Override
-            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                TextView item = (TextView) super.getView(position,convertView,parent);
-
-                item.setTypeface(getResources().getFont(R.font.vecna_bold_italic));
-                item.setTextColor(getResources().getColor(R.color.background_brown));
-                item.setTextSize(TypedValue.COMPLEX_UNIT_DIP,18);
-
-                return item;
-            }
-        };;
-
-        listView.setAdapter(arrayAdapter);
-    }
-
-    private void setUpMaterialButtonAttack(){
-        materialButtonAttack = findViewById(R.id.materialButtonCombatScreenAttack);
-        materialButtonAttack.setOnClickListener(view -> {
-            playerAttack();
-            if (enemy.getHealth() > 0) enemyAttack();
-        });
-    }
-
-    private void setUpMaterialButtonSpell(){
-        materialButtonSpell = findViewById(R.id.materialButtonCombatScreenSpell);
-        materialButtonSpell.setOnClickListener(view -> {
-            if (player.getCurrentMana() > 0){
-                playerSpell();
-                player.setCurrentMana(player.getCurrentMana() - 1);
-                setUpPlayer();
-                if (enemy.getHealth() > 0) enemyAttack();
-            }
-            if (player.getCurrentMana() == 0) {
-                makeSnackbarOnOutOfMana();
-            }
-        });
-    }
-
-    private void setUpMaterialButtonFlee(){
-        materialButtonFlee = findViewById(R.id.materialButtonCombatScreenFlee);
-        materialButtonFlee.setOnClickListener(view -> {
-            Intent intent = new Intent(CombatScreenActivity.this, ExploreDungeonScreenActivity.class);
-            intent.putExtra(PLAYER, player.getId());
-
-            dungeon.setDungeonProgress(0);
-            dungeon.setDidFlee(true);
-
-            dungeonDao.insertItem(dungeon);
-            playerDao.insertItem(player);
-
-            startActivity(intent);
-            finish();
-        });
-    }
-
-    private void showErrorDialogEncounter(){
-        final Dialog dialog = new Dialog(CombatScreenActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(true);
-        dialog.setContentView(R.layout.dialog_custom);
-
-        TextView textView = dialog.findViewById(R.id.dialogTextView);
-        MaterialButton buttonPositive = dialog.findViewById(R.id.dialogPositiveButton);
-        MaterialButton buttonNegative = dialog.findViewById(R.id.dialogNegativeButton);
-
-        switch (encounter.getId()){
-            case 1:
-                textView.setText(String.format(
-                        getResources().getString(R.string.explore_dungeon_screen_goblin_encounter),
-                        player.getName()
-                ));
-                break;
-            case 2:
-                textView.setText(R.string.explore_dungeon_screen_skeleton_encounter);
-                break;
-            case 3:
-                textView.setText(R.string.explore_dungeon_screen_rat_encounter);
-                break;
-            case 4:
-                textView.setText(R.string.explore_dungeon_screen_slime);
-                break;
-            default:
-                break;
-        }
-
-        buttonPositive.setText(R.string.combat_screen_fight);
-        buttonPositive.setOnClickListener(view -> {
-            dialog.dismiss();
-        });
-
-        buttonNegative.setText(R.string.combat_screen_flee);
-        buttonNegative.setOnClickListener(view -> {
-            Intent intent = new Intent(CombatScreenActivity.this, ExploreDungeonScreenActivity.class);
-            intent.putExtra(PLAYER, player.getId());
-
-            dungeon.setDungeonProgress(0);
-            dungeon.setDidFlee(true);
-
-            dungeonDao.insertItem(dungeon);
-            playerDao.insertItem(player);
-
-            startActivity(intent);
-            finish();
-            dialog.dismiss();
-        });
-
-        dialog.show();
     }
 
     private void setUpProgressBars(){
@@ -332,6 +192,49 @@ public class CombatScreenActivity extends AppCompatActivity {
         int progressPlayerMP = (int) Math.round((double) player.getCurrentMana() / (double) player.getMaxMana() * 100);
         progressBarPlayerMP.setProgress(progressPlayerMP);
     }
+
+    //SET-UP BUTTON
+
+    private void setUpMaterialButtonAttack(){
+        MaterialButton materialButtonAttack = findViewById(R.id.materialButtonCombatScreenAttack);
+        materialButtonAttack.setOnClickListener(view -> {
+            playerAttack();
+            if (enemy.getHealth() > 0) enemyAttack();
+        });
+    }
+
+    private void setUpMaterialButtonSpell(){
+        MaterialButton materialButtonSpell = findViewById(R.id.materialButtonCombatScreenSpell);
+        materialButtonSpell.setOnClickListener(view -> {
+            if (player.getCurrentMana() > 0){
+                playerSpell();
+                player.setCurrentMana(player.getCurrentMana() - 1);
+                setUpPlayer();
+                if (enemy.getHealth() > 0) enemyAttack();
+            }
+            if (player.getCurrentMana() == 0) {
+                makeSnackbarOnOutOfMana();
+            }
+        });
+    }
+
+    private void setUpMaterialButtonFlee(){
+        MaterialButton materialButtonFlee = findViewById(R.id.materialButtonCombatScreenFlee);
+        materialButtonFlee.setOnClickListener(view -> {
+            Intent intent = new Intent(CombatScreenActivity.this, ExploreDungeonScreenActivity.class);
+            intent.putExtra(PLAYER, player.getId());
+
+            dungeon.setDungeonProgress(0);
+            dungeon.setDidFlee(true);
+
+            dungeonDao.insertItem(dungeon);
+            playerDao.insertItem(player);
+
+            startActivity(intent);
+            finish();
+        });
+    }
+
 
     //SET-UP COMBAT
     private void setUpCombatInfo() {
@@ -363,7 +266,7 @@ public class CombatScreenActivity extends AppCompatActivity {
     }
 
     private void enemyAttack(){
-        enemyDamage = combat.calculateEnemyDamage();
+        int enemyDamage = combat.calculateEnemyDamage();
         generateCombatLogEnemyAttack(enemyDamage);
         player.setCurrentHealth(player.getCurrentHealth() - enemyDamage);
         if (player.getCurrentHealth() <= 0) {
@@ -394,6 +297,31 @@ public class CombatScreenActivity extends AppCompatActivity {
     }
 
     //SET-UP COMBAT LOG TEXT
+    private void setUpCombatTextLog(){
+        combatText = new ArrayList();
+
+        ListView listView = findViewById(R.id.listViewCombatScreenText);
+
+        arrayAdapter = new ArrayAdapter(
+                this,
+                android.R.layout.simple_list_item_1,
+                combatText){
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                TextView item = (TextView) super.getView(position,convertView,parent);
+
+                item.setTypeface(getResources().getFont(R.font.vecna_bold_italic));
+                item.setTextColor(getResources().getColor(R.color.background_brown));
+                item.setTextSize(TypedValue.COMPLEX_UNIT_DIP,18);
+
+                return item;
+            }
+        };
+
+        listView.setAdapter(arrayAdapter);
+    }
+
     private void generateCombatLogPlayerAttack(int playerDamage){
         String log = "";
 
@@ -448,7 +376,59 @@ public class CombatScreenActivity extends AppCompatActivity {
         arrayAdapter.notifyDataSetChanged();
     }
 
-    //SET-UP VICTORY/DEFEAT
+    //SET-UP DIALOGS
+    private void showErrorDialogEncounter(){
+        final Dialog dialog = new Dialog(CombatScreenActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_custom);
+
+        TextView textView = dialog.findViewById(R.id.dialogTextView);
+        MaterialButton buttonPositive = dialog.findViewById(R.id.dialogPositiveButton);
+        MaterialButton buttonNegative = dialog.findViewById(R.id.dialogNegativeButton);
+
+        switch (encounter.getId()){
+            case 1:
+                textView.setText(String.format(
+                        getResources().getString(R.string.explore_dungeon_screen_goblin_encounter),
+                        player.getName()
+                ));
+                break;
+            case 2:
+                textView.setText(R.string.explore_dungeon_screen_skeleton_encounter);
+                break;
+            case 3:
+                textView.setText(R.string.explore_dungeon_screen_rat_encounter);
+                break;
+            case 4:
+                textView.setText(R.string.explore_dungeon_screen_slime);
+                break;
+            default:
+                break;
+        }
+
+        buttonPositive.setText(R.string.combat_screen_fight);
+        buttonPositive.setOnClickListener(view -> dialog.dismiss());
+
+        buttonNegative.setText(R.string.combat_screen_flee);
+        buttonNegative.setOnClickListener(view -> {
+            Intent intent = new Intent(CombatScreenActivity.this, ExploreDungeonScreenActivity.class);
+            intent.putExtra(PLAYER, player.getId());
+
+            dungeon.setDungeonProgress(0);
+            dungeon.setDidFlee(true);
+
+            dungeonDao.insertItem(dungeon);
+            playerDao.insertItem(player);
+
+            startActivity(intent);
+            finish();
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
     private void showErrorDialogEnemyDeath(){
         final Dialog dialog = new Dialog(CombatScreenActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

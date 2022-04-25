@@ -33,13 +33,7 @@ import lt.vcs.baigiamasis.repository.MainDatabase;
 
 public class ExploreDungeonScreenActivity extends AppCompatActivity {
 
-    private ImageView imageView;
     private TextView textView;
-    private MaterialButton materialButtonActivate;
-    private MaterialButton materialButtonSkip;
-    private MaterialButton materialButtonFlee;
-    private MaterialButton materialButtonPlayerInfo;
-    private MaterialButton materialButtonInventory;
 
     private PlayerDao playerDao;
     private EncounterDao encounterDao;
@@ -48,8 +42,6 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
     private Player player;
     private Dungeon dungeon;
     private Encounter encounter;
-
-    private Resources resources;
 
     private int randomEncounterID;
     private int characterID;
@@ -60,8 +52,6 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setUpDatabase();
         setUpUI();
-
-
     }
 
 
@@ -77,11 +67,9 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
 
         player = playerDao.getItem(characterID);
         dungeon = dungeonDao.getItemFromCharacter(player.getId());
-
-        resources = getResources();
     }
 
-    //SET UP UI:
+    //SET-UP UI:
     private void setUpUI(){
         setContentView(R.layout.activity_explore_dungeon_screen);
 
@@ -107,23 +95,116 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
         randomEncounterID = random.nextInt(8) + 1;
 
         encounter = encounterDao.getItem(randomEncounterID);
+
     }
 
-    private void setUpActivateButton(){
-        materialButtonActivate = findViewById(R.id.materialButtonExploreScreenActivate);
+    private void setUpImageView(){
+        ImageView imageView = findViewById(R.id.imageViewExploreScreen);
 
-        if (randomEncounterID == 1 || randomEncounterID == 7) {
+        Random random = new Random();
+        switch (random.nextInt(3)){
+            case 0:
+                imageView.setImageResource(R.drawable.explore_hallway);
+                break;
+            case 1:
+                imageView.setImageResource(R.drawable.explore_hallway_2);
+                break;
+            case 2:
+                imageView.setImageResource(R.drawable.explore_hallway_3);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void setUpTextView(){
+        textView = findViewById(R.id.textViewExploreScreen);
+
+        if (encounter.getId() == 1 || encounter.getId() == 7) {
+            textView.setText(String.format(
+                    getResources().getString(R.string.explore_dungeon_screen_goblins),
+                    player.getName()
+            ));
+        } else if (encounter.getId() < 4 || encounter.getId() == 5 || encounter.getId() == 6) {
+            textView.setText(R.string.explore_dungeon_screen_skeleton_rat);
+        } else if (encounter.getId() == 4 || encounter.getId() == 8) {
+            textView.setText(String.format(
+                    getResources().getString(R.string.explore_dungeon_screen_slime),
+                    player.getName()
+            ));
+        }
+    }
+
+    private void makeSnackbarOnSkip(){
+        if (dungeon.isSkipped()){
+
+
+            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutExploreDungeonScreen);
+            Snackbar
+                    .make(coordinatorLayout, R.string.explore_dungeon_screen_encounter_skipped, Snackbar.LENGTH_LONG)
+                    .show();
+
+            dungeon.setSkipped(false);
+            dungeonDao.insertItem(dungeon);
+        }
+    }
+
+    private void makeSnackbarOnFlee(){
+        if (dungeon.isDidFlee()){
+
+
+            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutExploreDungeonScreen);
+            Snackbar
+                    .make(coordinatorLayout, R.string.explore_dungeon_screen_encounter_flee, Snackbar.LENGTH_LONG)
+                    .show();
+
+            dungeon.setDidFlee(false);
+            dungeonDao.insertItem(dungeon);
+        }
+    }
+
+    private void makeSnackbarOnLevelUp(){
+        if (player.getCurrentXP() >= player.getXpToLevel()){
+            player.setLeveledUp(true);
+            player.setLevelUpPoints(player.getLevelUpPoints()+3);
+            player.setLevel(player.getLevel()+1);
+            player.calculateXPToLevel();
+            player.setCurrentXP(0);
+
+            playerDao.insertItem(player);
+
+            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutExploreDungeonScreen);
+            Snackbar
+                    .make(coordinatorLayout, R.string.explore_dungeon_screen_level_up_available, Snackbar.LENGTH_LONG)
+                    .show();
+        }
+    }
+
+    private void makeSnackbarWhenLeveledUp(){
+        if (player.isLeveledUp()) {
+            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutExploreDungeonScreen);
+            Snackbar
+                    .make(coordinatorLayout, R.string.explore_dungeon_screen_level_up_available, Snackbar.LENGTH_LONG)
+                    .show();
+        }
+    }
+
+    //SET-UP BUTTONS
+    private void setUpActivateButton(){
+        MaterialButton materialButtonActivate = findViewById(R.id.materialButtonExploreScreenActivate);
+
+        if (encounter.getId() == 1 || encounter.getId() == 7) {
             materialButtonActivate.setText(R.string.explore_dungeon_screen_goblin_button);
-        } else if (randomEncounterID < 4 || randomEncounterID == 5 || randomEncounterID == 6) {
+        } else if (encounter.getId() < 4 || encounter.getId() == 5 || encounter.getId() == 6) {
             materialButtonActivate.setText(R.string.explore_dungeon_screen_skeleton_rat_button);
-        } else if (randomEncounterID == 4 || randomEncounterID == 8) {
+        } else if (encounter.getId() == 4 || encounter.getId() == 8) {
             textView.setText(R.string.explore_dungeon_screen_slime_button);
         }
 
         materialButtonActivate.setOnClickListener(view -> {
             Intent intent;
 
-            switch(randomEncounterID){
+            switch(encounter.getId()){
                 case 1:
                 case 2:
                 case 3:
@@ -157,9 +238,9 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
     }
 
     private void setUpSkipButton(){
-        materialButtonSkip = findViewById(R.id.materialButtonExploreScreenSkip);
+        MaterialButton materialButtonSkip = findViewById(R.id.materialButtonExploreScreenSkip);
 
-        String skipText = String.format(resources.getString(R.string.explore_dungeon_screen_skips_remaining), dungeon.getSkipsRemaining());
+        String skipText = String.format(getResources().getString(R.string.explore_dungeon_screen_skips_remaining), dungeon.getSkipsRemaining());
         materialButtonSkip.setText(skipText);
 
         materialButtonSkip.setOnClickListener(view -> {
@@ -179,7 +260,7 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
     }
 
     private void setUpFleeButton(){
-        materialButtonFlee = findViewById(R.id.materialButtonExploreScreenFlee);
+        MaterialButton materialButtonFlee = findViewById(R.id.materialButtonExploreScreenFlee);
         materialButtonFlee.setText(R.string.explore_dungeon_screen_flee);
         materialButtonFlee.setOnClickListener(view -> {
             Intent intent = new Intent(ExploreDungeonScreenActivity.this, MainGameMenuScreenActivity.class);
@@ -196,7 +277,7 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
     }
 
     private void setUpCharacterInfoScreenButton(){
-        materialButtonPlayerInfo = findViewById(R.id.materialButtonExploreDungeonScreenPlayerInfo);
+        MaterialButton materialButtonPlayerInfo = findViewById(R.id.materialButtonExploreDungeonScreenPlayerInfo);
         materialButtonPlayerInfo.setOnClickListener(view -> {
             Intent intent = new Intent(ExploreDungeonScreenActivity.this, PlayerInfoScreenActivity.class);
             intent.putExtra(PLAYER, player.getId());
@@ -205,103 +286,12 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
     }
 
     private void setUpInventoryScreenButton(){
-        materialButtonInventory = findViewById(R.id.materialButtonExploreDungeonInventoryScreen);
+        MaterialButton materialButtonInventory = findViewById(R.id.materialButtonExploreDungeonInventoryScreen);
         materialButtonInventory.setOnClickListener(view -> {
             Intent intent = new Intent(ExploreDungeonScreenActivity.this, InventoryScreenActivity.class);
             intent.putExtra(PLAYER, player.getId());
             startActivity(intent);
         });
-    }
-
-    private void makeSnackbarOnSkip(){
-        if (dungeon.isSkipped()){
-
-
-            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutExploreDungeonScreen);
-            Snackbar
-                    .make(coordinatorLayout, resources.getString(R.string.explore_dungeon_screen_encounter_skipped), Snackbar.LENGTH_LONG)
-                    .show();
-
-            dungeon.setSkipped(false);
-            dungeonDao.insertItem(dungeon);
-        }
-    }
-
-    private void makeSnackbarOnFlee(){
-        if (dungeon.isDidFlee()){
-
-
-            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutExploreDungeonScreen);
-            Snackbar
-                    .make(coordinatorLayout, resources.getString(R.string.explore_dungeon_screen_encounter_flee), Snackbar.LENGTH_LONG)
-                    .show();
-
-            dungeon.setDidFlee(false);
-            dungeonDao.insertItem(dungeon);
-        }
-    }
-
-    private void makeSnackbarOnLevelUp(){
-        if (player.getCurrentXP() >= player.getXpToLevel()){
-            player.setLeveledUp(true);
-            player.setLevelUpPoints(player.getLevelUpPoints()+3);
-            player.setLevel(player.getLevel()+1);
-            player.calculateXPToLevel();
-            player.setCurrentXP(0);
-
-            playerDao.insertItem(player);
-
-            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutExploreDungeonScreen);
-            Snackbar
-                    .make(coordinatorLayout, resources.getString(R.string.explore_dungeon_screen_level_up_available), Snackbar.LENGTH_LONG)
-                    .show();
-        }
-    }
-
-    private void makeSnackbarWhenLeveledUp(){
-        if (player.isLeveledUp()) {
-            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayoutExploreDungeonScreen);
-            Snackbar
-                    .make(coordinatorLayout, resources.getString(R.string.explore_dungeon_screen_level_up_available), Snackbar.LENGTH_LONG)
-                    .show();
-        }
-    }
-
-    private void setUpImageView(){
-        imageView = findViewById(R.id.imageViewExploreScreen);
-
-        Random random = new Random();
-        switch (random.nextInt(3)){
-            case 0:
-                imageView.setImageResource(R.drawable.explore_hallway);
-                break;
-            case 1:
-                imageView.setImageResource(R.drawable.explore_hallway_2);
-                break;
-            case 2:
-                imageView.setImageResource(R.drawable.explore_hallway_3);
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void setUpTextView(){
-        textView = findViewById(R.id.textViewExploreScreen);
-
-        if (randomEncounterID == 1 || randomEncounterID == 7) {
-            textView.setText(String.format(
-                    getResources().getString(R.string.explore_dungeon_screen_goblins),
-                    player.getName()
-            ));
-        } else if (randomEncounterID < 4 || randomEncounterID == 5 || randomEncounterID == 6) {
-            textView.setText(R.string.explore_dungeon_screen_skeleton_rat);
-        } else if (randomEncounterID == 4 || randomEncounterID == 8) {
-            textView.setText(String.format(
-                    getResources().getString(R.string.explore_dungeon_screen_slime),
-                    player.getName()
-            ));
-        }
     }
 
 

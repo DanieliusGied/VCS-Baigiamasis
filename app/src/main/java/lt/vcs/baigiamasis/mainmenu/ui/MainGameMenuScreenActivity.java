@@ -25,26 +25,33 @@ public class MainGameMenuScreenActivity extends AppCompatActivity {
     Player player;
     MaterialButton materialButtonExplore;
 
-    private int characterID;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_game_menu);
+        setUpDatabase();
+        setUpUI();
+    }
 
+    //SET-UP DATABASE
+    private void setUpDatabase() {
         Intent intent = getIntent();
-        characterID = intent.getIntExtra(PLAYER, 0);
+        int characterID = intent.getIntExtra(PLAYER, 0);
 
         MainDatabase mainDatabase = MainDatabase.getInstance(getApplicationContext());
         playerDao = mainDatabase.playerDao();
 
         player = playerDao.getItem(characterID);
+    }
 
+    //SET-UP UI
+    private void setUpUI(){
+        setContentView(R.layout.activity_main_game_menu);
         setUpCharacterInfoScreenButton();
         setUpInventoryScreenButton();
         setUpExploreDungeonButton();
     }
 
+    //SET-UP BUTTONS
     private void setUpCharacterInfoScreenButton(){
         materialButtonPlayerInfo = findViewById(R.id.materialButtonCharacterInfoScreen);
         materialButtonPlayerInfo.setOnClickListener(view -> {

@@ -37,7 +37,13 @@ public class PlayerInfoScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setUpDatabase();
+        setUpUI();
+    }
 
+
+    //SET-UP DATABASE
+    private void setUpDatabase() {
         Intent intent = getIntent();
         int characterID = intent.getIntExtra(PLAYER, 0);
 
@@ -46,10 +52,9 @@ public class PlayerInfoScreenActivity extends AppCompatActivity {
         inventoryDao = mainDatabase.inventoryDao();
 
         player = playerDao.getItem(characterID);
-
-        setUpUI();
     }
 
+    //SET-UP UI
     private void setUpUI(){
         setContentView(R.layout.activity_player_info_screen);
 
@@ -57,7 +62,7 @@ public class PlayerInfoScreenActivity extends AppCompatActivity {
         setUpCloseButton();
         setUpProgressBars();
 
-        setUpLevelUpButtonsAndText();
+        setUpLevelUpButtons();
         checkForLevelUp();
     }
 
@@ -109,7 +114,28 @@ public class PlayerInfoScreenActivity extends AppCompatActivity {
         textViewDMG.setText(textDMG);
     }
 
-    private void setUpLevelUpButtonsAndText(){
+    private void setUpProgressBars(){
+        ProgressBar progressBarHP = findViewById(R.id.progressBarPlayerInfoScreenHP);
+        ProgressBar progressBarMP = findViewById(R.id.progressBarPlayerInfoScreenMP);
+        ProgressBar progressBarXP = findViewById(R.id.progressBarPlayerInfoScreenXP);
+
+        int progressHP = (int) Math.round((double) player.getCurrentHealth() / (double) player.getMaxHealth() * 100);
+        progressBarHP.setProgress(progressHP);
+
+        int progressMP = (int) Math.round((double) player.getCurrentMana() / (double) player.getMaxMana() * 100);
+        progressBarMP.setProgress(progressMP);
+
+        int progressXP = (int) Math.round((double) player.getCurrentXP() / (double) player.getXpToLevel() * 100);
+        progressBarXP.setProgress(progressXP);
+    }
+
+    private void setUpCloseButton(){
+        materialButton = findViewById(R.id.materialButtonPlayerInfoScreenClose);
+        materialButton.setOnClickListener(view -> finish());
+    }
+
+    //SET-UP LEVEL-UP
+    private void setUpLevelUpButtons(){
         floatingActionButtonSTR = findViewById(R.id.floatingActionButtonPlayerInfoScreenSTRIncrease);
         floatingActionButtonDEX = findViewById(R.id.floatingActionButtonPlayerInfoScreenDEXIncrease);
         floatingActionButtonCON = findViewById(R.id.floatingActionButtonPlayerInfoScreenCONIncrease);
@@ -124,43 +150,38 @@ public class PlayerInfoScreenActivity extends AppCompatActivity {
 
         floatingActionButtonSTR.setOnClickListener(view -> {
             player.setStatStr(player.getStatStr()+1);
-            player.setLevelUpPoints(player.getLevelUpPoints()-1);
-            player.levelUp();
-            playerDao.insertItem(player);
-            setUpUI();
+            playerLevelUp();
         });
         floatingActionButtonSTR.setEnabled(false);
         floatingActionButtonSTR.setVisibility(View.INVISIBLE);
 
         floatingActionButtonDEX.setOnClickListener(view -> {
             player.setStatDex(player.getStatDex()+1);
-            player.setLevelUpPoints(player.getLevelUpPoints()-1);
-            player.levelUp();
-            playerDao.insertItem(player);
-            setUpUI();
+            playerLevelUp();
         });
         floatingActionButtonDEX.setEnabled(false);
         floatingActionButtonDEX.setVisibility(View.INVISIBLE);
 
         floatingActionButtonCON.setOnClickListener(view -> {
             player.setStatCon(player.getStatCon()+1);
-            player.setLevelUpPoints(player.getLevelUpPoints()-1);
-            player.levelUp();
-            playerDao.insertItem(player);
-            setUpUI();
+            playerLevelUp();
         });
         floatingActionButtonCON.setEnabled(false);
         floatingActionButtonCON.setVisibility(View.INVISIBLE);
 
         floatingActionButtonWIS.setOnClickListener(view -> {
             player.setStatWis(player.getStatWis()+1);
-            player.setLevelUpPoints(player.getLevelUpPoints()-1);
-            player.levelUp();
-            playerDao.insertItem(player);
-            setUpUI();
+            playerLevelUp();
         });
         floatingActionButtonWIS.setEnabled(false);
         floatingActionButtonWIS.setVisibility(View.INVISIBLE);
+    }
+
+    private void playerLevelUp(){
+        player.setLevelUpPoints(player.getLevelUpPoints()-1);
+        player.levelUp();
+        playerDao.insertItem(player);
+        setUpUI();
     }
 
     private void checkForLevelUp(){
@@ -188,25 +209,5 @@ public class PlayerInfoScreenActivity extends AppCompatActivity {
             floatingActionButtonWIS.setEnabled(false);
             floatingActionButtonWIS.setVisibility(View.INVISIBLE);
         }
-    }
-
-    private void setUpCloseButton(){
-        materialButton = findViewById(R.id.materialButtonPlayerInfoScreenClose);
-        materialButton.setOnClickListener(view -> finish());
-    }
-
-    private void setUpProgressBars(){
-        ProgressBar progressBarHP = findViewById(R.id.progressBarPlayerInfoScreenHP);
-        ProgressBar progressBarMP = findViewById(R.id.progressBarPlayerInfoScreenMP);
-        ProgressBar progressBarXP = findViewById(R.id.progressBarPlayerInfoScreenXP);
-
-        int progressHP = (int) Math.round((double) player.getCurrentHealth() / (double) player.getMaxHealth() * 100);
-        progressBarHP.setProgress(progressHP);
-
-        int progressMP = (int) Math.round((double) player.getCurrentMana() / (double) player.getMaxMana() * 100);
-        progressBarMP.setProgress(progressMP);
-
-        int progressXP = (int) Math.round((double) player.getCurrentXP() / (double) player.getXpToLevel() * 100);
-        progressBarXP.setProgress(progressXP);
     }
 }

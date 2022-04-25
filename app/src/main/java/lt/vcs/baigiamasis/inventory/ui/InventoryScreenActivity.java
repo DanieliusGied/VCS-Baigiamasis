@@ -50,11 +50,6 @@ public class InventoryScreenActivity extends AppCompatActivity {
     List<Item> weaponList;
     List<Item> armorList;
 
-
-    Button buttonClose;
-
-    private int characterID;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,22 +58,25 @@ public class InventoryScreenActivity extends AppCompatActivity {
         weaponList = new ArrayList();
         armorList = new ArrayList();
 
+        setUpDatabase();
+        setUpItemList();
+        setUpUI();
+    }
+
+    //SET-UP DATABASE
+    private void setUpDatabase() {
         MainDatabase mainDatabase = MainDatabase.getInstance(getApplicationContext());
         playerDao = mainDatabase.playerDao();
         itemDao = mainDatabase.itemDao();
         inventoryDao = mainDatabase.inventoryDao();
 
         Intent intent = getIntent();
-        characterID = intent.getIntExtra(PLAYER, 0);
+        int characterID = intent.getIntExtra(PLAYER, 0);
 
         player = playerDao.getItem(characterID);
-        setUpItemList();
-
-        setUpUI();
     }
 
-    // SET UP UI:
-
+    //SET-UP UI:
     private void setUpItemList(){
         Item equippedWeapon = inventoryDao.getWeaponFromCharacter(player.getId());
         Item equippedArmor = inventoryDao.getArmorFromCharacter(player.getId());
@@ -93,6 +91,8 @@ public class InventoryScreenActivity extends AppCompatActivity {
 
         setUpCloseButton();
 
+        setUpGoldText();
+
         setUpInventoryListView();
         setUpInventoryListViewItemClick();
         setUpInventoryListViewItemLongClick();
@@ -105,34 +105,38 @@ public class InventoryScreenActivity extends AppCompatActivity {
     }
 
     private void setUpCloseButton(){
-        buttonClose = findViewById(R.id.buttonInventoryScreenClose);
+        Button buttonClose = findViewById(R.id.buttonInventoryScreenClose);
 
-        buttonClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        buttonClose.setOnClickListener(view -> {
 
-                inventoryDao.deleteItemFromCharacter(player.getId());
+            inventoryDao.deleteItemFromCharacter(player.getId());
 
-                inventoryList.stream()
-                        .map(item -> new Inventory(false, player.getId(), item.getId()))
-                        .forEach(inventory -> inventoryDao.insertItem(inventory));
+            inventoryList.stream()
+                    .map(item -> new Inventory(false, player.getId(), item.getId()))
+                    .forEach(inventory -> inventoryDao.insertItem(inventory));
 
-                weaponList.stream()
-                        .map(item -> new Inventory(true, player.getId(), item.getId()))
-                        .forEach(inventory -> inventoryDao.insertItem(inventory));
+            weaponList.stream()
+                    .map(item -> new Inventory(true, player.getId(), item.getId()))
+                    .forEach(inventory -> inventoryDao.insertItem(inventory));
 
-                armorList.stream()
-                        .map(item -> new Inventory(true, player.getId(), item.getId()))
-                        .forEach(inventory -> inventoryDao.insertItem(inventory));
+            armorList.stream()
+                    .map(item -> new Inventory(true, player.getId(), item.getId()))
+                    .forEach(inventory -> inventoryDao.insertItem(inventory));
 
-                playerDao.insertItem(player);
-                finish();
-            }
+            playerDao.insertItem(player);
+            finish();
         });
     }
 
-    // SET UP LIST VIEWS:
+    private void setUpGoldText(){
+        TextView textView = findViewById(R.id.textViewInventoryScreenGold);
+        textView.setText(String.format(
+                getResources().getString(R.string.inventory_gold),
+                player.getGold()
+        ));
+    }
 
+    //SET-UP LIST VIEWS:
     private void setUpInventoryListView() {
         elementListViewInventory = findViewById(R.id.listViewInventoryScreenInventory);
 
@@ -174,7 +178,7 @@ public class InventoryScreenActivity extends AppCompatActivity {
 
                 return item;
             }
-        };;
+        };
 
         elementListViewWeapon.setAdapter(arrayAdapterWeapon);
     }
@@ -197,13 +201,12 @@ public class InventoryScreenActivity extends AppCompatActivity {
 
                 return item;
             }
-        };;
+        };
 
         elementListViewArmor.setAdapter(arrayAdapterArmor);
     }
 
-    // SET UP LIST VIEW ITEM CLICK:
-
+    //SET-UP LIST VIEW ITEM CLICK:
     private void setUpInventoryListViewItemClick() {
         // Set-up clicking on specific items in the list:
         elementListViewInventory.setOnItemClickListener((adapterView, view, position, id) -> {
@@ -236,8 +239,7 @@ public class InventoryScreenActivity extends AppCompatActivity {
         });
     }
 
-    // SET UP ERROR DIALOG BOXES:
-
+    //SET-UP ERROR DIALOG BOXES:
     public void showErrorDialogDiscardItem(int position){
         final Dialog dialog = new Dialog(InventoryScreenActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -344,8 +346,7 @@ public class InventoryScreenActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    // SET UP EQUIP/UNEQUIP ITEM FUNCTIONALITY:
-
+    //SET-UP EQUIP/UNEQUIP ITEM FUNCTIONALITY:
     private void unequipItem(Item item, int position){
 
         Inventory inventory1;
@@ -386,7 +387,7 @@ public class InventoryScreenActivity extends AppCompatActivity {
         switch (itemBeingEquipped.getItemType()){
             case Constant.WEAPON:
 
-                if (weaponList.isEmpty() == false) {
+                if (!weaponList.isEmpty()) {
                     itemBeingUnequipped = weaponList.get(0);
                     weaponList.remove(0);
                     inventoryList.add(itemBeingUnequipped);
@@ -397,7 +398,7 @@ public class InventoryScreenActivity extends AppCompatActivity {
                 inventoryDao.deleteItem(inventoryDao.returnWeaponId(player.getId()));
                 break;
             case Constant.ARMOR:
-                if (armorList.isEmpty() == false) {
+                if (!armorList.isEmpty()) {
                     itemBeingUnequipped = armorList.get(0);
                     armorList.remove(0);
                     inventoryList.add(itemBeingUnequipped);
