@@ -2,15 +2,25 @@ package lt.vcs.baigiamasis.dungeon.puzzle.ui;
 
 import static lt.vcs.baigiamasis.common.Constant.PLAYER;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -101,6 +111,7 @@ public class PuzzleRoomScreenActivity extends AppCompatActivity {
 
         setUpPuzzle();
         setUpText();
+        setUpProgressBar();
         setUpAnswerChoiceListView();
         setUpListViewItemClick();
     }
@@ -117,11 +128,15 @@ public class PuzzleRoomScreenActivity extends AppCompatActivity {
     }
 
     private void setUpText(){
+        TextView textViewHP = findViewById(R.id.textViewPuzzleRoomHP);
+
         textViewDescription  = findViewById(R.id.textViewPuzzleRoomDescription);
         textViewDescription.setText(String.format(getResources().getString(R.string.puzzle_screen_description), player.getName()));
 
         textViewPuzzle = findViewById(R.id.textViewPuzzlePuzzle);
         textViewPuzzle.setText(String.format(getResources().getString(R.string.puzzle_screen_puzzle_text), chosenPuzzle.getPuzzle()));
+
+        textViewHP.setText(String.format(getResources().getString(R.string.combat_screen_hp), player.getCurrentHealth(), player.getMaxHealth()));
     }
 
     private void populateAnswerList(int randomInt){
@@ -129,10 +144,17 @@ public class PuzzleRoomScreenActivity extends AppCompatActivity {
         puzzleAnswerChoiceList.remove(randomInt);
         Collections.shuffle(puzzleAnswerChoiceList);
 
-        puzzleAnswerChoiceList.subList(0, 5).clear();
+        puzzleAnswerChoiceList.subList(0, 7).clear();
 
         puzzleAnswerChoiceList.add(chosenPuzzleAnswer);
         Collections.shuffle(puzzleAnswerChoiceList);
+    }
+
+    private void setUpProgressBar(){
+        ProgressBar progressBarPlayerHP = findViewById(R.id.progressBarPuzzleRoomHP);
+
+        int progressPlayerHP = (int) Math.round((double) player.getCurrentHealth() / (double) player.getMaxHealth() * 100);
+        progressBarPlayerHP.setProgress(progressPlayerHP);
     }
 
     private void setUpAnswerChoiceListView(){
@@ -141,7 +163,19 @@ public class PuzzleRoomScreenActivity extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter(
                 this,
                 android.R.layout.simple_list_item_1,
-                puzzleAnswerChoiceList);
+                puzzleAnswerChoiceList){
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                TextView item = (TextView) super.getView(position,convertView,parent);
+
+                item.setTypeface(getResources().getFont(R.font.vecna_bold_italic));
+                item.setTextColor(getResources().getColor(R.color.background_brown));
+                item.setTextSize(TypedValue.COMPLEX_UNIT_DIP,18);
+
+                return item;
+            }
+        };;
 
         listView.setAdapter(arrayAdapter);
     }
@@ -160,46 +194,110 @@ public class PuzzleRoomScreenActivity extends AppCompatActivity {
     }
 
     public void showErrorDialogIncorrectChoice(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(PuzzleRoomScreenActivity.this);
-        builder.setMessage(String.format(getResources().getString(R.string.puzzle_screen_incorrect_choice), player.getName()));
+        final Dialog dialog = new Dialog(PuzzleRoomScreenActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_custom);
 
-        builder.setPositiveButton("Close",
-                (dialogInterface, i) -> {
-                    player.setCurrentHealth(player.getCurrentHealth() - 2);
-                    playerDao.insertItem(player);
-                    if (player.getCurrentHealth() <= 0){
-                        player.setCurrentHealth(0);
-                        showErrorDialogPlayerDeath();
-                    } else {
-                        recreate();
-                    }
-                });
-        builder.show();
+        TextView textView = dialog.findViewById(R.id.dialogTextView);
+        MaterialButton buttonPositive = dialog.findViewById(R.id.dialogPositiveButton);
+        MaterialButton buttonNegative = dialog.findViewById(R.id.dialogNegativeButton);
+
+        textView.setText(String.format(getResources().getString(
+                R.string.puzzle_screen_incorrect_choice),
+                player.getName()
+        ));
+
+        buttonPositive.setText(R.string.button_close);
+        buttonPositive.setOnClickListener(view -> {
+            player.setCurrentHealth(player.getCurrentHealth() - 2);
+            playerDao.insertItem(player);
+            if (player.getCurrentHealth() <= 0){
+                player.setCurrentHealth(0);
+                showErrorDialogPlayerDeath();
+            } else {
+                recreate();
+            }
+        });
+
+        buttonNegative.setEnabled(false);
+        buttonNegative.setVisibility(View.INVISIBLE);
+
+        dialog.show();
     }
 
     public void showErrorDialogCorrectChoice(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(PuzzleRoomScreenActivity.this);
+        final Dialog dialog = new Dialog(PuzzleRoomScreenActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_custom);
 
-        builder.setMessage(getResources().getString(R.string.puzzle_screen_correct_choice));
+        TextView textView = dialog.findViewById(R.id.dialogTextView);
+        MaterialButton buttonPositive = dialog.findViewById(R.id.dialogPositiveButton);
+        MaterialButton buttonNegative = dialog.findViewById(R.id.dialogNegativeButton);
 
-        builder.setPositiveButton("Proceed",
-                (dialogInterface, i) -> {
-                    player.setCurrentXP(player.getCurrentXP() + 1);
-                    playerDao.insertItem(player);
+        textView.setText(R.string.puzzle_screen_correct_choice);
 
-                    dungeon.setDungeonProgress(dungeon.getDungeonProgress() + 1);
-                    dungeonDao.insertItem(dungeon);
+        buttonPositive.setText(R.string.button_proceed);
+        buttonPositive.setOnClickListener(view -> {
+            player.setCurrentXP(player.getCurrentXP() + 1);
+            playerDao.insertItem(player);
 
-                    Intent intent = new Intent(PuzzleRoomScreenActivity.this, ExploreDungeonScreenActivity.class);
-                    intent.putExtra(PLAYER, player.getId());
+            dungeon.setDungeonProgress(dungeon.getDungeonProgress() + 1);
+            dungeonDao.insertItem(dungeon);
 
-                    startActivity(intent);
-                    finish();
-                });
-        builder.show();
+            Intent intent = new Intent(PuzzleRoomScreenActivity.this, ExploreDungeonScreenActivity.class);
+            intent.putExtra(PLAYER, player.getId());
+
+            startActivity(intent);
+            finish();
+        });
+
+        buttonNegative.setEnabled(false);
+        buttonNegative.setVisibility(View.INVISIBLE);
+
+        dialog.show();
     }
 
     private void showErrorDialogPlayerDeath(){
+        final Dialog dialog = new Dialog(PuzzleRoomScreenActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_custom);
+
+        TextView textView = dialog.findViewById(R.id.dialogTextView);
+        MaterialButton buttonPositive = dialog.findViewById(R.id.dialogPositiveButton);
+        MaterialButton buttonNegative = dialog.findViewById(R.id.dialogNegativeButton);
+
+        textView.setText(String.format(
+                getResources().getString(R.string.combat_screen_player_defeat),
+                player.getName()
+        ));
+
+        buttonPositive.setText(R.string.button_close);
+        buttonPositive.setOnClickListener(view -> {
+            Graveyard graveyard = new Graveyard(player.getId(), player.getName(), player.getLevel());
+            GraveyardDao graveyardDao = mainDatabase.graveyardDao();
+            graveyardDao.insertItem(graveyard);
+
+            playerDao.deleteItem(player);
+            dungeonDao.deleteItemFromCharacter(player.getId());
+
+            InventoryDao inventoryDao = mainDatabase.inventoryDao();
+            inventoryDao.deleteItemFromCharacter(player.getId());
+
+            Intent intent = new Intent(PuzzleRoomScreenActivity.this, MainActivity.class);
+            intent.putExtra(PLAYER, player.getId());
+
+            startActivity(intent);
+            finish();
+        });
+
+        buttonNegative.setEnabled(false);
+        buttonNegative.setVisibility(View.INVISIBLE);
+
+        dialog.show();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(PuzzleRoomScreenActivity.this);
 
         builder.setMessage(String.format(getResources().getString(R.string.combat_screen_player_defeat), player.getName()));

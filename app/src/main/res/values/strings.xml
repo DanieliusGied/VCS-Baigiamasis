@@ -9,7 +9,6 @@
 
     <string name="main_game_menu_explore_the_dungeon">Enter the dungeon</string>
 
-
     <string name="player_info_screen_name">Name: %1$s, Level %2$d</string>
     <string name="player_info_screen_hp">HP: %1$d / %2$d</string>
     <string name="player_info_screen_mp">MP: %1$d / %2$d</string>
@@ -19,12 +18,43 @@
     <string name="player_info_screen_dmg">1 - %1$d</string>
     <string name="player_info_screen_level_up_points">Level up points available: %1$d</string>
 
+    <string name="inventory_screen_inventory_title">INVENTORY</string>
+    <string name="inventory_screen_item_text_weapon">%1$s, weapon. \n Damage: 1 - %2$d</string>
+    <string name="inventory_screen_item_text_armor">%1$s, armor. \n Defense: %2$d</string>
+    <string name="inventory_screen_discard_item">Would you like to DISCARD this item? \n The item will be destroyed.</string>
+    <string name="inventory_screen_discard_confirm">DISCARD</string>
+    <string name="inventory_screen_cancel">Cancel</string>
+    <string name="inventory_screen_equip">Equip</string>
+    <string name="inventory_screen_unequip">Un-equip</string>
+
     <string name="explore_dungeon_screen_skips_remaining">Skip (%1$d skips remaining)</string>
     <string name="explore_dungeon_screen_flee">Flee</string>
     <string name="explore_dungeon_screen_encounter_skipped">Encounter skipped! A new encounter was generated!</string>
     <string name="explore_dungeon_screen_no_skips_remaining">No skips remaining!</string>
     <string name="explore_dungeon_screen_level_up_available">Level up available! Open Character info to assign points.</string>
     <string name="explore_dungeon_screen_encounter_flee">Ran away to the start of the dungeon!</string>
+    <string name="explore_dungeon_screen_goblins">Shadows dance on the uneven walls of the dungeon, brought to life by the light of %1$s\'s torch.
+        The air is stale and damp. The only testimony of life are countless trails of small dusty footprints that seemingly lead nowhere.
+        One particular trail seems fresh. %1$s starts to follow them.
+        \n After following the tracks for several tense minutes, %1$s reaches a room closed off with a shoddy wooden door.
+        Sounds of rustling and metallic clanking come from within.
+</string>
+    <string name="explore_dungeon_screen_goblin_encounter">The goblin inside startles as %1$s opens the door and grabs for his blade!</string>
+    <string name="explore_dungeon_screen_skeleton_rat">The dungeon opens up to a larger room, accommodating crumbling vases and sarcophagi.
+        The ancient artifacts are covered in a thick layer of dust. Cobwebs hang from the ceiling, some inhabited by skittering crawlers.
+The room is beset by an eerie silence, sometimes broken by sharp squeaks. Bones litter the floor around a stone door which shows no handle.
+</string>
+    <string name="explore_dungeon_screen_skeleton_encounter">Touching the door sends out a wave of magical energy, animating the bones nearby!</string>
+    <string name="explore_dungeon_screen_rat_encounter">The door begins to open with a rumble, disturbing a giant rat!</string>
+
+    <string name="explore_dungeon_screen_slime">%1$s\'s footsteps echo in the silent halls of the dungeon. This part of the dungeon is suspiciously clean.
+        Not a single cobweb decorates these worn halls. After a several minutes walk, faint sounds of bubbling reach %1$\'s ears.
+        The bubbling grows louder as %1$s approaches its source, stopping at an iron grate. The popping sounds can be heard from within.
+</string>
+    <string name="explore_dungeon_screen_slime_encounter">The grate leads to a room in which resides a gelatinous cube!</string>
+    <string name="explore_dungeon_screen_goblin_button">Open the door</string>
+    <string name="explore_dungeon_screen_skeleton_rat_button">Touch the door</string>
+    <string name="explore_dungeon_screen_slime_button">Open the grate</string>
 
 
     <string name="combat_screen_encounter">%1$s ran into a %2$s!</string>
@@ -40,15 +70,15 @@
     <string name="combat_screen_spell_hit">%1$s\'s spell hit for %2$d damage!</string>
     <string name="combat_screen_oom">Out of mana!</string>
 
-    <string name="treasure_screen_item_text">Following the sounds of the metallic clanking, %2$s approaches a goblin figure hunched over a box. The goblin startles at %1$s\'s approach and scurries away. Among useless pieces of rusty iron, inside the box %2$s finds a %1$s!</string>
-    <string name="treasure_screen_healing_text">Peeking over the corner, %1$s spots a dusty table sporting pieces of mushrooms, colorful dust, shattered vials, and a bubbling pot of purple liquid. %1$s recognises, that the liquid has restorative qualities! </string>
+    <string name="treasure_screen_item_text">Opening the door %2$s, sees a goblin figure hunched over a wooden barrel. The goblin startles at %2$s\'s approach and scurries away. \n \n Among useless pieces of rusty iron, inside the barrel %2$s finds a %1$s!</string>
+    <string name="treasure_screen_healing_text">Opening the iron grate, %1$s enters an abandoned room. Parchment litters the floor. In the center of the room stands a dusty table sporting pieces of mushrooms, colorful dust, shattered vials, and a bubbling pot of purple liquid. \n \n %1$s recognises, that the liquid has restorative qualities! </string>
     <string name="treasure_screen_claim_item">Pick the %1$s up!</string>
     <string name="treasure_screen_claim_healing">Drink the liquid!</string>
     <string name="treasure_screen_proceed">Proceed</string>
     <string name="treasure_screen_item_claimed">%1$s was added to %2$s\'s inventory!</string>
     <string name="treasure_screen_healing_claimed">%1$s recovered %2$d HP and %3$d MP!</string>
 
-    <string name="puzzle_screen_description">%1$s approaches a large stone door. Runes begin to form, as if from mist, etched upon the door\'s surface. %1$s recognises the runes as a riddle.</string>
+    <string name="puzzle_screen_description">As %1$s touches the stone door, runes begin to form upon it\'s surface as if from mist. \n \n %1$s recognises the runes as a riddle.</string>
     <string name="puzzle_screen_puzzle_text">%1$s</string>
     <string name="puzzle_screen_incorrect_choice">%1$s feels a racking headache as the room around dims. %1$s suffers 2 damage. The riddle shifts and changes.</string>
     <string name="puzzle_screen_correct_choice">The words of the riddle fade and the door opens with a rumble.</string>
@@ -56,9 +86,21 @@
     <string name="character_sheet_icon">I</string>
     <string name="inventory_icon">.</string>
     <string name="button_close">close</string>
-    <string name="inventory_screen_inventory_title">INVENTORY</string>
+
     <string name="combat_screen_attack">Attack</string>
     <string name="combat_screen_cast_a_spell">Cast a spell</string>
     <string name="combat_screen_flee">Flee</string>
+    <string name="combat_screen_fight">Fight!</string>
+    <string name="button_proceed">Proceed</string>
+    <string name="inventory_screen_weapon">Weapon:</string>
+    <string name="inventory_screen_armor">Armor:</string>
+    <string name="inventory_screen_bag">Bag</string>
+    <string name="player_info_str">STR:</string>
+    <string name="player_info_dex">DEX:</string>
+    <string name="player_info_con">CON:</string>
+    <string name="player_info_wis">WIS:</string>
+    <string name="player_info_defense">Defense:</string>
+    <string name="player_info_damage">Damage:</string>
+    <string name="player_select_enter_name">Enter name</string>
 
 </resources>

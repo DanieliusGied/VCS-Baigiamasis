@@ -9,7 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/bg">
 
         <ImageView
             android:id="@+id/imageViewTreasureRoom"
@@ -21,39 +22,56 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/text_border"/>
+            android:src="@drawable/treasure"/>
+
+        <ImageView
+            android:layout_width="450dp"
+            android:layout_height="250dp"
+            android:src="@drawable/text_350_150"
+            app:layout_constraintTop_toTopOf="@id/textViewTreasureRoom"
+            app:layout_constraintBottom_toBottomOf="@id/textViewTreasureRoom"
+            app:layout_constraintStart_toStartOf="@id/textViewTreasureRoom"
+            app:layout_constraintEnd_toEndOf="@id/textViewTreasureRoom"/>
 
         <TextView
             android:id="@+id/textViewTreasureRoom"
-            android:layout_width="350dp"
-            android:layout_height="150dp"
+            android:layout_width="325dp"
+            android:layout_height="125dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewTreasureRoom"
-            android:background="@drawable/text_border"/>
+            android:textColor="@color/background_brown"
+            android:fontFamily="@font/vecna_italic"
+            android:textSize="16sp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButtonTreasureRoomClaim"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTreasureRoom"/>
+            app:layout_constraintTop_toBottomOf="@+id/textViewTreasureRoom"
+            android:fontFamily="@font/breathe_fire_normal"
+            android:textColor="@color/foreground_yellow"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButtonTreasureRoomProceed"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            app:layout_constraintStart_toStartOf="@+id/textViewTreasureRoom"
-            app:layout_constraintTop_toBottomOf="@+id/materialButtonTreasureRoomClaim"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialButtonTreasureRoomClaim"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/breathe_fire_normal"
+            android:textColor="@color/foreground_yellow"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

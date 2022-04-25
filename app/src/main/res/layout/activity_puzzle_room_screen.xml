@@ -10,43 +10,67 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/bg">
 
         <ImageView
             android:id="@+id/imageViewPuzzleRoom"
-            android:layout_width="350dp"
-            android:layout_height="150dp"
+            android:layout_width="450dp"
+            android:layout_height="225dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/text_border"/>
+            android:src="@drawable/riddle_door"/>
+
+        <ImageView
+            android:layout_width="450dp"
+            android:layout_height="250dp"
+            android:src="@drawable/text_350_150"
+            app:layout_constraintTop_toTopOf="@id/textViewPuzzleRoomDescription"
+            app:layout_constraintBottom_toBottomOf="@id/textViewPuzzleRoomDescription"
+            app:layout_constraintStart_toStartOf="@id/textViewPuzzleRoomDescription"
+            app:layout_constraintEnd_toEndOf="@id/textViewPuzzleRoomDescription"/>
 
         <TextView
             android:id="@+id/textViewPuzzleRoomDescription"
-            android:layout_width="350dp"
-            android:layout_height="150dp"
+            android:layout_width="325dp"
+            android:layout_height="125dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="-8dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewPuzzleRoom"
-            android:background="@drawable/text_border"/>
+            android:textColor="@color/background_brown"
+            android:fontFamily="@font/vecna_italic"
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/textViewPuzzlePuzzle"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewPuzzleRoomDescription"
-            android:background="@drawable/text_border"/>
+            android:gravity="center"
+            android:textAlignment="center"
+            android:fontFamily="@font/breathe_fire_normal"
+            android:textSize="20sp"/>
+
+        <ImageView
+            android:id="@+id/imageViewPuzzleRoomList"
+            android:layout_width="425dp"
+            android:layout_height="425dp"
+            android:src="@drawable/text_350_250"
+            app:layout_constraintTop_toTopOf="@id/listViewPuzzleRoomAnswers"
+            app:layout_constraintStart_toStartOf="@id/listViewPuzzleRoomAnswers"
+            app:layout_constraintEnd_toEndOf="@id/listViewPuzzleRoomAnswers"
+            android:layout_marginTop="-128dp"/>
 
         <ListView
             android:id="@+id/listViewPuzzleRoomAnswers"
@@ -54,8 +78,30 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/textViewPuzzlePuzzle"
             app:layout_constraintStart_toStartOf="@+id/textViewPuzzlePuzzle"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="48dp"
             />
+
+        <ProgressBar
+            android:id="@+id/progressBarPuzzleRoomHP"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="300dp"
+            android:layout_height="24dp"
+            android:progress="80"
+            android:progressDrawable="@drawable/pb_health"
+            app:layout_constraintBottom_toBottomOf="@id/textViewPuzzleRoomHP"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewPuzzleRoomHP" />
+
+        <TextView
+            android:id="@+id/textViewPuzzleRoomHP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-128dp"
+            android:fontFamily="@font/vecna_bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewPuzzleRoomList" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

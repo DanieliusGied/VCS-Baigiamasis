@@ -17,31 +17,11 @@ public class Encounter {
     private int linkedEnemyId;
     @ColumnInfo(name = "Encounter_type")
     private String encounterType;
-    @ColumnInfo(name = "Encounter_description_text")
-    private String descriptionText;
-    @ColumnInfo(name = "Encounter_activate_button_text")
-    private String activateButtonText;
 
     public Encounter(int id) {
         this.id = id;
         this.encounterReward = 0;
         this.linkedEnemyId = 0;
-    }
-
-    public String getDescriptionText() {
-        return descriptionText;
-    }
-
-    public void setDescriptionText(String descriptionText) {
-        this.descriptionText = descriptionText;
-    }
-
-    public String getActivateButtonText() {
-        return activateButtonText;
-    }
-
-    public void setActivateButtonText(String activateButtonText) {
-        this.activateButtonText = activateButtonText;
     }
 
     public int getId() {

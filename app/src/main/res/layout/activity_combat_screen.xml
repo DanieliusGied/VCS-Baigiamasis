@@ -71,7 +71,6 @@
                     android:id="@+id/textViewCombatScreenEnemyHP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="HP X/X"
                     android:fontFamily="@font/vecna_bold"
                     app:layout_constraintTop_toTopOf="@+id/progressBarCombatScreenEnemyHP"
                     app:layout_constraintStart_toStartOf="@+id/progressBarCombatScreenEnemyHP"
@@ -84,7 +83,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="16dp"
-                    android:text="ENEMY NAME"
                     android:fontFamily="@font/vecna_bold_italic"
                     android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -99,7 +97,6 @@
             android:id="@+id/listViewCombatScreenText"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@drawable/text_border"
             app:layout_constraintTop_toBottomOf="@id/cardViewCombatScreenEnemy"
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
@@ -107,7 +104,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButtonCombatScreenAttack"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:text="@string/combat_screen_attack"
             android:textColor="@color/foreground_yellow"
@@ -121,7 +118,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButtonCombatScreenSpell"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
@@ -135,7 +132,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButtonCombatScreenFlee"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
@@ -188,7 +185,6 @@
                     android:id="@+id/textViewCombatScreenPlayerHP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="HP X/X"
                     android:fontFamily="@font/vecna_bold"
                     app:layout_constraintEnd_toEndOf="@+id/progressBarCombatScreenPlayerHP"
                     app:layout_constraintStart_toStartOf="@+id/progressBarCombatScreenPlayerHP"
@@ -210,7 +206,6 @@
                     android:id="@+id/textViewCombatScreenPlayerMP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="MP X/X"
                     android:fontFamily="@font/vecna_bold"
                     app:layout_constraintEnd_toEndOf="@+id/progressBarCombatScreenPlayerMP"
                     app:layout_constraintStart_toStartOf="@+id/progressBarCombatScreenPlayerMP"
@@ -223,7 +218,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
-                    android:text="PLAYER NAME"
                     android:fontFamily="@font/vecna_bold_italic"
                     android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="parent"

@@ -78,13 +78,6 @@ public class Item {
 
     @Override
     public String toString() {
-        switch (itemType){
-            case Constant.WEAPON:
-                return name + ", weapon, base damage: 1-" + maxDamage;
-            case Constant.ARMOR:
-                return name + ", armor, base armor: " + armor;
-            default:
-                return "ERROR";
-        }
+        return name;
     }
 }

@@ -7,17 +7,6 @@ public class EncounterPuzzle extends Encounter {
     public EncounterPuzzle(int id) {
         super(id);
         super.setEncounterType(Constant.PUZZLE);
-        super.setActivateButtonText("Enter puzzle");
-
-        switch (id) {
-            case 5:
-                super.setDescriptionText("Skeleton / puzzle (clanking of bones)");
-                break;
-            case 6:
-                super.setDescriptionText("Giant rat / puzzle ");
-                break;
-            default:
-        }
     }
 
     //    @Override

@@ -14,17 +14,6 @@ public class EncounterTreasure extends Encounter {
         super(id);
         super.setEncounterType(Constant.TREASURE);
         super.setEncounterReward(encounterReward);
-        super.setActivateButtonText("Enter treasure");
-
-        switch (id) {
-            case 7:
-                super.setDescriptionText("Goblin / item treasure (clanking of metal)");
-                break;
-            case 8:
-                super.setDescriptionText("Slime / health potion (bubbling)");
-                break;
-            default:
-        }
 
         random = new Random();
     }

@@ -111,7 +111,14 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
 
     private void setUpActivateButton(){
         materialButtonActivate = findViewById(R.id.materialButtonExploreScreenActivate);
-        materialButtonActivate.setText(encounter.getActivateButtonText());
+
+        if (randomEncounterID == 1 || randomEncounterID == 7) {
+            materialButtonActivate.setText(R.string.explore_dungeon_screen_goblin_button);
+        } else if (randomEncounterID < 4 || randomEncounterID == 5 || randomEncounterID == 6) {
+            materialButtonActivate.setText(R.string.explore_dungeon_screen_skeleton_rat_button);
+        } else if (randomEncounterID == 4 || randomEncounterID == 8) {
+            textView.setText(R.string.explore_dungeon_screen_slime_button);
+        }
 
         materialButtonActivate.setOnClickListener(view -> {
             Intent intent;
@@ -281,7 +288,20 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
 
     private void setUpTextView(){
         textView = findViewById(R.id.textViewExploreScreen);
-        textView.setText(encounter.getDescriptionText());
+
+        if (randomEncounterID == 1 || randomEncounterID == 7) {
+            textView.setText(String.format(
+                    getResources().getString(R.string.explore_dungeon_screen_goblins),
+                    player.getName()
+            ));
+        } else if (randomEncounterID < 4 || randomEncounterID == 5 || randomEncounterID == 6) {
+            textView.setText(R.string.explore_dungeon_screen_skeleton_rat);
+        } else if (randomEncounterID == 4 || randomEncounterID == 8) {
+            textView.setText(String.format(
+                    getResources().getString(R.string.explore_dungeon_screen_slime),
+                    player.getName()
+            ));
+        }
     }
 
 

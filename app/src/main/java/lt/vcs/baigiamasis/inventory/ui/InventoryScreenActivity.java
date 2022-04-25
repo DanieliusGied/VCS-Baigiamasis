@@ -2,16 +2,26 @@ package lt.vcs.baigiamasis.inventory.ui;
 
 import static lt.vcs.baigiamasis.common.Constant.PLAYER;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,20 +113,17 @@ public class InventoryScreenActivity extends AppCompatActivity {
 
                 inventoryDao.deleteItemFromCharacter(player.getId());
 
-                for (Item item : inventoryList){
-                    Inventory inventory = new Inventory(false, player.getId(), item.getId());
-                    inventoryDao.insertItem(inventory);
-                }
+                inventoryList.stream()
+                        .map(item -> new Inventory(false, player.getId(), item.getId()))
+                        .forEach(inventory -> inventoryDao.insertItem(inventory));
 
-                for (Item item : weaponList){
-                    Inventory inventory = new Inventory(true, player.getId(), item.getId());
-                    inventoryDao.insertItem(inventory);
-                }
+                weaponList.stream()
+                        .map(item -> new Inventory(true, player.getId(), item.getId()))
+                        .forEach(inventory -> inventoryDao.insertItem(inventory));
 
-                for (Item item : armorList){
-                    Inventory inventory = new Inventory(true, player.getId(), item.getId());
-                    inventoryDao.insertItem(inventory);
-                }
+                armorList.stream()
+                        .map(item -> new Inventory(true, player.getId(), item.getId()))
+                        .forEach(inventory -> inventoryDao.insertItem(inventory));
 
                 playerDao.insertItem(player);
                 finish();
@@ -132,36 +139,66 @@ public class InventoryScreenActivity extends AppCompatActivity {
         arrayAdapterInventory = new ArrayAdapter(
                 this,
                 android.R.layout.simple_list_item_1,
-                inventoryList);
+                inventoryList){
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                TextView item = (TextView) super.getView(position,convertView,parent);
+
+                item.setTypeface(getResources().getFont(R.font.vecna_bold_italic));
+                item.setTextColor(getResources().getColor(R.color.background_brown));
+                item.setTextSize(TypedValue.COMPLEX_UNIT_DIP,18);
+
+                return item;
+            }
+        };
 
         elementListViewInventory.setAdapter(arrayAdapterInventory);
     }
 
     private void setUpEquippedWeaponListView() {
-        // Graphic element
         elementListViewWeapon = findViewById(R.id.listViewInventoryScreenEquippedWeapon);
 
-        // Adapter Graphic element <-> Data
         arrayAdapterWeapon = new ArrayAdapter(
                 this,
                 android.R.layout.simple_list_item_1,
-                weaponList);
+                weaponList){
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                TextView item = (TextView) super.getView(position,convertView,parent);
 
-        // Graphic element connected with adapter
+                item.setTypeface(getResources().getFont(R.font.vecna_bold_italic));
+                item.setTextColor(getResources().getColor(R.color.background_brown));
+                item.setTextSize(TypedValue.COMPLEX_UNIT_DIP,18);
+
+                return item;
+            }
+        };;
+
         elementListViewWeapon.setAdapter(arrayAdapterWeapon);
     }
 
     private void setUpEquippedArmorListView() {
-        // Graphic element
         elementListViewArmor = findViewById(R.id.listViewInventoryScreenEquippedArmor);
 
-        // Adapter Graphic element <-> Data
         arrayAdapterArmor = new ArrayAdapter(
                 this,
                 android.R.layout.simple_list_item_1,
-                armorList);
+                armorList){
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                TextView item = (TextView) super.getView(position,convertView,parent);
 
-        // Graphic element connected with adapter
+                item.setTypeface(getResources().getFont(R.font.vecna_bold_italic));
+                item.setTextColor(getResources().getColor(R.color.background_brown));
+                item.setTextSize(TypedValue.COMPLEX_UNIT_DIP,18);
+
+                return item;
+            }
+        };;
+
         elementListViewArmor.setAdapter(arrayAdapterArmor);
     }
 
@@ -177,10 +214,7 @@ public class InventoryScreenActivity extends AppCompatActivity {
     }
 
     private void setUpInventoryListViewItemLongClick() {
-        // Set-up clicking on specific items in the list:
         elementListViewInventory.setOnItemLongClickListener((adapterView, view, position, id) -> {
-//                Log.i("test_tag", "Just long-clicked the item " + position + " from the list :)");
-//                Log.i("test_tag", noteListText.get(position).toString());
             showErrorDialogDiscardItem(position);
             return true;
         });
@@ -205,56 +239,109 @@ public class InventoryScreenActivity extends AppCompatActivity {
     // SET UP ERROR DIALOG BOXES:
 
     public void showErrorDialogDiscardItem(int position){
-        AlertDialog.Builder builder = new AlertDialog.Builder(InventoryScreenActivity.this);
+        final Dialog dialog = new Dialog(InventoryScreenActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_custom);
+
+        TextView textView = dialog.findViewById(R.id.dialogTextView);
+        MaterialButton buttonPositive = dialog.findViewById(R.id.dialogPositiveButton);
+        MaterialButton buttonNegative = dialog.findViewById(R.id.dialogNegativeButton);
 
         Item clickedItem = inventoryList.get(position);
 
-        builder.setMessage("Would you like to DISCARD this item? The item will be destroyed.");
+        textView.setText(R.string.inventory_screen_discard_item);
+        buttonPositive.setText(R.string.inventory_screen_discard_confirm);
 
-        builder.setPositiveButton("DISCARD",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        inventoryList.remove(clickedItem);
-                        arrayAdapterInventory.notifyDataSetChanged();
-                        playerDao.insertItem(player);
-                    }
-                });
-        builder.setNegativeButton("Cancel", null);
-        builder.show();
+        buttonPositive.setOnClickListener(view -> {
+            inventoryList.remove(clickedItem);
+            arrayAdapterInventory.notifyDataSetChanged();
+            playerDao.insertItem(player);
+            dialog.dismiss();
+        });
+
+        buttonNegative.setEnabled(false);
+        buttonNegative.setVisibility(View.INVISIBLE);
+
+        dialog.show();
     }
 
     public void showErrorDialogEquipItem(Item item, int position){
-        AlertDialog.Builder builder = new AlertDialog.Builder(InventoryScreenActivity.this);
+        final Dialog dialog = new Dialog(InventoryScreenActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_custom);
 
-        builder.setMessage(item.toString());
+        TextView textView = dialog.findViewById(R.id.dialogTextView);
+        MaterialButton buttonPositive = dialog.findViewById(R.id.dialogPositiveButton);
+        MaterialButton buttonNegative = dialog.findViewById(R.id.dialogNegativeButton);
 
-        builder.setPositiveButton("Equip",
-                (dialogInterface, i) -> {
-                    equipItem(item, position);
-                    arrayAdapterInventory.notifyDataSetChanged();
-                    arrayAdapterArmor.notifyDataSetChanged();
-                    arrayAdapterWeapon.notifyDataSetChanged();
-                    playerDao.insertItem(player);
-                });
-        builder.setNegativeButton("Cancel", null);
-        builder.show();
+        if (item.getItemType().equals(Constant.WEAPON)) {
+            textView.setText(String.format(
+                    getResources().getString(R.string.inventory_screen_item_text_weapon),
+                    item.getName(),
+                    item.getMaxDamage()));
+        }
+        if (item.getItemType().equals(Constant.ARMOR)) {
+            textView.setText(String.format(
+                    getResources().getString(R.string.inventory_screen_item_text_armor),
+                    item.getName(),
+                    item.getArmor()));
+        }
+        buttonPositive.setText(R.string.inventory_screen_equip);
+
+        buttonPositive.setOnClickListener(view -> {
+            equipItem(item, position);
+            arrayAdapterInventory.notifyDataSetChanged();
+            arrayAdapterArmor.notifyDataSetChanged();
+            arrayAdapterWeapon.notifyDataSetChanged();
+            playerDao.insertItem(player);
+            dialog.dismiss();
+        });
+
+        buttonNegative.setEnabled(false);
+        buttonNegative.setVisibility(View.INVISIBLE);
+
+        dialog.show();
     }
 
     public void showErrorDialogUnequipItem(Item item, int position){
-        AlertDialog.Builder builder = new AlertDialog.Builder(InventoryScreenActivity.this);
-        builder.setMessage(item.toString());
+        final Dialog dialog = new Dialog(InventoryScreenActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_custom);
 
-        builder.setPositiveButton("Un-equip",
-                (dialogInterface, i) -> {
-                    unequipItem(item, position);
-                    arrayAdapterInventory.notifyDataSetChanged();
-                    arrayAdapterArmor.notifyDataSetChanged();
-                    arrayAdapterWeapon.notifyDataSetChanged();
-                    playerDao.insertItem(player);
-                });
-        builder.setNegativeButton("Cancel", null);
-        builder.show();
+        TextView textView = dialog.findViewById(R.id.dialogTextView);
+        MaterialButton buttonPositive = dialog.findViewById(R.id.dialogPositiveButton);
+        MaterialButton buttonNegative = dialog.findViewById(R.id.dialogNegativeButton);
+
+        if (item.getItemType().equals(Constant.WEAPON)) {
+            textView.setText(String.format(
+                    getResources().getString(R.string.inventory_screen_item_text_weapon),
+                    item.getName(),
+                    item.getMaxDamage()));
+        }
+        if (item.getItemType().equals(Constant.ARMOR)) {
+            textView.setText(String.format(
+                    getResources().getString(R.string.inventory_screen_item_text_armor),
+                    item.getName(),
+                    item.getArmor()));
+        }
+        buttonPositive.setText(R.string.inventory_screen_unequip);
+
+        buttonPositive.setOnClickListener(view -> {
+            unequipItem(item, position);
+            arrayAdapterInventory.notifyDataSetChanged();
+            arrayAdapterArmor.notifyDataSetChanged();
+            arrayAdapterWeapon.notifyDataSetChanged();
+            playerDao.insertItem(player);
+            dialog.dismiss();
+        });
+
+        buttonNegative.setEnabled(false);
+        buttonNegative.setVisibility(View.INVISIBLE);
+
+        dialog.show();
     }
 
     // SET UP EQUIP/UNEQUIP ITEM FUNCTIONALITY:
