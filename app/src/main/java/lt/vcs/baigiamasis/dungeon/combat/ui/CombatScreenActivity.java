@@ -401,7 +401,7 @@ public class CombatScreenActivity extends AppCompatActivity {
                 textView.setText(R.string.explore_dungeon_screen_rat_encounter);
                 break;
             case 4:
-                textView.setText(R.string.explore_dungeon_screen_slime);
+                textView.setText(R.string.explore_dungeon_screen_slime_encounter);
                 break;
             default:
                 break;

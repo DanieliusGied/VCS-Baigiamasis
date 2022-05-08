@@ -58,7 +58,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/vecna"
-            android:text="@string/player_select_enter_name"
+            android:hint="@string/player_select_enter_name"
             android:textColor="@color/background_brown"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"

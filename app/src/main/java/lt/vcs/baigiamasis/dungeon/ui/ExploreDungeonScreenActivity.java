@@ -43,7 +43,6 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
     private Dungeon dungeon;
     private Encounter encounter;
 
-    private int randomEncounterID;
     private int characterID;
 
 
@@ -92,7 +91,7 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
 
     private void setUpRandomEncounter() {
         Random random = new Random();
-        randomEncounterID = random.nextInt(8) + 1;
+        int randomEncounterID = random.nextInt(8) + 1;
 
         encounter = encounterDao.getItem(randomEncounterID);
 
@@ -198,7 +197,7 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
         } else if (encounter.getId() < 4 || encounter.getId() == 5 || encounter.getId() == 6) {
             materialButtonActivate.setText(R.string.explore_dungeon_screen_skeleton_rat_button);
         } else if (encounter.getId() == 4 || encounter.getId() == 8) {
-            textView.setText(R.string.explore_dungeon_screen_slime_button);
+            materialButtonActivate.setText(R.string.explore_dungeon_screen_slime_button);
         }
 
         materialButtonActivate.setOnClickListener(view -> {
@@ -211,7 +210,7 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
                 case 4:
                     intent = new Intent(ExploreDungeonScreenActivity.this, CombatScreenActivity.class);
                     intent.putExtra(Constant.PLAYER, characterID);
-                    intent.putExtra(Constant.RANDOM_DUNGEON, randomEncounterID);
+                    intent.putExtra(Constant.RANDOM_DUNGEON, encounter.getId());
                     startActivity(intent);
                     finish();
                     break;
@@ -219,7 +218,7 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
                 case 6:
                     intent = new Intent(ExploreDungeonScreenActivity.this, PuzzleRoomScreenActivity.class);
                     intent.putExtra(Constant.PLAYER, characterID);
-                    intent.putExtra(Constant.RANDOM_DUNGEON, randomEncounterID);
+                    intent.putExtra(Constant.RANDOM_DUNGEON, encounter.getId());
                     startActivity(intent);
                     finish();
                     break;
@@ -227,7 +226,7 @@ public class ExploreDungeonScreenActivity extends AppCompatActivity {
                 case 8:
                     intent = new Intent(ExploreDungeonScreenActivity.this, TreasureRoomScreenActivity.class);
                     intent.putExtra(Constant.PLAYER, characterID);
-                    intent.putExtra(Constant.RANDOM_DUNGEON, randomEncounterID);
+                    intent.putExtra(Constant.RANDOM_DUNGEON, encounter.getId());
                     startActivity(intent);
                     finish();
                     break;

@@ -39,7 +39,7 @@
         \n After following the tracks for several tense minutes, %1$s reaches a room closed off with a shoddy wooden door.
         Sounds of rustling and metallic clanking come from within.
 </string>
-    <string name="explore_dungeon_screen_goblin_encounter">The goblin inside startles as %1$s opens the door and grabs for his blade!</string>
+    <string name="explore_dungeon_screen_goblin_encounter">As %1$s opens the door the goblin inside startles and grabs for his blade!</string>
     <string name="explore_dungeon_screen_skeleton_rat">The dungeon opens up to a larger room, accommodating crumbling vases and sarcophagi.
         The ancient artifacts are covered in a thick layer of dust. Cobwebs hang from the ceiling, some inhabited by skittering crawlers.
 The room is beset by an eerie silence, sometimes broken by sharp squeaks. Bones litter the floor around a stone door which shows no handle.
@@ -48,7 +48,7 @@ The room is beset by an eerie silence, sometimes broken by sharp squeaks. Bones 
     <string name="explore_dungeon_screen_rat_encounter">The door begins to open with a rumble, disturbing a giant rat!</string>
 
     <string name="explore_dungeon_screen_slime">%1$s\'s footsteps echo in the silent halls of the dungeon. This part of the dungeon is suspiciously clean.
-        Not a single cobweb decorates these worn halls. After a several minutes walk, faint sounds of bubbling reach %1$\'s ears.
+        Not a single cobweb decorates these worn halls. After a several minutes walk, faint sounds of bubbling reach %1$s\'s ears.
         The bubbling grows louder as %1$s approaches its source, stopping at an iron grate. The popping sounds can be heard from within.
 </string>
     <string name="explore_dungeon_screen_slime_encounter">The grate leads to a room in which resides a gelatinous cube!</string>
